@@ -3,7 +3,7 @@ import Image from "next/image";
 import styled from "styled-components";
 
 export async function getStaticPaths() {
-  const asanas = await getAllAsanas();
+  const asanas = getAllAsanas();
   const ids = asanas.map((asana) => asana.id);
   return {
     paths: ids.map((id) => ({ params: { id: id } })),
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const { id } = context.params;
-  const asana = await getAsanaByID(id);
+  const asana = getAsanaByID(id);
   return {
     props: { asana: asana },
   };

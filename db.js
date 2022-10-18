@@ -542,11 +542,11 @@ const asanas = [
 
 export default asanas;
 
-async function getAllAsanas() {
+function getAllAsanas() {
   return asanas;
 }
 
-async function getAsanaByID(id) {
+function getAsanaByID(id) {
   return asanas.find((asana) => asana.id === id);
 }
 
