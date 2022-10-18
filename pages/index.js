@@ -1,5 +1,7 @@
 import Head from "next/head";
 import styled from "styled-components";
+import Image from "next/image";
+import AsanaCard from "../components/Asana-Card/AsanaCard";
 
 const asanas = [
   {
@@ -565,7 +567,10 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1>My App</h1>
+        <h1>Your Daily Flow</h1>
+        {asanas.map((asana) => {
+          return <AsanaCard key={asana.id} name={asana.english_name} />;
+        })}
       </main>
     </div>
   );
