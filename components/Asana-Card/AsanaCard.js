@@ -1,12 +1,16 @@
 import styled from "styled-components";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function AsanaCard({ name, img }) {
+export default function AsanaCard({ name, img, id }) {
   return (
     <StyledArticle>
       <Image src={img} alt={name} width={100} height={100} layout="fixed" />
 
       <h2>{name}</h2>
+      <Link href={`/asanas/${id}`} passHref>
+        Mehr Infos
+      </Link>
     </StyledArticle>
   );
 }

@@ -18,7 +18,11 @@ export default function Home() {
           {asanas.map((asana) => {
             return (
               <li key={asana.id}>
-                <AsanaCard name={asana.english_name} img={asana.img_url} />
+                <AsanaCard
+                  name={asana.english_name}
+                  img={asana.img_url}
+                  id={asana.id}
+                />
               </li>
             );
           })}
