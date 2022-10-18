@@ -14,21 +14,20 @@ export default function Home() {
 
       <main>
         <h1>Your Daily Flow</h1>
-
-        {asanas.map((asana) => {
-          return (
-            <AsanaCard
-              key={asana.id}
-              name={asana.english_name}
-              img={asana.img_url}
-            />
-          );
-        })}
+        <StyledList>
+          {asanas.map((asana) => {
+            return (
+              <li key={asana.id}>
+                <AsanaCard name={asana.english_name} img={asana.img_url} />
+              </li>
+            );
+          })}
+        </StyledList>
       </main>
     </div>
   );
 }
 
-const StyledHeadline = styled.h1`
-  color: blue;
+const StyledList = styled.ul`
+  list-style: none;
 `;
