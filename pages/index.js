@@ -1,5 +1,7 @@
 import Head from "next/head";
 import styled from "styled-components";
+import AsanaCard from "../components/Asana-Card/AsanaCard";
+import asanas from "../db";
 
 export default function Home() {
   return (
@@ -11,12 +13,21 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1>My App</h1>
+        <h1>Your Daily Flow</h1>
+        <StyledList>
+          {asanas.map((asana) => {
+            return (
+              <li key={asana.id}>
+                <AsanaCard name={asana.english_name} img={asana.img_url} />
+              </li>
+            );
+          })}
+        </StyledList>
       </main>
     </div>
   );
 }
 
-const StyledHeadline = styled.h1`
-  color: blue;
+const StyledList = styled.ul`
+  list-style: none;
 `;
