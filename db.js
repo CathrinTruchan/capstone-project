@@ -1,6 +1,6 @@
 const asanas = [
   {
-    id: 1,
+    id: "1",
     sanskrit_name: "Navasana",
     english_name: "Boat",
     img_url: "/images/boat.svg",
@@ -13,7 +13,7 @@ const asanas = [
     next: ["Downward-Facing Dog", "Half-Boat"],
   },
   {
-    id: 2,
+    id: "2",
     sanskrit_name: "Ardha Navasana",
     english_name: "Half-Boat",
     img_url: "/images/half-boat.svg",
@@ -24,7 +24,7 @@ const asanas = [
     next: ["Bridge"],
   },
   {
-    id: 3,
+    id: "3",
     sanskrit_name: "Dhanurasana",
     english_name: "Bow",
     img_url: "/images/bow.svg",
@@ -35,7 +35,7 @@ const asanas = [
     next: ["Camel"],
   },
   {
-    id: 4,
+    id: "4",
     sanskrit_name: "Setu Bandha Sarvangasana",
     english_name: "Bridge",
     img_url: "/images/bridge.svg",
@@ -46,7 +46,7 @@ const asanas = [
     next: ["Shoulder Stand", "Upward-Facing Dog", "Plow"],
   },
   {
-    id: 5,
+    id: "5",
     sanskrit_name: "Baddha Konasana",
     english_name: "Butterfly",
     img_url: "/images/butterfly.svg",
@@ -58,7 +58,7 @@ const asanas = [
     next: ["Seated Forward Bend", "Forward Bend with Shoulder Opener"],
   },
   {
-    id: 6,
+    id: "6",
     sanskrit_name: "Ustrasana",
     english_name: "Camel",
     img_url: "/images/camel.svg",
@@ -69,7 +69,7 @@ const asanas = [
     next: ["Child's Pose", "Pigeon"],
   },
   {
-    id: 7,
+    id: "7",
     sanskrit_name: "Marjaryasana",
     english_name: "Cat",
     img_url: "/images/cat.svg",
@@ -81,7 +81,7 @@ const asanas = [
     next: ["Cow"],
   },
   {
-    id: 8,
+    id: "8",
     sanskrit_name: "Bitilasana",
     english_name: "Cow",
     img_url: "/images/cow.svg",
@@ -93,7 +93,7 @@ const asanas = [
     next: ["Cat", "Sphinx"],
   },
   {
-    id: 9,
+    id: "9",
     sanskrit_name: "Utkatasana",
     english_name: "Chair",
     img_url: "/images/chair.svg",
@@ -105,7 +105,7 @@ const asanas = [
     next: ["Standing Forward Bend", "Bridge", "Downward-Facing Dog"],
   },
   {
-    id: 10,
+    id: "10",
     sanskrit_name: "Balasana",
     english_name: "Child's Pose",
     img_url: "/images/child.svg",
@@ -128,7 +128,7 @@ const asanas = [
       next: [],
     }, */
   {
-    id: 12,
+    id: "12",
     sanskrit_name: "Alanasana",
     english_name: "Crescent Lunge",
     img_url: "/images/crescent_lunge.svg",
@@ -139,7 +139,7 @@ const asanas = [
     next: ["Plank", "Downward-Facing Dog", "Standing Forward Bend"],
   },
   {
-    id: 13,
+    id: "13",
     sanskrit_name: "Bakasana",
     english_name: "Crow",
     img_url: "/images/crow.svg",
@@ -150,7 +150,7 @@ const asanas = [
     next: ["Squat", "Butterfly", "Child's Pose"],
   },
   {
-    id: 14,
+    id: "14",
     sanskrit_name: "Ardha Pincha Mayurasana",
     english_name: "Dolphin",
     img_url: "/images/dolphin.svg",
@@ -161,7 +161,7 @@ const asanas = [
     next: ["Downward-Facing Dog", "Plank", "Forearm Stand"],
   },
   {
-    id: 15,
+    id: "15",
     sanskrit_name: "Adho Mukha Svanasana",
     english_name: "Downward-Facing Dog",
     img_url: "/images/downdog.svg",
@@ -172,7 +172,7 @@ const asanas = [
     next: ["Plank", "Low Lunge", "Upward-Facing Dog"],
   },
   {
-    id: 16,
+    id: "16",
     sanskrit_name: "Garudasana",
     english_name: "Eagle",
     img_url: "/images/eagle.svg",
@@ -183,7 +183,7 @@ const asanas = [
     next: ["Chair", "Tree"],
   },
   {
-    id: 17,
+    id: "17",
     sanskrit_name: "Utthita Hasta Padangusthasana",
     english_name: "Extended Hand to Toe",
     img_url: "/images/extendedhandtotoe.svg",
@@ -194,7 +194,7 @@ const asanas = [
     next: ["Downward-Facing Dog", "Tree"],
   },
   {
-    id: 18,
+    id: "18",
     sanskrit_name: "Utthita Parsvakonasana",
     english_name: "Extended Side Angle",
     img_url: "/images/extendedsideangle.svg",
@@ -205,7 +205,7 @@ const asanas = [
     next: [""],
   },
   {
-    id: 19,
+    id: "19",
     sanskrit_name: "Pincha Mayurasana",
     english_name: "Forearm Stand",
     img_url: "/images/forearmstand.svg",
@@ -216,7 +216,7 @@ const asanas = [
     next: ["Handstand", "Child's Pose"],
   },
   {
-    id: 20,
+    id: "20",
     sanskrit_name: "Uttanasana",
     english_name: "Forward Bend with Shoulder Opener",
     img_url: "/images/forwardfoldshoulderstretch.svg",
@@ -227,7 +227,7 @@ const asanas = [
     next: ["Cat", "Cow", "Downward-Facing Dog"],
   },
   {
-    id: 21,
+    id: "21",
     sanskrit_name: "Ardha Chandrasana",
     english_name: "Half-Moon",
     img_url: "/images/halfmoon.svg",
@@ -238,7 +238,7 @@ const asanas = [
     next: [""],
   },
   {
-    id: 22,
+    id: "22",
     sanskrit_name: "Adho Mukha Vrksasana",
     english_name: "Handstand",
     img_url: "/images/handstand.svg",
@@ -249,7 +249,7 @@ const asanas = [
     next: ["Child's Pose", "Bridge", "Bow"],
   },
   {
-    id: 23,
+    id: "23",
     sanskrit_name: "Anjaneyasana",
     english_name: "Low Lunge",
     img_url: "/images/lowlunge.svg",
@@ -261,7 +261,7 @@ const asanas = [
   },
 
   {
-    id: 24,
+    id: "24",
     sanskrit_name: "Supta Kapotasana",
     english_name: "Pigeon",
     img_url: "/images/pigeon.svg",
@@ -272,7 +272,7 @@ const asanas = [
     next: ["Camel", "Butterfly", "King Pigeon"],
   },
   {
-    id: 25,
+    id: "25",
     sanskrit_name: "Eka Pada Rajakapotasana",
     english_name: "King Pigeon",
     img_url: "/images/kingpigeon.svg",
@@ -283,7 +283,7 @@ const asanas = [
     next: ["Squad", "Butterfly", "Pigeon"],
   },
   {
-    id: 26,
+    id: "26",
     sanskrit_name: "Phalakasana",
     english_name: "Plank",
     img_url: "/images/plank.svg",
@@ -294,7 +294,7 @@ const asanas = [
     next: ["Upward-Facing Dog", "Sphinx", "Child's Pose"],
   },
   {
-    id: 27,
+    id: "27",
     sanskrit_name: "Halasana",
     english_name: "Plow",
     img_url: "/images/plow.svg",
@@ -305,7 +305,7 @@ const asanas = [
     next: ["Shoulder Stand", "Corpse"],
   },
   {
-    id: 28,
+    id: "28",
     sanskrit_name: "Parsvottanasana",
     english_name: "Pyramid",
     img_url: "/images/pyramid.svg",
@@ -316,7 +316,7 @@ const asanas = [
     next: ["Seated Forward Bend", "Standing Forward Bend"],
   },
   {
-    id: 29,
+    id: "29",
     sanskrit_name: "Parsva Virabhadrasana",
     english_name: "Reverse Warrior",
     img_url: "/images/reverswarrior.svg",
@@ -328,7 +328,7 @@ const asanas = [
   },
 
   {
-    id: 30,
+    id: "30",
     sanskrit_name: "Paschimottanasana",
     english_name: "Seated Forward Bend",
     img_url: "/images/seatedforwardfold.svg",
@@ -339,7 +339,7 @@ const asanas = [
     next: ["Seated Spinal Twist", "Butterfly"],
   },
   {
-    id: 31,
+    id: "31",
     sanskrit_name: "Padmasana",
     english_name: "Lotus",
     img_url: "/images/lotus.svg",
@@ -350,7 +350,7 @@ const asanas = [
     next: ["Seated Spinal Twist", "Butterfly"],
   },
   {
-    id: 32,
+    id: "32",
     sanskrit_name: "Ardha Matsyendrasana",
     english_name: "Seated Spinal Twist",
     img_url: "/images/seatedspinaltwist.svg",
@@ -361,7 +361,7 @@ const asanas = [
     next: ["Seated Forward Bend", "Butterfly"],
   },
   {
-    id: 33,
+    id: "33",
     sanskrit_name: "Salamba Sarvangasana",
     english_name: "Shoulder Stand",
     img_url: "/images/shoulderstand.svg",
@@ -373,7 +373,7 @@ const asanas = [
   },
 
   {
-    id: 34,
+    id: "34",
     sanskrit_name: "Vasisthasana",
     english_name: "Side Plank",
     img_url: "/images/sideplank.svg",
@@ -384,7 +384,7 @@ const asanas = [
     next: ["Sphinx", "Child's Pose", "Downward-Facing Dog"],
   },
   {
-    id: 35,
+    id: "35",
     sanskrit_name: "Salamba Bhujangasana",
     english_name: "Sphinx",
     img_url: "/images/sphinx.svg",
@@ -395,7 +395,7 @@ const asanas = [
     next: ["Child's Pose", "Downward-Facing Dog"],
   },
   {
-    id: 36,
+    id: "36",
     sanskrit_name: "Hanumanasana",
     english_name: "Splits",
     img_url: "/images/splits.svg",
@@ -407,7 +407,7 @@ const asanas = [
   },
 
   {
-    id: 37,
+    id: "37",
     sanskrit_name: "Malasana",
     english_name: "Squat",
     img_url: "/images/squat.svg",
@@ -418,7 +418,7 @@ const asanas = [
     next: ["Standing Forward Bend", "Downward-Facing Dog"],
   },
   {
-    id: 38,
+    id: "38",
     sanskrit_name: "Uttanasana",
     english_name: "Standing Forward Bend",
     img_url: "/images/standingforwardfold.svg",
@@ -429,7 +429,7 @@ const asanas = [
     next: ["Warrior One", "Plank", "Half-Moon"],
   },
   {
-    id: 39,
+    id: "39",
     sanskrit_name: "Ashta Chandrasana",
     english_name: "Crescent Moon",
     img_url: "/images/standingstretch.svg",
@@ -440,7 +440,7 @@ const asanas = [
     next: [""],
   },
   {
-    id: 40,
+    id: "40",
     sanskrit_name: "Upavistha Konasana",
     english_name: "Side Splits",
     img_url: "/images/straddlesplit.svg",
@@ -451,7 +451,7 @@ const asanas = [
     next: [""],
   },
   {
-    id: 41,
+    id: "41",
     sanskrit_name: "Vrksasana",
     english_name: "Tree",
     img_url: "/images/tree.svg",
@@ -462,7 +462,7 @@ const asanas = [
     next: ["Standing Forward Bend", ""],
   },
   {
-    id: 42,
+    id: "42",
     sanskrit_name: "Trikonasana",
     english_name: "Triangle",
     img_url: "/images/triangle.svg",
@@ -473,7 +473,7 @@ const asanas = [
     next: [""],
   },
   {
-    id: 43,
+    id: "43",
     sanskrit_name: "Urdhva Mukha Svsnssana",
     english_name: "Upward-Facing Dog",
     img_url: "/images/updog.svg",
@@ -484,7 +484,7 @@ const asanas = [
     next: ["Downward Facing Dog", "Plank", "Sphinx"],
   },
   {
-    id: 44,
+    id: "44",
     sanskrit_name: "Virabhadrasana One",
     english_name: "Warrior One",
     img_url: "/images/warrior1.svg",
@@ -495,7 +495,7 @@ const asanas = [
     next: ["Warrior Two", "Plank", "Reverse Warrior"],
   },
   {
-    id: 45,
+    id: "45",
     sanskrit_name: "Virabhadrasana Two",
     english_name: "Warrior Two",
     img_url: "/images/warrior2.svg",
@@ -506,7 +506,7 @@ const asanas = [
     next: ["Warrior Three", "Reverse Warrior"],
   },
   {
-    id: 46,
+    id: "46",
     sanskrit_name: "Virabhadrasana Three",
     english_name: "Warrior Three",
     img_url: "/images/warrior3.svg",
@@ -517,7 +517,7 @@ const asanas = [
     next: ["Pyramid", "Reverse Warrior", "Upward-Facing Dog"],
   },
   {
-    id: 47,
+    id: "47",
     sanskrit_name: "Urdhva Dhanurasana",
     english_name: "Wheel",
     img_url: "/images/wheel.svg",
@@ -528,7 +528,7 @@ const asanas = [
     next: ["Bridge"],
   },
   {
-    id: 48,
+    id: "48",
     sanskrit_name: "Camatkarasana",
     english_name: "Wild Thing",
     img_url: "/images/wildthing.svg",
@@ -541,3 +541,13 @@ const asanas = [
 ];
 
 export default asanas;
+
+function getAllAsanas() {
+  return asanas;
+}
+
+function getAsanaByID(id) {
+  return asanas.find((asana) => asana.id === id);
+}
+
+export { getAllAsanas, getAsanaByID };
