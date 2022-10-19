@@ -540,8 +540,6 @@ const asanas = [
   },
 ];
 
-export default asanas;
-
 function getAllAsanas() {
   return asanas;
 }
