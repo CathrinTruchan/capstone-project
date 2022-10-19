@@ -34,7 +34,7 @@ export default function Asana({ asana }) {
       <p>{asana.description}</p>
 
       <StyledList>
-        {asana.level.map((item, index) => {
+        {asana.levels.map((item, index) => {
           return <StyledListElement key={index}>{item}</StyledListElement>;
         })}
       </StyledList>
