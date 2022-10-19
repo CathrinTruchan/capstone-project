@@ -6,6 +6,7 @@ import asanas from "../../db";
 
 export default function Flow() {
   const [flowAsanaIds, setFlowAsanaIds] = useState([]);
+  const [selectedAsanaIds, setSelectedAsanaIds] = useState([]);
 
   const flowAsanas = flowAsanaIds.map((id) => {
     return getAsanaByID(id);
@@ -35,7 +36,9 @@ export default function Flow() {
               <li key={asana.id}>
                 <p>{asana.english_name}</p>
                 <button
-                  onClick={() => setFlowAsanaIds([...flowAsanaIds, asana.id])}
+                  onClick={() =>
+                    selectedAsanaIds([...selectedAsanaIds, asana.id])
+                  }
                 >
                   Add to flow
                 </button>
@@ -44,6 +47,9 @@ export default function Flow() {
           })}
         </ul>
       </section>
+      <button onClick={() => setFlowAsanaIds(selectedAsanaIds)}>
+        Create your flow
+      </button>
     </>
   );
 }
