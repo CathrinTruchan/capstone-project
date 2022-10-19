@@ -18,20 +18,18 @@ export default function Flow({
       <StyledH2>Choose your Asanas for today:</StyledH2>
       <AddAsanaSection>
         <StyledList>
-          {asanas.map((asana) => {
-            return (
-              <StyledListItem key={asana.id}>
-                <h3>{asana.english_name}</h3>
-                <StyledAddButton
-                  onClick={() =>
-                    setSelectedAsanaIds([...selectedAsanaIds, asana.id])
-                  }
-                >
-                  <a>Add to flow</a>
-                </StyledAddButton>
-              </StyledListItem>
-            );
-          })}
+          {asanas.map((asana) => (
+            <StyledListItem key={asana.id}>
+              <h3>{asana.english_name}</h3>
+              <StyledAddButton
+                onClick={() =>
+                  setSelectedAsanaIds([...selectedAsanaIds, asana.id])
+                }
+              >
+                <a>Add to flow</a>
+              </StyledAddButton>
+            </StyledListItem>
+          ))}
         </StyledList>
       </AddAsanaSection>
       <CreateButton onClick={() => setFlowAsanaIds(selectedAsanaIds)}>
@@ -40,17 +38,15 @@ export default function Flow({
 
       <StyledH2>Your flow for today:</StyledH2>
       <StyledList>
-        {flowAsanas.map((asana, index) => {
-          return (
-            <li key={index}>
-              <AsanaCard
-                name={asana.english_name}
-                img={asana.img_url}
-                id={asana.id}
-              />
-            </li>
-          );
-        })}
+        {flowAsanas.map((asana, index) => (
+          <li key={index}>
+            <AsanaCard
+              name={asana.english_name}
+              img={asana.img_url}
+              id={asana.id}
+            />
+          </li>
+        ))}
       </StyledList>
     </>
   );
@@ -63,6 +59,7 @@ const StyledList = styled.ul`
 const StyledListItem = styled.li`
   display: flex;
   gap: 2rem;
+  justify-content: space-between;
 `;
 
 const StyledAddButton = styled.button`
@@ -77,10 +74,10 @@ const AddAsanaSection = styled.section`
   width: 400px;
   height: 400px;
   overflow-y: scroll;
-  margin: 2.4rem auto;
+  margin: 1.5rem auto;
   background-color: #f5f5f5;
   border-radius: 22px;
-  padding: 1.5rem 3rem;
+  padding: 1.5rem;
 `;
 
 const StyledH2 = styled.h2`
