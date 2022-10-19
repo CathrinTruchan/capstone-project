@@ -15,7 +15,7 @@ export default function Flow({
 
   return (
     <>
-      <StyledH2>Choose your Flow for today:</StyledH2>
+      <StyledH2>Choose your Asanas for today:</StyledH2>
       <AddAsanaSection>
         <StyledList>
           {asanas.map((asana) => {
@@ -76,8 +76,11 @@ const StyledAddButton = styled.button`
 const AddAsanaSection = styled.section`
   width: 400px;
   height: 400px;
-  overflow: scroll;
-  margin: auto;
+  overflow-y: scroll;
+  margin: 2.4rem auto;
+  background-color: #f5f5f5;
+  border-radius: 22px;
+  padding: 1.5rem 3rem;
 `;
 
 const StyledH2 = styled.h2`
@@ -85,7 +88,12 @@ const StyledH2 = styled.h2`
 `;
 
 const CreateButton = styled.button`
-  width: 10rem;
+  width: 16rem;
   margin: 2rem auto;
   display: block;
+  border: none;
+  background-color: #5d6bea;
+  color: #f5f5f5;
+  padding: 0.5rem 3rem;
+  border-radius: 22px;
 `;
