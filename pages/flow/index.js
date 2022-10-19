@@ -4,14 +4,16 @@ import { getAsanaByID } from "../../db";
 import { useState } from "react";
 import asanas from "../../db";
 
-export default function Flow() {
-  const [flowAsanaIds, setFlowAsanaIds] = useState([]);
-  const [selectedAsanaIds, setSelectedAsanaIds] = useState([]);
-
+export default function Flow({
+  flowAsanaIds,
+  setFlowAsanaIds,
+  selectedAsanaIds,
+  setSelectedAsanaIds,
+}) {
   const flowAsanas = flowAsanaIds.map((id) => {
     return getAsanaByID(id);
   });
-  console.log(flowAsanas);
+
   return (
     <>
       <h2>Your flow for today:</h2>
@@ -30,22 +32,22 @@ export default function Flow() {
       </StyledList>
 
       <section>
-        <ul>
+        <StyledList>
           {asanas.map((asana) => {
             return (
-              <li key={asana.id}>
-                <p>{asana.english_name}</p>
-                <button
+              <StyledListItem key={asana.id}>
+                <h3>{asana.english_name}</h3>
+                <StyledAddButton
                   onClick={() =>
-                    selectedAsanaIds([...selectedAsanaIds, asana.id])
+                    setSelectedAsanaIds([...selectedAsanaIds, asana.id])
                   }
                 >
                   Add to flow
-                </button>
-              </li>
+                </StyledAddButton>
+              </StyledListItem>
             );
           })}
-        </ul>
+        </StyledList>
       </section>
       <button onClick={() => setFlowAsanaIds(selectedAsanaIds)}>
         Create your flow
@@ -56,4 +58,14 @@ export default function Flow() {
 
 const StyledList = styled.ul`
   list-style: none;
+`;
+
+const StyledListItem = styled.li`
+  display: flex;
+  gap: 2rem;
+`;
+
+const StyledAddButton = styled.button`
+  all: unset;
+  cursor: pointer;
 `;
