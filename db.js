@@ -549,3 +549,5 @@ function getAsanaByID(id) {
 }
 
 export { getAllAsanas, getAsanaByID };
+
+export default asanas;
