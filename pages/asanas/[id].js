@@ -44,7 +44,7 @@ export default function Asana({ asana }) {
 }
 
 const StyledArticle = styled.article`
-  border-radius: 32px;
+  border-radius: 2rem;
   box-shadow: 0px 0px 4px rgba(93, 107, 234, 0.42);
   max-width: 500px;
   padding: 1.5rem 2rem;
@@ -59,7 +59,7 @@ const StyledBenefit = styled.p`
   background-color: #5d6bea;
   padding: 1rem 1.5rem;
   color: #f5f5f5;
-  border-radius: 22px;
+  border-radius: 1.5rem;
   position: absolute;
   top: 12rem;
   right: -1rem;
@@ -76,5 +76,5 @@ const StyledListElement = styled.li`
   background-color: #f5f5f5;
   padding: 0.5rem 1rem;
   color: #5d6bea;
-  border-radius: 12px;
+  border-radius: 1rem;
 `;
