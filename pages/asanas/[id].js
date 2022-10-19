@@ -34,7 +34,7 @@ export default function Asana({ asana }) {
       <p>{asana.description}</p>
 
       <StyledList>
-        {asana.level.map((item, index) => {
+        {asana.levels.map((item, index) => {
           return <StyledListElement key={index}>{item}</StyledListElement>;
         })}
       </StyledList>
@@ -76,5 +76,5 @@ const StyledListElement = styled.li`
   background-color: #f5f5f5;
   padding: 0.5rem 1rem;
   color: #5d6bea;
-  border-radius: 12px;
+  border-radius: 16px;
 `;
