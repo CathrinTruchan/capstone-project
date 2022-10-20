@@ -7,6 +7,16 @@ const GlobalStyle = createGlobalStyle`
       }
 
 
+      * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 100%;
+}
+
+
 /* noto-sans-regular - latin */
 @font-face {
   font-family: 'Noto Sans';
