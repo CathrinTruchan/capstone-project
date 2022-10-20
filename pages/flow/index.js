@@ -28,9 +28,11 @@ export default function Flow() {
         ))}
       </StyledList>
 
-      <StyledButton onClick={() => setOpen(true)}>
-        Create your Flow
-      </StyledButton>
+      {!open && (
+        <StyledButton onClick={() => setOpen(true)}>
+          Create your Flow
+        </StyledButton>
+      )}
 
       {open && (
         <AddAsanaSection>
@@ -101,10 +103,12 @@ const StyledButton = styled.button`
   margin: 2rem auto;
   display: block;
   border: none;
-  background-color: #5d6bea;
+  background-color: #ff8667;
   color: #f5f5f5;
-  padding: 0.5rem 3rem;
+  padding: 1rem 3rem;
   border-radius: 22px;
+  font-size: 1.1rem;
+  cursor: pointer;
 `;
 
 const StyledContainer = styled.section`
