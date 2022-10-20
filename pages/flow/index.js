@@ -7,6 +7,11 @@ import { useState } from "react";
 export default function Flow() {
   const [flowAsanaIds, setFlowAsanaIds] = useState([]);
   const [open, setOpen] = useState(false);
+  const [countAsanas, setCountAsanas] = useState(0);
+
+  function sumUpAsanas() {
+    setCountAsanas((prev) => prev + 1);
+  }
 
   const flowAsanas = flowAsanaIds.map((id) => {
     return getAsanaByID(id);
@@ -37,12 +42,17 @@ export default function Flow() {
       {open && (
         <AddAsanaSection>
           <CloseButton onClick={() => setOpen(false)}>X</CloseButton>
+          <StyledCount>{countAsanas}</StyledCount>
+
           <StyledList>
             {asanas.map((asana) => (
               <StyledListItem key={asana.id}>
                 <h3>{asana.english_name}</h3>
                 <StyledAddButton
-                  onClick={() => setFlowAsanaIds([...flowAsanaIds, asana.id])}
+                  onClick={() => {
+                    setFlowAsanaIds([...flowAsanaIds, asana.id]);
+                    sumUpAsanas();
+                  }}
                 >
                   <a>+</a>
                 </StyledAddButton>
@@ -124,4 +134,14 @@ const CloseButton = styled.div`
   border-radius: 50%;
   text-align: center;
   cursor: pointer; ;
+`;
+
+const StyledCount = styled.div`
+  background-color: #5d6bea;
+  color: #f5f5f5;
+  padding: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  text-align: center;
 `;
