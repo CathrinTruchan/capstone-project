@@ -72,14 +72,14 @@ const StyledList = styled.ul`
 
 const StyledListItem = styled.li`
   display: flex;
-  gap: 2rem;
+  gap: 4rem;
   justify-content: space-between;
   align-items: center;
+  margin: 1.2rem 0.5rem;
 `;
 
-const StyledAddButton = styled.div`
-  all: unset;
-  cursor: pointer;
+const StyledAddButton = styled.button`
+  border: none;
   background-color: #5d6bea;
   color: #f5f5f5;
   padding: 0;
@@ -87,6 +87,7 @@ const StyledAddButton = styled.div`
   height: 1.5rem;
   border-radius: 50%;
   text-align: center;
+  cursor: pointer;
   &:active {
     background-color: orange;
   }
@@ -99,7 +100,7 @@ const AddAsanaSection = styled.section`
   height: 80vh;
   background-color: #ffffff;
   border-radius: 22px;
-  padding: 1.5rem;
+  padding: 3rem;
   z-index: 5;
   box-shadow: 0px 0px 4px rgba(93, 107, 234, 0.42);
   overflow-y: scroll;
@@ -126,7 +127,8 @@ const StyledContainer = styled.section`
   position: relative;
 `;
 
-const CloseButton = styled.div`
+const CloseButton = styled.button`
+  border: none;
   background-color: #5d6bea;
   color: #f5f5f5;
   padding: 0;
