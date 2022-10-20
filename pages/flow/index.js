@@ -55,7 +55,7 @@ export default function Flow() {
                     sumUpAsanas();
                   }}
                 >
-                  <a>+</a>
+                  +
                 </StyledAddButton>
               </StyledListItem>
             ))}
@@ -134,7 +134,7 @@ const CloseButton = styled.div`
   height: 1.5rem;
   border-radius: 50%;
   text-align: center;
-  cursor: pointer; ;
+  cursor: pointer;
 `;
 
 const StyledCounter = styled.div`
@@ -152,5 +152,5 @@ const SectionHeader = styled.section`
   justify-content: space-between;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid #d3d3d3;
 `;
