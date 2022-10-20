@@ -218,7 +218,7 @@ const asanas = [
   {
     id: "20",
     sanskrit_name: "Uttanasana",
-    english_name: "Forward Bend with Shoulder Opener",
+    english_name: "Standing Shoulder Opener",
     img_url: "/images/forwardfoldshoulderstretch.svg",
     description: `Die stehende Vorwärtsbeuge mit Schulteröffnung ist eine Variation der klassichen Vorwärtsbeuge. Dabei werden die Hände hinter dem Rücken verschränkt und beim Vorbeugen über den Kopf fallen lassen. Die öffnet die Schultern und dehnt den Bereich zwischen den Schulterblättern. Zudem werden die Beinrückseiten gedehnt und die gesamte Wirbelsäule gestreckt.`,
     levels: ["beginner", "intermediate", "pro"],

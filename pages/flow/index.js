@@ -8,12 +8,6 @@ export default function Flow() {
   const [flowAsanaIds, setFlowAsanaIds] = useState([]);
   const [open, setOpen] = useState(false);
 
-  function toggleOpenState() {
-    if (open) {
-      return false;
-    } else return true;
-  }
-
   const flowAsanas = flowAsanaIds.map((id) => {
     return getAsanaByID(id);
   });
@@ -34,7 +28,7 @@ export default function Flow() {
         ))}
       </StyledList>
 
-      <StyledButton onClick={() => setOpen(toggleOpenState)}>
+      <StyledButton onClick={() => setOpen(true)}>
         Create your Flow
       </StyledButton>
 
@@ -86,18 +80,16 @@ const StyledAddButton = styled.div`
 `;
 
 const AddAsanaSection = styled.section`
-  width: 500px;
-  height: 90vh;
-  overflow-y: scroll;
-  margin: 1.5rem auto;
+  position: absolute;
+  top: 4rem;
+  right: 0;
+  height: 80vh;
   background-color: #ffffff;
   border-radius: 22px;
   padding: 1.5rem;
-  position: absolute;
-  top: 1rem;
-  left: 4rem;
   z-index: 5;
   box-shadow: 0px 0px 4px rgba(93, 107, 234, 0.42);
+  overflow-y: scroll;
 `;
 
 const StyledH2 = styled.h2`
