@@ -2,13 +2,11 @@ import styled from "styled-components";
 import AsanaCard from "../../components/Asana-Card/AsanaCard";
 import { getAsanaByID } from "../../db";
 import asanas from "../../db";
+import { useState } from "react";
 
-export default function Flow({
-  flowAsanaIds,
-  setFlowAsanaIds,
-  selectedAsanaIds,
-  setSelectedAsanaIds,
-}) {
+export default function Flow() {
+  const [flowAsanaIds, setFlowAsanaIds] = useState([]);
+
   const flowAsanas = flowAsanaIds.map((id) => {
     return getAsanaByID(id);
   });
@@ -22,9 +20,7 @@ export default function Flow({
             <StyledListItem key={asana.id}>
               <h3>{asana.english_name}</h3>
               <StyledAddButton
-                onClick={() =>
-                  setSelectedAsanaIds([...selectedAsanaIds, asana.id])
-                }
+                onClick={() => setFlowAsanaIds([...flowAsanaIds, asana.id])}
               >
                 <a>Add to flow</a>
               </StyledAddButton>
@@ -32,9 +28,6 @@ export default function Flow({
           ))}
         </StyledList>
       </AddAsanaSection>
-      <CreateButton onClick={() => setFlowAsanaIds(selectedAsanaIds)}>
-        Create your flow
-      </CreateButton>
 
       <StyledH2>Your flow for today:</StyledH2>
       <StyledList>
@@ -82,15 +75,4 @@ const AddAsanaSection = styled.section`
 
 const StyledH2 = styled.h2`
   text-align: center;
-`;
-
-const CreateButton = styled.button`
-  width: 16rem;
-  margin: 2rem auto;
-  display: block;
-  border: none;
-  background-color: #5d6bea;
-  color: #f5f5f5;
-  padding: 0.5rem 3rem;
-  border-radius: 22px;
 `;
