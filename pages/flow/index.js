@@ -41,9 +41,10 @@ export default function Flow() {
 
       {open && (
         <AddAsanaSection>
-          <CloseButton onClick={() => setOpen(false)}>X</CloseButton>
-          <StyledCount>{countAsanas}</StyledCount>
-
+          <SectionHeader>
+            <CloseButton onClick={() => setOpen(false)}>X</CloseButton>
+            <StyledCount>{countAsanas}</StyledCount>
+          </SectionHeader>
           <StyledList>
             {asanas.map((asana) => (
               <StyledListItem key={asana.id}>
@@ -137,11 +138,19 @@ const CloseButton = styled.div`
 `;
 
 const StyledCount = styled.div`
-  background-color: #5d6bea;
+  background-color: #ff8667;
   color: #f5f5f5;
-  padding: 0.5rem;
+  padding: 0;
   width: 1.5rem;
   height: 1.5rem;
-  border-radius: 50%;
+  border-radius: 22px;
   text-align: center;
+`;
+
+const SectionHeader = styled.section`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid grey;
 `;
