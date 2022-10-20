@@ -43,7 +43,7 @@ export default function Flow() {
         <AddAsanaSection>
           <SectionHeader>
             <CloseButton onClick={() => setOpen(false)}>X</CloseButton>
-            <StyledCount>{countAsanas}</StyledCount>
+            <StyledCounter>{countAsanas}</StyledCounter>
           </SectionHeader>
           <StyledList>
             {asanas.map((asana) => (
@@ -137,7 +137,7 @@ const CloseButton = styled.div`
   cursor: pointer; ;
 `;
 
-const StyledCount = styled.div`
+const StyledCounter = styled.div`
   background-color: #ff8667;
   color: #f5f5f5;
   padding: 0;
