@@ -21,7 +21,6 @@ export default function Flow() {
     <StyledContainer>
       <StyledH2>Your Flow for today:</StyledH2>
 
-      {countAsanas > 0 && open && <StyledCounter>{countAsanas}</StyledCounter>}
       <StyledListMargin>
         {flowAsanas.map((asana, index) => (
           <li key={index}>
@@ -42,7 +41,7 @@ export default function Flow() {
         {open && (
           <AddAsanaSection>
             <SectionHeader>
-              <h2>Add your Asanas</h2>
+              <h2>You added {countAsanas} Asanas</h2>
               <StyledCloseButton onClick={() => setOpen(false)}>
                 X
               </StyledCloseButton>
@@ -151,8 +150,8 @@ const StyledCounter = styled.div`
   border-radius: 50%;
   text-align: center;
   position: fixed;
-  bottom: 2rem;
-  right: 1rem;
+  bottom: 19rem;
+  right: 2rem;
   z-index: 40;
 `;
 
