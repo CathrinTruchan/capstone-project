@@ -27,7 +27,7 @@ export default function Flow() {
     <StyledContainer>
       <StyledH2>Your Flow for today:</StyledH2>
 
-      <StyledListMargin>
+      <StyledListWithMargin>
         {flowAsanas.map((asana, index) => (
           <li key={index}>
             <AsanaCard
@@ -37,7 +37,7 @@ export default function Flow() {
             />
           </li>
         ))}
-      </StyledListMargin>
+      </StyledListWithMargin>
 
       {!open && (
         <StyledButton onClick={() => setOpen(true)}>Add Asanas</StyledButton>
@@ -122,7 +122,7 @@ const StyledH2 = styled.h2`
 
 const StyledButton = styled.button`
   width: 16rem;
-  margin: 2rem auto;
+  margin: -15rem auto 5rem auto;
   display: block;
   border: none;
   background-color: #ff8667;
@@ -149,19 +149,6 @@ const StyledCloseButton = styled.button`
   cursor: pointer;
 `;
 
-const StyledCounter = styled.div`
-  background-color: #ff8667;
-  color: #f5f5f5;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  text-align: center;
-  position: fixed;
-  bottom: 19rem;
-  right: 2rem;
-  z-index: 40;
-`;
-
 const SectionHeader = styled.section`
   display: flex;
   justify-content: space-between;
@@ -174,7 +161,7 @@ const StyledWrapper = styled.div`
   position: relative;
 `;
 
-const StyledListMargin = styled.ul`
+const StyledListWithMargin = styled.ul`
   list-style: none;
   margin-bottom: 20rem;
 `;
