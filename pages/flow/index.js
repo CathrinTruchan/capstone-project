@@ -21,7 +21,8 @@ export default function Flow() {
     <StyledContainer>
       <StyledH2>Your Flow for today:</StyledH2>
 
-      <StyledList>
+      {countAsanas > 0 && open && <StyledCounter>{countAsanas}</StyledCounter>}
+      <StyledListMargin>
         {flowAsanas.map((asana, index) => (
           <li key={index}>
             <AsanaCard
@@ -31,21 +32,22 @@ export default function Flow() {
             />
           </li>
         ))}
-      </StyledList>
+      </StyledListMargin>
 
       {!open && (
         <StyledButton onClick={() => setOpen(true)}>Add Asanas</StyledButton>
       )}
 
-      {open && (
-        <StyledOverlayBackground>
+      <StyledWrapper>
+        {open && (
           <AddAsanaSection>
             <SectionHeader>
+              <h2>Add your Asanas</h2>
               <StyledCloseButton onClick={() => setOpen(false)}>
                 X
               </StyledCloseButton>
-              <StyledCounter>You added {countAsanas} Asanas</StyledCounter>
             </SectionHeader>
+
             <StyledList>
               {asanas.map((asana) => (
                 <StyledListItem key={asana.id}>
@@ -62,8 +64,8 @@ export default function Flow() {
               ))}
             </StyledList>
           </AddAsanaSection>
-        </StyledOverlayBackground>
-      )}
+        )}
+      </StyledWrapper>
     </StyledContainer>
   );
 }
@@ -95,16 +97,17 @@ const StyledAddButton = styled.button`
 `;
 
 const AddAsanaSection = styled.section`
-  position: absolute;
-  top: 12rem;
-  left: calc(50% - 220px);
-  height: 50vh;
+  position: fixed;
+  bottom: 0;
+  height: 30vh;
+  width: 90%;
   background-color: #ffffff;
   border-radius: 22px;
   padding: 3rem;
   z-index: 10;
-  box-shadow: 0px 0px 4px rgba(93, 107, 234, 0.42);
+  box-shadow: 0px 0px 6px rgba(93, 107, 234, 0.8);
   overflow-y: scroll;
+  margin: 2rem;
 `;
 
 const StyledH2 = styled.h2`
@@ -143,8 +146,14 @@ const StyledCloseButton = styled.button`
 const StyledCounter = styled.div`
   background-color: #ff8667;
   color: #f5f5f5;
-  padding: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
   text-align: center;
+  position: fixed;
+  bottom: 2rem;
+  right: 1rem;
+  z-index: 40;
 `;
 
 const SectionHeader = styled.section`
@@ -155,12 +164,11 @@ const SectionHeader = styled.section`
   border-bottom: 1px solid #d3d3d3;
 `;
 
-const StyledOverlayBackground = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(93, 107, 234, 0.3);
-  z-index: 5;
+const StyledWrapper = styled.div`
+  position: relative;
+`;
+
+const StyledListMargin = styled.ul`
+  list-style: none;
+  margin-bottom: 20rem;
 `;
