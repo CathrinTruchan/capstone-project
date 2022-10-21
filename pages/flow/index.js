@@ -34,9 +34,7 @@ export default function Flow() {
       </StyledList>
 
       {!open && (
-        <StyledButton onClick={() => setOpen(true)}>
-          Create your Flow
-        </StyledButton>
+        <StyledButton onClick={() => setOpen(true)}>Add Asanas</StyledButton>
       )}
 
       {open && (
