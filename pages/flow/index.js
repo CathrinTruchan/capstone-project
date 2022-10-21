@@ -13,6 +13,12 @@ export default function Flow() {
     setCountAsanas((prev) => prev + 1);
   }
 
+  function autoScroll() {
+    setTimeout(() => {
+      window.scrollBy({ top: 500, behavior: "smooth" });
+    });
+  }
+
   const flowAsanas = flowAsanaIds.map((id) => {
     return getAsanaByID(id);
   });
@@ -55,6 +61,7 @@ export default function Flow() {
                     onClick={() => {
                       setFlowAsanaIds([...flowAsanaIds, asana.id]);
                       sumUpAsanas();
+                      autoScroll();
                     }}
                   >
                     +
