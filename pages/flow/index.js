@@ -38,29 +38,31 @@ export default function Flow() {
       )}
 
       {open && (
-        <AddAsanaSection>
-          <SectionHeader>
-            <StyledCloseButton onClick={() => setOpen(false)}>
-              X
-            </StyledCloseButton>
-            <StyledCounter>{countAsanas}</StyledCounter>
-          </SectionHeader>
-          <StyledList>
-            {asanas.map((asana) => (
-              <StyledListItem key={asana.id}>
-                <h3>{asana.english_name}</h3>
-                <StyledAddButton
-                  onClick={() => {
-                    setFlowAsanaIds([...flowAsanaIds, asana.id]);
-                    sumUpAsanas();
-                  }}
-                >
-                  +
-                </StyledAddButton>
-              </StyledListItem>
-            ))}
-          </StyledList>
-        </AddAsanaSection>
+        <StyledOverlayBackground>
+          <AddAsanaSection>
+            <SectionHeader>
+              <StyledCloseButton onClick={() => setOpen(false)}>
+                X
+              </StyledCloseButton>
+              <StyledCounter>{countAsanas}</StyledCounter>
+            </SectionHeader>
+            <StyledList>
+              {asanas.map((asana) => (
+                <StyledListItem key={asana.id}>
+                  <h3>{asana.english_name}</h3>
+                  <StyledAddButton
+                    onClick={() => {
+                      setFlowAsanaIds([...flowAsanaIds, asana.id]);
+                      sumUpAsanas();
+                    }}
+                  >
+                    +
+                  </StyledAddButton>
+                </StyledListItem>
+              ))}
+            </StyledList>
+          </AddAsanaSection>
+        </StyledOverlayBackground>
       )}
     </StyledContainer>
   );
@@ -95,12 +97,12 @@ const StyledAddButton = styled.button`
 const AddAsanaSection = styled.section`
   position: absolute;
   top: 4rem;
-  right: 0;
+  left: calc(50% - 220px);
   height: 80vh;
   background-color: #ffffff;
   border-radius: 22px;
   padding: 3rem;
-  z-index: 5;
+  z-index: 10;
   box-shadow: 0px 0px 4px rgba(93, 107, 234, 0.42);
   overflow-y: scroll;
 `;
@@ -154,4 +156,14 @@ const SectionHeader = styled.section`
   margin-bottom: 2rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #d3d3d3;
+`;
+
+const StyledOverlayBackground = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(93, 107, 234, 0.3);
+  z-index: 5;
 `;
