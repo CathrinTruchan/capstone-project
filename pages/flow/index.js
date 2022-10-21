@@ -7,11 +7,6 @@ import { useState } from "react";
 export default function Flow() {
   const [flowAsanaIds, setFlowAsanaIds] = useState([]);
   const [open, setOpen] = useState(false);
-  const [countAsanas, setCountAsanas] = useState(0);
-
-  function sumUpAsanas() {
-    setCountAsanas((prev) => prev + 1);
-  }
 
   function autoScroll() {
     setTimeout(() => {
@@ -47,7 +42,7 @@ export default function Flow() {
         {open && (
           <AddAsanaSection>
             <SectionHeader>
-              <h2>You added {countAsanas} Asanas</h2>
+              <h2>You added {flowAsanaIds.length} Asanas</h2>
               <StyledCloseButton onClick={() => setOpen(false)}>
                 X
               </StyledCloseButton>
@@ -60,7 +55,6 @@ export default function Flow() {
                   <StyledAddButton
                     onClick={() => {
                       setFlowAsanaIds([...flowAsanaIds, asana.id]);
-                      sumUpAsanas();
                       autoScroll();
                     }}
                   >
