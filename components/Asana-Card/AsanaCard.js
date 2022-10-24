@@ -13,13 +13,14 @@ export default function AsanaCard({ name, img, id, deleteCard }) {
         <Link href={`/asanas/${id}`} passHref>
           <StyledLink>Mehr Infos</StyledLink>
         </Link>
-        <button onClick={deleteCard}>Delete</button>
+        <StyledDeleteButton onClick={deleteCard}>X</StyledDeleteButton>
       </section>
     </StyledArticle>
   );
 }
 
 const StyledArticle = styled.article`
+  position: relative;
   box-shadow: var(--drop-shadow-bottom-color);
   display: grid;
   grid-template-columns: 1fr 3fr 3fr 1fr;
@@ -48,4 +49,24 @@ const StyledLink = styled.a`
   cursor: pointer;
   font-size: var(--font-small);
   margin-top: 1rem;
+`;
+
+const StyledDeleteButton = styled.button`
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  background-color: var(--background-primary);
+  color: var(--highlight);
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  &:hover {
+    //border: 1px solid var(--highlight);
+    background-color: var(--highlight);
+    color: var(--text-light);
+  }
 `;
