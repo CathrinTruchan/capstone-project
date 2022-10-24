@@ -39,7 +39,7 @@ export default function Flow() {
         <MainButton
           type="primary"
           onClick={() => setOpen(true)}
-          style={{ margin: "-15rem auto 5rem auto" }}
+          margin="-15rem auto 5rem auto"
         >
           + Add Asanas
         </MainButton>
@@ -48,7 +48,7 @@ export default function Flow() {
         <MainButton
           type="secondary"
           onClick={() => setFlowAsanaIds([])}
-          style={{ margin: "-3rem auto 5rem auto" }}
+          margin="-3rem auto 5rem auto"
         >
           X Rest flow
         </MainButton>
