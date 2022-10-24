@@ -5,9 +5,11 @@ import Link from "next/link";
 export default function AsanaCard({ name, img, id }) {
   return (
     <StyledArticle>
-      <Image src={img} alt={name} width={100} height={100} layout="fixed" />
+      <StyledImageContainer>
+        <Image src={img} alt={name} width={100} height={100} layout="fixed" />
+      </StyledImageContainer>
       <section>
-        <h2>{name}</h2>
+        <StyledH3>{name}</StyledH3>
         <Link href={`/asanas/${id}`} passHref>
           <StyledLink>Mehr Infos</StyledLink>
         </Link>
@@ -17,17 +19,32 @@ export default function AsanaCard({ name, img, id }) {
 }
 
 const StyledArticle = styled.article`
-  border-radius: 22px;
-  box-shadow: 0px 0px 4px rgba(93, 107, 234, 0.42);
-  display: flex;
-  gap: 3rem;
-  justify-content: space-evenly;
-  padding: 1.5rem 3rem;
-  max-width: 400px;
-  margin: 3rem auto;
+  box-shadow: var(--drop-shadow-bottom-color);
+  display: grid;
+  grid-template-columns: 1fr 3fr 3fr 1fr;
+  align-items: center;
+  margin: 4rem auto;
+  padding: 0 2rem 1rem 2rem;
+  &:hover {
+    box-shadow: var(--drop-shadow-bottom-hover);
+  }
+`;
+
+const StyledImageContainer = styled.div`
+  grid-column: 2 / 3;
+`;
+
+const StyledH3 = styled.h3`
+  grid-column: 3 / 4;
+  text-align: left;
 `;
 
 const StyledLink = styled.a`
   text-decoration: none;
+  color: var(--text-dark);
+  grid-column: 3 / 4;
+  text-align: left;
   cursor: pointer;
+  font-size: var(--font-small);
+  margin-top: 1rem;
 `;
