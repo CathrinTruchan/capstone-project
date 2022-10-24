@@ -20,7 +20,7 @@ export default function Flow() {
 
   return (
     <StyledContainer>
-      <StyledH2>Your Flow for today:</StyledH2>
+      <h2>Your Flow for today:</h2>
 
       <StyledListWithMargin>
         {flowAsanas.map((asana, index) => (
@@ -42,7 +42,7 @@ export default function Flow() {
         {open && (
           <AddAsanaSection>
             <SectionHeader>
-              <h2>You added {flowAsanaIds.length} Asanas</h2>
+              <StyledH3>You added {flowAsanaIds.length} Asanas</StyledH3>
               <StyledCloseButton onClick={() => setOpen(false)}>
                 X
               </StyledCloseButton>
@@ -51,7 +51,7 @@ export default function Flow() {
             <StyledList>
               {asanas.map((asana) => (
                 <StyledListItem key={asana.id}>
-                  <h3>{asana.english_name}</h3>
+                  <p>{asana.english_name}</p>
                   <StyledAddButton
                     onClick={() => {
                       setFlowAsanaIds([...flowAsanaIds, asana.id]);
@@ -84,34 +84,35 @@ const StyledListItem = styled.li`
 
 const StyledAddButton = styled.button`
   border: none;
-  background-color: #5d6bea;
-  color: #f5f5f5;
+  background-color: var(--background-neutral);
+  color: var(--highlight);
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
   text-align: center;
   cursor: pointer;
   &:active {
-    background-color: orange;
+    background-color: var(--highlight);
+    color: var(--text-light);
   }
 `;
 
 const AddAsanaSection = styled.section`
   position: fixed;
   bottom: 0;
-  height: 30vh;
-  width: 90%;
-  background-color: #ffffff;
-  border-radius: 22px;
+  height: 45vh;
+  width: 100%;
+  background: var(--primary-gradient);
   padding: 3rem;
-  z-index: 10;
-  box-shadow: 0px 0px 6px rgba(93, 107, 234, 0.8);
+  z-index: 100;
+  box-shadow: var(--drop-shadow-color);
   overflow-y: scroll;
-  margin: 2rem;
+  color: var(--text-light);
 `;
 
-const StyledH2 = styled.h2`
+const StyledH3 = styled.h3`
   text-align: center;
+  color: var(--text-light);
 `;
 
 const StyledButton = styled.button`
@@ -119,12 +120,13 @@ const StyledButton = styled.button`
   margin: -15rem auto 5rem auto;
   display: block;
   border: none;
-  background-color: #ff8667;
-  color: #f5f5f5;
+  background: var(--highlight-gradient);
+  color: var(--text-light);
   padding: 1rem 3rem;
   border-radius: 22px;
   font-size: 1.1rem;
   cursor: pointer;
+  box-shadow: var(--drop-shadow-gray);
 `;
 
 const StyledContainer = styled.section`
@@ -133,9 +135,8 @@ const StyledContainer = styled.section`
 
 const StyledCloseButton = styled.button`
   border: none;
-  background-color: #5d6bea;
-  color: #f5f5f5;
-  padding: 0;
+  background-color: var(--background-neutral);
+  color: var(--primary);
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
@@ -146,9 +147,8 @@ const StyledCloseButton = styled.button`
 const SectionHeader = styled.section`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #d3d3d3;
+  border-bottom: 1px solid var(--background-neutral);
+  background-color: transparent;
 `;
 
 const StyledWrapper = styled.div`

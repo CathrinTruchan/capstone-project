@@ -29,9 +29,9 @@ export default function Asana({ asana }) {
         height={230}
         layout="fixed"
       />
-      <h2>{asana.english_name}</h2>
-      <h3>{asana.sanskrit_name}</h3>
-      <p>{asana.description}</p>
+      <h1>{asana.english_name}</h1>
+      <h2>{asana.sanskrit_name}</h2>
+      <StyledDescription>{asana.description}</StyledDescription>
 
       <StyledList>
         {asana.levels.map((item, index) => {
@@ -44,37 +44,44 @@ export default function Asana({ asana }) {
 }
 
 const StyledArticle = styled.article`
-  border-radius: 32px;
-  box-shadow: 0px 0px 4px rgba(93, 107, 234, 0.42);
-  max-width: 500px;
-  padding: 1.5rem 2rem;
+  border-radius: 22px;
+  box-shadow: var(--drop-shadow-gray);
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 2rem auto;
+  margin: 2rem 1.5rem;
   position: relative;
 `;
 
 const StyledBenefit = styled.p`
-  background-color: #5d6bea;
-  padding: 1rem 1.5rem;
-  color: #f5f5f5;
-  border-radius: 22px;
+  background-color: var(--highlight);
+  padding: 0.8rem 1.2rem;
+  color: var(--text-light);
+  border-radius: 22px 10px 22px 10px;
   position: absolute;
   top: 12rem;
   right: -1rem;
+  font-size: var(--font-small);
 `;
 
 const StyledList = styled.ul`
   list-style: none;
   display: flex;
-  gap: 2rem;
-  margin: 2rem 0 2rem -8rem;
+  gap: 1rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
 `;
 
 const StyledListElement = styled.li`
-  background-color: #f5f5f5;
+  background-color: var(--background-neutral);
   padding: 0.5rem 1rem;
-  color: #5d6bea;
+  color: var(--primary);
   border-radius: 16px;
+  font-size: var(--font-small);
+`;
+
+const StyledDescription = styled.p`
+  margin: 1.5rem;
+  text-align: center;
 `;
