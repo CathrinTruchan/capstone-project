@@ -35,7 +35,7 @@ export default function Flow() {
               img={asana.img_url}
               id={asana.id}
               deleteCard={() => deleteAsana(index)}
-              pathname={pathname}
+              showDeleteButton={true}
             />
           </li>
         ))}
