@@ -20,7 +20,7 @@ export default function Flow() {
 
   return (
     <StyledContainer>
-      <StyledH2>Your Flow for today:</StyledH2>
+      <h2>Your Flow for today:</h2>
 
       <StyledListWithMargin>
         {flowAsanas.map((asana, index) => (
@@ -42,7 +42,7 @@ export default function Flow() {
         {open && (
           <AddAsanaSection>
             <SectionHeader>
-              <h2>You added {flowAsanaIds.length} Asanas</h2>
+              <StyledH3>You added {flowAsanaIds.length} Asanas</StyledH3>
               <StyledCloseButton onClick={() => setOpen(false)}>
                 X
               </StyledCloseButton>
@@ -51,7 +51,7 @@ export default function Flow() {
             <StyledList>
               {asanas.map((asana) => (
                 <StyledListItem key={asana.id}>
-                  <h3>{asana.english_name}</h3>
+                  <p>{asana.english_name}</p>
                   <StyledAddButton
                     onClick={() => {
                       setFlowAsanaIds([...flowAsanaIds, asana.id]);
@@ -110,8 +110,9 @@ const AddAsanaSection = styled.section`
   color: var(--text-light);
 `;
 
-const StyledH2 = styled.h2`
+const StyledH3 = styled.h3`
   text-align: center;
+  color: var(--text-light);
 `;
 
 const StyledButton = styled.button`
