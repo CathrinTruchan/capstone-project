@@ -38,10 +38,11 @@ export default function Flow() {
       {!open && (
         <StyledButton onClick={() => setOpen(true)}>+ Add Asanas</StyledButton>
       )}
-
-      <MainButton type="secondary" onClick={() => setFlowAsanaIds([])}>
-        X Rest flow
-      </MainButton>
+      {!open && flowAsanaIds.length > 0 && (
+        <MainButton type="secondary" onClick={() => setFlowAsanaIds([])}>
+          X Rest flow
+        </MainButton>
+      )}
 
       <StyledWrapper>
         {open && (
