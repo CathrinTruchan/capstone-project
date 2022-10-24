@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
      
-     /* add to project*/
+     
      
      :root {
           --text-dark: #363946;
@@ -57,7 +57,7 @@ html {
        url('/fonts/dm-sans-v11-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
-  /* add to project */
+ 
   h1 {
     font-size: 2rem;
     color: var(--primary);
