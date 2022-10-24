@@ -10,9 +10,9 @@ export default function Flow() {
   const [selectedAsanas, setSelectedAsanas] = useState([]);
   const [open, setOpen] = useState(false);
 
-  function deleteAsana(cardId) {
+  function deleteAsana(cardIndex) {
     const filteredAsanas = selectedAsanas.filter(
-      (item, index) => index !== cardId
+      (item, index) => index !== cardIndex
     );
     setSelectedAsanas(filteredAsanas);
   }
