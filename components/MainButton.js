@@ -6,7 +6,7 @@ const MainButton = styled.button`
   padding: 1rem 3rem;
   border-radius: 22px;
   font-size: 1.1rem;
-  margin: ${(props) => props.margin};
+  margin: ${(props) => props.margin || "1.5rem"};
   cursor: pointer;
   box-shadow: ${({ type }) =>
     type === "primary" ? "var(--drop-shadow-gray)" : "none"};
