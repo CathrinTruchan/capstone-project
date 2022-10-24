@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function AsanaCard({ name, img, id, deleteCard }) {
+export default function AsanaCard({ name, img, id, deleteCard, pathname }) {
   return (
     <StyledArticle>
       <StyledImageContainer>
@@ -13,7 +13,9 @@ export default function AsanaCard({ name, img, id, deleteCard }) {
         <Link href={`/asanas/${id}`} passHref>
           <StyledLink>Mehr Infos</StyledLink>
         </Link>
-        <StyledDeleteButton onClick={deleteCard}>X</StyledDeleteButton>
+        {pathname === "/flow" && (
+          <StyledDeleteButton onClick={deleteCard}>X</StyledDeleteButton>
+        )}
       </section>
     </StyledArticle>
   );
@@ -65,7 +67,6 @@ const StyledDeleteButton = styled.button`
   cursor: pointer;
   transition: 0.3s ease-in-out;
   &:hover {
-    //border: 1px solid var(--highlight);
     background-color: var(--highlight);
     color: var(--text-light);
   }

@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import AsanaCard from "../../components/Asana-Card/AsanaCard";
-import { getAsanaByID } from "../../db";
 import asanas from "../../db";
 import { useState } from "react";
 import { MainButton } from "../../components/MainButton";
+import { useRouter } from "next/router";
 
 export default function Flow() {
+  const { pathname } = useRouter();
   const [selectedAsanas, setSelectedAsanas] = useState([]);
   const [open, setOpen] = useState(false);
 
@@ -34,6 +35,7 @@ export default function Flow() {
               img={asana.img_url}
               id={asana.id}
               deleteCard={() => deleteAsana(index)}
+              pathname={pathname}
             />
           </li>
         ))}
