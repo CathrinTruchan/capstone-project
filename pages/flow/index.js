@@ -3,6 +3,7 @@ import AsanaCard from "../../components/Asana-Card/AsanaCard";
 import { getAsanaByID } from "../../db";
 import asanas from "../../db";
 import { useState } from "react";
+import { MainButton } from "../../components/MainButton";
 
 export default function Flow() {
   const [flowAsanaIds, setFlowAsanaIds] = useState([]);
@@ -35,7 +36,22 @@ export default function Flow() {
       </StyledListWithMargin>
 
       {!open && (
-        <StyledButton onClick={() => setOpen(true)}>Add Asanas</StyledButton>
+        <MainButton
+          type="primary"
+          onClick={() => setOpen(true)}
+          margin="-15rem auto 5rem auto"
+        >
+          + Add Asanas
+        </MainButton>
+      )}
+      {!open && flowAsanaIds.length > 0 && (
+        <MainButton
+          type="secondary"
+          onClick={() => setFlowAsanaIds([])}
+          margin="-3rem auto 5rem auto"
+        >
+          X Reset flow
+        </MainButton>
       )}
 
       <StyledWrapper>
@@ -113,20 +129,6 @@ const AddAsanaSection = styled.section`
 const StyledH3 = styled.h3`
   text-align: center;
   color: var(--text-light);
-`;
-
-const StyledButton = styled.button`
-  width: 16rem;
-  margin: -15rem auto 5rem auto;
-  display: block;
-  border: none;
-  background: var(--highlight-gradient);
-  color: var(--text-light);
-  padding: 1rem 3rem;
-  border-radius: 22px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  box-shadow: var(--drop-shadow-gray);
 `;
 
 const StyledContainer = styled.section`
