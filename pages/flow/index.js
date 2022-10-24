@@ -50,7 +50,7 @@ export default function Flow() {
           onClick={() => setFlowAsanaIds([])}
           margin="-3rem auto 5rem auto"
         >
-          X Rest flow
+          X Reset flow
         </MainButton>
       )}
 
