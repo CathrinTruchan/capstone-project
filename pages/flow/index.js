@@ -10,13 +10,12 @@ export default function Flow() {
   const [selectedAsanas, setSelectedAsanas] = useState([]);
   const [open, setOpen] = useState(false);
 
-  /*  function deleteAsana(id) {
-    const filteredAsanas = flowAsanas.filter(
-      (flowAsana) => flowAsana.id !== id
+  function deleteAsana(cardId) {
+    const filteredAsanas = selectedAsanas.filter(
+      (item, index) => index !== cardId
     );
-    setFlowAsanaIds(filteredAsanas);
-    console.log(filteredAsanas);
-  } */
+    setSelectedAsanas(filteredAsanas);
+  }
 
   function autoScroll() {
     setTimeout(() => {
@@ -39,7 +38,7 @@ export default function Flow() {
               name={asana.name}
               img={asana.img}
               id={asana.id}
-              deleteCard={() => deleteAsana(asana.id)}
+              deleteCard={() => deleteAsana(index)}
             />
           </li>
         ))}
