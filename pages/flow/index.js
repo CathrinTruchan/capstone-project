@@ -3,6 +3,7 @@ import AsanaCard from "../../components/Asana-Card/AsanaCard";
 import { getAsanaByID } from "../../db";
 import asanas from "../../db";
 import { useState } from "react";
+import { MainButton } from "../../components/MainButton";
 
 export default function Flow() {
   const [flowAsanaIds, setFlowAsanaIds] = useState([]);
@@ -35,8 +36,12 @@ export default function Flow() {
       </StyledListWithMargin>
 
       {!open && (
-        <StyledButton onClick={() => setOpen(true)}>Add Asanas</StyledButton>
+        <StyledButton onClick={() => setOpen(true)}>+ Add Asanas</StyledButton>
       )}
+
+      <MainButton type="secondary" onClick={() => setFlowAsanaIds([])}>
+        X Rest flow
+      </MainButton>
 
       <StyledWrapper>
         {open && (
