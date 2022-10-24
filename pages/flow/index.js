@@ -6,7 +6,6 @@ import { useState } from "react";
 import { MainButton } from "../../components/MainButton";
 
 export default function Flow() {
-  // const [flowAsanaIds, setFlowAsanaIds] = useState([]);
   const [selectedAsanas, setSelectedAsanas] = useState([]);
   const [open, setOpen] = useState(false);
 
@@ -23,10 +22,6 @@ export default function Flow() {
     });
   }
 
-  /*  const flowAsanas = flowAsanaIds.map((id) => {
-    return getAsanaByID(id);
-  }); */
-
   return (
     <StyledContainer>
       <h2>Your Flow for today:</h2>
@@ -35,8 +30,8 @@ export default function Flow() {
         {selectedAsanas.map((asana, index) => (
           <li key={index}>
             <AsanaCard
-              name={asana.name}
-              img={asana.img}
+              name={asana.english_name}
+              img={asana.img_url}
               id={asana.id}
               deleteCard={() => deleteAsana(index)}
             />
@@ -83,11 +78,11 @@ export default function Flow() {
                         ...selectedAsanas,
                         {
                           id: asana.id,
-                          name: asana.english_name,
-                          img: asana.img_url,
+                          english_name: asana.english_name,
+                          img_url: asana.img_url,
                         },
                       ]);
-                      console.log(selectedAsanas);
+
                       autoScroll();
                     }}
                   >
