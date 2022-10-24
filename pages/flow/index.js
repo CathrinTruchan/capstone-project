@@ -3,10 +3,8 @@ import AsanaCard from "../../components/Asana-Card/AsanaCard";
 import asanas from "../../db";
 import { useState } from "react";
 import { MainButton } from "../../components/MainButton";
-import { useRouter } from "next/router";
 
 export default function Flow() {
-  const { pathname } = useRouter();
   const [selectedAsanas, setSelectedAsanas] = useState([]);
   const [open, setOpen] = useState(false);
 
@@ -76,14 +74,7 @@ export default function Flow() {
                   <p>{asana.english_name}</p>
                   <StyledAddButton
                     onClick={() => {
-                      setSelectedAsanas([
-                        ...selectedAsanas,
-                        {
-                          id: asana.id,
-                          english_name: asana.english_name,
-                          img_url: asana.img_url,
-                        },
-                      ]);
+                      setSelectedAsanas([...selectedAsanas, asana]);
 
                       autoScroll();
                     }}
