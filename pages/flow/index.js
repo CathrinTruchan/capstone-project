@@ -6,8 +6,17 @@ import { useState } from "react";
 import { MainButton } from "../../components/MainButton";
 
 export default function Flow() {
-  const [flowAsanaIds, setFlowAsanaIds] = useState([]);
+  // const [flowAsanaIds, setFlowAsanaIds] = useState([]);
+  const [selectedAsanas, setSelectedAsanas] = useState([]);
   const [open, setOpen] = useState(false);
+
+  /*  function deleteAsana(id) {
+    const filteredAsanas = flowAsanas.filter(
+      (flowAsana) => flowAsana.id !== id
+    );
+    setFlowAsanaIds(filteredAsanas);
+    console.log(filteredAsanas);
+  } */
 
   function autoScroll() {
     setTimeout(() => {
@@ -15,21 +24,22 @@ export default function Flow() {
     });
   }
 
-  const flowAsanas = flowAsanaIds.map((id) => {
+  /*  const flowAsanas = flowAsanaIds.map((id) => {
     return getAsanaByID(id);
-  });
+  }); */
 
   return (
     <StyledContainer>
       <h2>Your Flow for today:</h2>
 
       <StyledListWithMargin>
-        {flowAsanas.map((asana, index) => (
+        {selectedAsanas.map((asana, index) => (
           <li key={index}>
             <AsanaCard
-              name={asana.english_name}
-              img={asana.img_url}
+              name={asana.name}
+              img={asana.img}
               id={asana.id}
+              deleteCard={() => deleteAsana(asana.id)}
             />
           </li>
         ))}
@@ -44,10 +54,10 @@ export default function Flow() {
           + Add Asanas
         </MainButton>
       )}
-      {!open && flowAsanaIds.length > 0 && (
+      {!open && selectedAsanas.length > 0 && (
         <MainButton
           type="secondary"
-          onClick={() => setFlowAsanaIds([])}
+          onClick={() => setSelectedAsanas([])}
           margin="-3rem auto 5rem auto"
         >
           X Reset flow
@@ -58,7 +68,7 @@ export default function Flow() {
         {open && (
           <AddAsanaSection>
             <SectionHeader>
-              <StyledH3>You added {flowAsanaIds.length} Asanas</StyledH3>
+              <StyledH3>You added {selectedAsanas.length} Asanas</StyledH3>
               <StyledCloseButton onClick={() => setOpen(false)}>
                 X
               </StyledCloseButton>
@@ -70,7 +80,15 @@ export default function Flow() {
                   <p>{asana.english_name}</p>
                   <StyledAddButton
                     onClick={() => {
-                      setFlowAsanaIds([...flowAsanaIds, asana.id]);
+                      setSelectedAsanas([
+                        ...selectedAsanas,
+                        {
+                          id: asana.id,
+                          name: asana.english_name,
+                          img: asana.img_url,
+                        },
+                      ]);
+                      console.log(selectedAsanas);
                       autoScroll();
                     }}
                   >

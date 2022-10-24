@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function AsanaCard({ name, img, id }) {
+export default function AsanaCard({ name, img, id, deleteCard }) {
   return (
     <StyledArticle>
       <StyledImageContainer>
@@ -13,6 +13,7 @@ export default function AsanaCard({ name, img, id }) {
         <Link href={`/asanas/${id}`} passHref>
           <StyledLink>Mehr Infos</StyledLink>
         </Link>
+        <button onClick={deleteCard}>Delete</button>
       </section>
     </StyledArticle>
   );
