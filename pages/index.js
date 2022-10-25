@@ -34,16 +34,18 @@ export default function Home() {
         </form>
         <StyledList>
           {asanas.map((asana) => {
-            return (
-              <li key={asana.id}>
-                <AsanaCard
-                  name={asana.english_name}
-                  img={asana.img_url}
-                  id={asana.id}
-                  showDeleteButton={false}
-                />
-              </li>
-            );
+            if (asana.english_name.includes(searchQuery)) {
+              return (
+                <li key={asana.id}>
+                  <AsanaCard
+                    name={asana.english_name}
+                    img={asana.img_url}
+                    id={asana.id}
+                    showDeleteButton={false}
+                  />
+                </li>
+              );
+            }
           })}
         </StyledList>
       </main>
