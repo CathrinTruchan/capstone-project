@@ -2,9 +2,19 @@ import styled from "styled-components";
 
 export default function SearchBar({ setSearchQuery }) {
   function handleSearch(event) {
-    event.preventDefault();
     setSearchQuery(event.target.value);
   }
+  function handleSubmit(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  }
+
+  function handleFocus(event) {
+    setSearchQuery("");
+    event.target.value = "";
+  }
+
   return (
     <form>
       <StyledInput
@@ -14,6 +24,8 @@ export default function SearchBar({ setSearchQuery }) {
         arialabel="searchbar"
         placeholder="search all asanas..."
         onChange={handleSearch}
+        onKeyDown={handleSubmit}
+        onBlur={handleFocus}
       />
     </form>
   );
