@@ -5,8 +5,6 @@ import asanas from "../db";
 import SearchBar from "../components/SearchBar";
 
 export default function Home({ searchQuery, setSearchQuery }) {
-  console.log(searchQuery);
-
   return (
     <div>
       <Head>
