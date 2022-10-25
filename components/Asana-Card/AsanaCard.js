@@ -20,7 +20,9 @@ export default function AsanaCard({
           <StyledLink>Mehr Infos</StyledLink>
         </Link>
         {showDeleteButton && (
-          <StyledDeleteButton onClick={deleteCard}>X</StyledDeleteButton>
+          <StyledDeleteButton aria-label="delete asana" onClick={deleteCard}>
+            X
+          </StyledDeleteButton>
         )}
       </section>
     </StyledArticle>

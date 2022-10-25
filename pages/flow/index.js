@@ -63,7 +63,10 @@ export default function Flow() {
           <AddAsanaSection>
             <SectionHeader>
               <StyledH3>You added {selectedAsanas.length} Asanas</StyledH3>
-              <StyledCloseButton onClick={() => setOpen(false)}>
+              <StyledCloseButton
+                aria-label="close"
+                onClick={() => setOpen(false)}
+              >
                 X
               </StyledCloseButton>
             </SectionHeader>
@@ -73,9 +76,9 @@ export default function Flow() {
                 <StyledListItem key={asana.id}>
                   <p>{asana.english_name}</p>
                   <StyledAddButton
+                    aria-label="add asana"
                     onClick={() => {
                       setSelectedAsanas([...selectedAsanas, asana]);
-
                       autoScroll();
                     }}
                   >
