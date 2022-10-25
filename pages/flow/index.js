@@ -4,8 +4,9 @@ import asanas from "../../db";
 import { useState } from "react";
 import { MainButton } from "../../components/MainButton";
 import { nanoid } from "nanoid";
+import SearchBar from "../../components/SearchBar";
 
-export default function Flow() {
+export default function Flow({ searchQuery, setSearchQuery }) {
   const [selectedAsanas, setSelectedAsanas] = useState([]);
   const [open, setOpen] = useState(false);
 
@@ -70,26 +71,34 @@ export default function Flow() {
               >
                 X
               </StyledCloseButton>
+              <SearchBar setSearchQuery={setSearchQuery} />
             </SectionHeader>
 
             <StyledList>
-              {asanas.map((asana) => (
-                <StyledListItem key={asana.id}>
-                  <p>{asana.english_name}</p>
-                  <StyledAddButton
-                    aria-label="add asana"
-                    onClick={() => {
-                      setSelectedAsanas([
-                        ...selectedAsanas,
-                        { ...asana, flowListId: nanoid() },
-                      ]);
-                      autoScroll();
-                    }}
-                  >
-                    +
-                  </StyledAddButton>
-                </StyledListItem>
-              ))}
+              {asanas.map((asana) => {
+                const nameInLowerCase = asana.english_name.toLowerCase();
+                const searchQueryInLowerCase = searchQuery.toLowerCase();
+
+                if (nameInLowerCase.includes(searchQueryInLowerCase)) {
+                  return (
+                    <StyledListItem key={asana.id}>
+                      <p>{asana.english_name}</p>
+                      <StyledAddButton
+                        aria-label="add asana"
+                        onClick={() => {
+                          setSelectedAsanas([
+                            ...selectedAsanas,
+                            { ...asana, flowListId: nanoid() },
+                          ]);
+                          autoScroll();
+                        }}
+                      >
+                        +
+                      </StyledAddButton>
+                    </StyledListItem>
+                  );
+                }
+              })}
             </StyledList>
           </AddAsanaSection>
         )}

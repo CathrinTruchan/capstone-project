@@ -15,7 +15,7 @@ export default function Home({ searchQuery, setSearchQuery }) {
 
       <main>
         <h1>Your Daily Flow</h1>
-        <SearchBar setSearchQuery={setSearchQuery} />
+        <SearchBar margin="10rem" setSearchQuery={setSearchQuery} />
         <StyledList>
           {asanas.map((asana) => {
             const nameInLowerCase = asana.english_name.toLowerCase();

@@ -22,16 +22,17 @@ export default function SearchBar({ setSearchQuery }) {
 
 const StyledInput = styled.input`
   all: unset;
+  display: block;
   width: 16rem;
   height: 1.3rem;
   border-radius: 22px;
   padding: 0.5rem 1rem;
   border: none;
+  background-color: var(--background-primary);
+  margin: ${(props) => props.margin || "1.5rem"};
   box-shadow: var(--drop-shadow-color);
-  margin: ${(props) => props.margin};
   font-size: var(--font-small);
-  transition: 0.3s ease-in-out;
   &:focus {
-    border: 1px solid var(--primary-light);
+    border: 1px solid var(--primary);
   }
 `;
