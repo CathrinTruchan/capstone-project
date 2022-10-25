@@ -2,8 +2,11 @@ import Head from "next/head";
 import styled from "styled-components";
 import AsanaCard from "../components/Asana-Card/AsanaCard";
 import asanas from "../db";
+import { useState } from "react";
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState();
+
   return (
     <div>
       <Head>
