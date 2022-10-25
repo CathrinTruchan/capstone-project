@@ -5,7 +5,7 @@ import asanas from "../db";
 import { useState } from "react";
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState();
+  const [searchQuery, setSearchQuery] = useState("");
 
   console.log(searchQuery);
 
@@ -34,7 +34,9 @@ export default function Home() {
         </form>
         <StyledList>
           {asanas.map((asana) => {
-            if (asana.english_name.includes(searchQuery)) {
+            const nameInLowerCase = asana.english_name.toLowerCase();
+            const searchQueryInLowerCase = searchQuery.toLowerCase();
+            if (nameInLowerCase.includes(searchQueryInLowerCase)) {
               return (
                 <li key={asana.id}>
                   <AsanaCard
