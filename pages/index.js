@@ -2,17 +2,10 @@ import Head from "next/head";
 import styled from "styled-components";
 import AsanaCard from "../components/Asana-Card/AsanaCard";
 import asanas from "../db";
-import { useState } from "react";
+import SearchBar from "../components/SearchBar";
 
-export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("");
-
+export default function Home({ searchQuery, setSearchQuery }) {
   console.log(searchQuery);
-
-  function handleSearch(event) {
-    event.preventDefault();
-    setSearchQuery(event.target.value);
-  }
 
   return (
     <div>
@@ -24,14 +17,7 @@ export default function Home() {
 
       <main>
         <h1>Your Daily Flow</h1>
-        <form>
-          <input
-            type="text"
-            id="search"
-            name="searchbar"
-            onChange={handleSearch}
-          />
-        </form>
+        <SearchBar setSearchQuery={setSearchQuery} />
         <StyledList>
           {asanas.map((asana) => {
             const nameInLowerCase = asana.english_name.toLowerCase();
