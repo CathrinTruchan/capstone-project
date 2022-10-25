@@ -6,9 +6,10 @@ import { MainButton } from "../../components/MainButton";
 import { nanoid } from "nanoid";
 import SearchBar from "../../components/SearchBar";
 
-export default function Flow({ searchQuery, setSearchQuery }) {
+export default function Flow() {
   const [selectedAsanas, setSelectedAsanas] = useState([]);
   const [open, setOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   function deleteAsana(cardID) {
     const filteredAsanas = selectedAsanas.filter(
@@ -74,11 +75,13 @@ export default function Flow({ searchQuery, setSearchQuery }) {
             </SectionHeader>
             <SearchBar setSearchQuery={setSearchQuery} />
             <StyledList>
-              {asanas.map((asana) => {
-                const nameInLowerCase = asana.english_name.toLowerCase();
-                const searchQueryInLowerCase = searchQuery.toLowerCase();
-
-                if (nameInLowerCase.includes(searchQueryInLowerCase)) {
+              {asanas
+                .filter((asana) => {
+                  const nameInLowerCase = asana.english_name.toLowerCase();
+                  const searchQueryInLowerCase = searchQuery.toLowerCase();
+                  return nameInLowerCase.includes(searchQueryInLowerCase);
+                })
+                .map((asana) => {
                   return (
                     <StyledListItem key={asana.id}>
                       <p>{asana.english_name}</p>
@@ -96,8 +99,7 @@ export default function Flow({ searchQuery, setSearchQuery }) {
                       </StyledAddButton>
                     </StyledListItem>
                   );
-                }
-              })}
+                })}
             </StyledList>
           </AddAsanaSection>
         )}

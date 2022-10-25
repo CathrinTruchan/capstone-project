@@ -3,8 +3,10 @@ import styled from "styled-components";
 import AsanaCard from "../components/Asana-Card/AsanaCard";
 import asanas from "../db";
 import SearchBar from "../components/SearchBar";
+import { useState } from "react";
 
-export default function Home({ searchQuery, setSearchQuery }) {
+export default function Home() {
+  const [searchQuery, setSearchQuery] = useState("");
   return (
     <div>
       <Head>
@@ -17,10 +19,13 @@ export default function Home({ searchQuery, setSearchQuery }) {
         <h1>Your Daily Flow</h1>
         <SearchBar setSearchQuery={setSearchQuery} />
         <StyledList>
-          {asanas.map((asana) => {
-            const nameInLowerCase = asana.english_name.toLowerCase();
-            const searchQueryInLowerCase = searchQuery.toLowerCase();
-            if (nameInLowerCase.includes(searchQueryInLowerCase)) {
+          {asanas
+            .filter((asana) => {
+              const nameInLowerCase = asana.english_name.toLowerCase();
+              const searchQueryInLowerCase = searchQuery.toLowerCase();
+              return nameInLowerCase.includes(searchQueryInLowerCase);
+            })
+            .map((asana) => {
               return (
                 <li key={asana.id}>
                   <AsanaCard
@@ -31,8 +36,7 @@ export default function Home({ searchQuery, setSearchQuery }) {
                   />
                 </li>
               );
-            }
-          })}
+            })}
         </StyledList>
       </main>
     </div>
