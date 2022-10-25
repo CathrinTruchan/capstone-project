@@ -71,9 +71,8 @@ export default function Flow({ searchQuery, setSearchQuery }) {
               >
                 X
               </StyledCloseButton>
-              <SearchBar setSearchQuery={setSearchQuery} />
             </SectionHeader>
-
+            <SearchBar setSearchQuery={setSearchQuery} />
             <StyledList>
               {asanas.map((asana) => {
                 const nameInLowerCase = asana.english_name.toLowerCase();
@@ -170,8 +169,8 @@ const StyledCloseButton = styled.button`
 const SectionHeader = styled.section`
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid var(--background-neutral);
   background-color: transparent;
+  flex-wrap: wrap;
 `;
 
 const StyledWrapper = styled.div`
