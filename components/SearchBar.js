@@ -4,11 +4,6 @@ export default function SearchBar({ setSearchQuery }) {
   function handleSearch(event) {
     setSearchQuery(event.target.value);
   }
-  function handleSubmit(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-    }
-  }
 
   function handleFocus(event) {
     setSearchQuery("");
@@ -16,18 +11,15 @@ export default function SearchBar({ setSearchQuery }) {
   }
 
   return (
-    <form>
-      <StyledInput
-        type="text"
-        id="search"
-        name="searchbar"
-        arialabel="searchbar"
-        placeholder="search all asanas..."
-        onChange={handleSearch}
-        onKeyDown={handleSubmit}
-        onBlur={handleFocus}
-      />
-    </form>
+    <StyledInput
+      type="text"
+      id="search"
+      name="searchbar"
+      arialabel="searchbar"
+      placeholder="search all asanas..."
+      onChange={handleSearch}
+      onBlur={handleFocus}
+    />
   );
 }
 
