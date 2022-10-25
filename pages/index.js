@@ -22,6 +22,7 @@ export default function Home() {
                   name={asana.english_name}
                   img={asana.img_url}
                   id={asana.id}
+                  showDeleteButton={false}
                 />
               </li>
             );

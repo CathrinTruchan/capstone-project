@@ -2,9 +2,16 @@ import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function AsanaCard({ name, img, id }) {
+export default function AsanaCard({
+  name,
+  img,
+  id,
+  deleteCard,
+  showDeleteButton,
+  flowListId,
+}) {
   return (
-    <StyledArticle>
+    <StyledArticle flowListID={flowListId}>
       <StyledImageContainer>
         <Image src={img} alt={name} width={100} height={100} layout="fixed" />
       </StyledImageContainer>
@@ -13,12 +20,18 @@ export default function AsanaCard({ name, img, id }) {
         <Link href={`/asanas/${id}`} passHref>
           <StyledLink>Mehr Infos</StyledLink>
         </Link>
+        {showDeleteButton && (
+          <StyledDeleteButton aria-label="delete asana" onClick={deleteCard}>
+            X
+          </StyledDeleteButton>
+        )}
       </section>
     </StyledArticle>
   );
 }
 
 const StyledArticle = styled.article`
+  position: relative;
   box-shadow: var(--drop-shadow-bottom-color);
   display: grid;
   grid-template-columns: 1fr 3fr 3fr 1fr;
@@ -47,4 +60,22 @@ const StyledLink = styled.a`
   cursor: pointer;
   font-size: var(--font-small);
   margin-top: 1rem;
+`;
+
+const StyledDeleteButton = styled.button`
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  background-color: var(--background-primary);
+  color: var(--highlight);
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  &:active {
+    background-color: var(--highlight);
+    color: var(--text-light);
+  }
 `;
