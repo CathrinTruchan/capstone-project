@@ -14,6 +14,9 @@ export default function Home() {
 
       <main>
         <h1>Your Daily Flow</h1>
+        <form>
+          <input type="text" id="search" name="searchbar" />
+        </form>
         <StyledList>
           {asanas.map((asana) => {
             return (
