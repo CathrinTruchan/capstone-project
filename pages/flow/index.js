@@ -3,14 +3,15 @@ import AsanaCard from "../../components/Asana-Card/AsanaCard";
 import asanas from "../../db";
 import { useState } from "react";
 import { MainButton } from "../../components/MainButton";
+import { nanoid } from "nanoid";
 
 export default function Flow() {
   const [selectedAsanas, setSelectedAsanas] = useState([]);
   const [open, setOpen] = useState(false);
 
-  function deleteAsana(cardIndex) {
+  function deleteAsana(cardID) {
     const filteredAsanas = selectedAsanas.filter(
-      (item, index) => index !== cardIndex
+      (selectedAsana) => selectedAsana.flowListId !== cardID
     );
     setSelectedAsanas(filteredAsanas);
   }
@@ -32,7 +33,7 @@ export default function Flow() {
               name={asana.english_name}
               img={asana.img_url}
               id={asana.id}
-              deleteCard={() => deleteAsana(index)}
+              deleteCard={() => deleteAsana(asana.flowListId)}
               showDeleteButton={true}
             />
           </li>
@@ -78,7 +79,10 @@ export default function Flow() {
                   <StyledAddButton
                     aria-label="add asana"
                     onClick={() => {
-                      setSelectedAsanas([...selectedAsanas, asana]);
+                      setSelectedAsanas([
+                        ...selectedAsanas,
+                        { ...asana, flowListId: nanoid() },
+                      ]);
                       autoScroll();
                     }}
                   >

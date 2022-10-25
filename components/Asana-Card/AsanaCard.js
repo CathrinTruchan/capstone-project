@@ -8,9 +8,10 @@ export default function AsanaCard({
   id,
   deleteCard,
   showDeleteButton,
+  flowListId,
 }) {
   return (
-    <StyledArticle>
+    <StyledArticle flowListID={flowListId}>
       <StyledImageContainer>
         <Image src={img} alt={name} width={100} height={100} layout="fixed" />
       </StyledImageContainer>
