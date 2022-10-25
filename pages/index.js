@@ -7,6 +7,13 @@ import { useState } from "react";
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState();
 
+  console.log(searchQuery);
+
+  function handleSearch(event) {
+    event.preventDefault();
+    setSearchQuery(event.target.value);
+  }
+
   return (
     <div>
       <Head>
@@ -18,7 +25,12 @@ export default function Home() {
       <main>
         <h1>Your Daily Flow</h1>
         <form>
-          <input type="text" id="search" name="searchbar" />
+          <input
+            type="text"
+            id="search"
+            name="searchbar"
+            onChange={handleSearch}
+          />
         </form>
         <StyledList>
           {asanas.map((asana) => {
