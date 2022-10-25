@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { FaSearch } from "react-icons/fa";
 
 export default function SearchBar({ setSearchQuery }) {
   function handleSearch(event) {
@@ -36,5 +35,6 @@ const StyledInput = styled.input`
   &:focus {
     box-shadow: none;
     border: 1px solid var(--highlight);
+    background-color: var(--background-primary);
   }
 `;
