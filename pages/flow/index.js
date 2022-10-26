@@ -68,7 +68,10 @@ export default function Flow() {
               <StyledH3>You added {selectedAsanas.length} Asanas</StyledH3>
               <StyledCloseButton
                 aria-label="close"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                  setSearchQuery("");
+                }}
               >
                 X
               </StyledCloseButton>
