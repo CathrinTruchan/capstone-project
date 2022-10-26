@@ -5,8 +5,9 @@ export default function SearchBar({ setSearchQuery }) {
     setSearchQuery(event.target.value);
   }
 
-  function handleFocus(event) {
-    event.target.value = null;
+  function resetSearch(event) {
+    event.target.value = "";
+    setSearchQuery("");
   }
 
   return (
@@ -17,7 +18,7 @@ export default function SearchBar({ setSearchQuery }) {
       arialabel="searchbar"
       placeholder="search all asanas..."
       onChange={handleSearch}
-      onBlur={handleFocus}
+      onClick={resetSearch}
     />
   );
 }

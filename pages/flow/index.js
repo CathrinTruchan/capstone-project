@@ -96,7 +96,7 @@ export default function Flow() {
                             { ...asana, flowListId: nanoid() },
                           ]);
                           autoScroll();
-                          setSearchQuery("");
+                          //setSearchQuery("");
                         }}
                       >
                         +
