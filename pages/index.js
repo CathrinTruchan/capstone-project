@@ -8,7 +8,7 @@ import LevelFilter from "../components/LevelFilter";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filterQuery, setFilterQuery] = useState("pro");
+  const [filterQuery, setFilterQuery] = useState("");
 
   return (
     <div>

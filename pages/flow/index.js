@@ -11,7 +11,7 @@ export default function Flow() {
   const [selectedAsanas, setSelectedAsanas] = useState([]);
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filterQuery, setFilterQuery] = useState("pro");
+  const [filterQuery, setFilterQuery] = useState("all");
 
   function deleteAsana(cardID) {
     const filteredAsanas = selectedAsanas.filter(
@@ -73,6 +73,7 @@ export default function Flow() {
                 onClick={() => {
                   setOpen(false);
                   setSearchQuery("");
+                  setFilterQuery("all");
                 }}
               >
                 X
@@ -87,7 +88,11 @@ export default function Flow() {
                   const searchQueryInLowerCase = searchQuery.toLowerCase();
                   return nameInLowerCase.includes(searchQueryInLowerCase);
                 })
-                .filter((asana) => asana.levels.includes(filterQuery))
+                .filter((asana) => {
+                  if (filterQuery !== "all") {
+                    return asana.levels[0] === filterQuery;
+                  } else return asana;
+                })
                 .map((asana) => {
                   return (
                     <StyledListItem key={asana.id}>
