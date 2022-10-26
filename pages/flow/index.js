@@ -5,11 +5,13 @@ import { useState } from "react";
 import { MainButton } from "../../components/MainButton";
 import { nanoid } from "nanoid";
 import SearchBar from "../../components/SearchBar";
+import LevelFilter from "../../components/LevelFilter";
 
 export default function Flow() {
   const [selectedAsanas, setSelectedAsanas] = useState([]);
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [filterQuery, setFilterQuery] = useState("pro");
 
   function deleteAsana(cardID) {
     const filteredAsanas = selectedAsanas.filter(
@@ -77,6 +79,7 @@ export default function Flow() {
               </StyledCloseButton>
             </SectionHeader>
             <SearchBar setSearchQuery={setSearchQuery} />
+            <LevelFilter setFilterQuery={setFilterQuery} />
             <StyledList>
               {asanas
                 .filter((asana) => {
@@ -84,6 +87,7 @@ export default function Flow() {
                   const searchQueryInLowerCase = searchQuery.toLowerCase();
                   return nameInLowerCase.includes(searchQueryInLowerCase);
                 })
+                .filter((asana) => asana.levels.includes(filterQuery))
                 .map((asana) => {
                   return (
                     <StyledListItem key={asana.id}>

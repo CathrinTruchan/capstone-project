@@ -1,6 +1,8 @@
 export default function LevelFilter({ setFilterQuery }) {
   function handleLevelFilter(event) {
-    setFilterQuery(event.target.value);
+    if (event.target.value === "all") {
+      setFilterQuery("pro");
+    } else setFilterQuery(event.target.value);
   }
 
   return (
@@ -9,9 +11,8 @@ export default function LevelFilter({ setFilterQuery }) {
         type="radio"
         id="all"
         name="levelfilter"
-        value="pro"
+        value="all"
         onChange={handleLevelFilter}
-        checked
         aria-label="filter for all asanas"
       />
       <label for="all">all</label>
