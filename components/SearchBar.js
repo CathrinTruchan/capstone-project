@@ -6,8 +6,7 @@ export default function SearchBar({ setSearchQuery }) {
   }
 
   function handleFocus(event) {
-    setSearchQuery("");
-    event.target.value = "";
+    event.target.value = null;
   }
 
   return (
