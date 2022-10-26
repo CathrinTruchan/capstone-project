@@ -5,21 +5,17 @@ export default function SearchBar({ setSearchQuery }) {
     setSearchQuery(event.target.value);
   }
 
-  function resetSearch(event) {
-    event.target.value = "";
-    setSearchQuery("");
-  }
-
   return (
-    <StyledInput
-      type="text"
-      id="search"
-      name="searchbar"
-      arialabel="searchbar"
-      placeholder="search all asanas..."
-      onChange={handleSearch}
-      onClick={resetSearch}
-    />
+    <>
+      <StyledInput
+        type="search"
+        id="search"
+        name="searchbar"
+        arialabel="searchbar"
+        placeholder="search all asanas..."
+        onChange={handleSearch}
+      />
+    </>
   );
 }
 
