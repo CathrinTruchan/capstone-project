@@ -2,8 +2,11 @@ import Head from "next/head";
 import styled from "styled-components";
 import AsanaCard from "../components/Asana-Card/AsanaCard";
 import asanas from "../db";
+import SearchBar from "../components/SearchBar";
+import { useState } from "react";
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState("");
   return (
     <div>
       <Head>
@@ -14,19 +17,26 @@ export default function Home() {
 
       <main>
         <h1>Your Daily Flow</h1>
+        <SearchBar setSearchQuery={setSearchQuery} />
         <StyledList>
-          {asanas.map((asana) => {
-            return (
-              <li key={asana.id}>
-                <AsanaCard
-                  name={asana.english_name}
-                  img={asana.img_url}
-                  id={asana.id}
-                  showDeleteButton={false}
-                />
-              </li>
-            );
-          })}
+          {asanas
+            .filter((asana) => {
+              const nameInLowerCase = asana.english_name.toLowerCase();
+              const searchQueryInLowerCase = searchQuery.toLowerCase();
+              return nameInLowerCase.includes(searchQueryInLowerCase);
+            })
+            .map((asana) => {
+              return (
+                <li key={asana.id}>
+                  <AsanaCard
+                    name={asana.english_name}
+                    img={asana.img_url}
+                    id={asana.id}
+                    showDeleteButton={false}
+                  />
+                </li>
+              );
+            })}
         </StyledList>
       </main>
     </div>

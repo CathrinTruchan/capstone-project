@@ -4,10 +4,12 @@ import asanas from "../../db";
 import { useState } from "react";
 import { MainButton } from "../../components/MainButton";
 import { nanoid } from "nanoid";
+import SearchBar from "../../components/SearchBar";
 
 export default function Flow() {
   const [selectedAsanas, setSelectedAsanas] = useState([]);
   const [open, setOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   function deleteAsana(cardID) {
     const filteredAsanas = selectedAsanas.filter(
@@ -66,30 +68,41 @@ export default function Flow() {
               <StyledH3>You added {selectedAsanas.length} Asanas</StyledH3>
               <StyledCloseButton
                 aria-label="close"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                  setSearchQuery("");
+                }}
               >
                 X
               </StyledCloseButton>
             </SectionHeader>
-
+            <SearchBar setSearchQuery={setSearchQuery} />
             <StyledList>
-              {asanas.map((asana) => (
-                <StyledListItem key={asana.id}>
-                  <p>{asana.english_name}</p>
-                  <StyledAddButton
-                    aria-label="add asana"
-                    onClick={() => {
-                      setSelectedAsanas([
-                        ...selectedAsanas,
-                        { ...asana, flowListId: nanoid() },
-                      ]);
-                      autoScroll();
-                    }}
-                  >
-                    +
-                  </StyledAddButton>
-                </StyledListItem>
-              ))}
+              {asanas
+                .filter((asana) => {
+                  const nameInLowerCase = asana.english_name.toLowerCase();
+                  const searchQueryInLowerCase = searchQuery.toLowerCase();
+                  return nameInLowerCase.includes(searchQueryInLowerCase);
+                })
+                .map((asana) => {
+                  return (
+                    <StyledListItem key={asana.id}>
+                      <p>{asana.english_name}</p>
+                      <StyledAddButton
+                        aria-label="add asana"
+                        onClick={() => {
+                          setSelectedAsanas([
+                            ...selectedAsanas,
+                            { ...asana, flowListId: nanoid() },
+                          ]);
+                          autoScroll();
+                        }}
+                      >
+                        +
+                      </StyledAddButton>
+                    </StyledListItem>
+                  );
+                })}
             </StyledList>
           </AddAsanaSection>
         )}
@@ -161,8 +174,8 @@ const StyledCloseButton = styled.button`
 const SectionHeader = styled.section`
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid var(--background-neutral);
   background-color: transparent;
+  flex-wrap: wrap;
 `;
 
 const StyledWrapper = styled.div`
