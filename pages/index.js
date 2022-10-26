@@ -8,7 +8,7 @@ import LevelFilter from "../components/LevelFilter";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filterQuery, setFilterQuery] = useState("");
+  const [filterQuery, setFilterQuery] = useState("all");
 
   return (
     <div>
@@ -31,7 +31,11 @@ export default function Home() {
               const searchQueryInLowerCase = searchQuery.toLowerCase();
               return nameInLowerCase.includes(searchQueryInLowerCase);
             })
-            .filter((asana) => asana.levels.includes(filterQuery))
+            .filter((asana) => {
+              if (filterQuery !== "all") {
+                return asana.levels[0] === filterQuery;
+              } else return asana;
+            })
             .map((asana) => {
               return (
                 <li key={asana.id}>
