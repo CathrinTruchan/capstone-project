@@ -4,9 +4,12 @@ import AsanaCard from "../components/Asana-Card/AsanaCard";
 import asanas from "../db";
 import SearchBar from "../components/SearchBar";
 import { useState } from "react";
+import LevelFilter from "../components/LevelFilter";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [filterQuery, setFilterQuery] = useState("all");
+
   return (
     <div>
       <Head>
@@ -18,12 +21,20 @@ export default function Home() {
       <main>
         <h1>Your Daily Flow</h1>
         <SearchBar setSearchQuery={setSearchQuery} />
+
+        <LevelFilter setFilterQuery={setFilterQuery} />
+
         <StyledList>
           {asanas
             .filter((asana) => {
               const nameInLowerCase = asana.english_name.toLowerCase();
               const searchQueryInLowerCase = searchQuery.toLowerCase();
               return nameInLowerCase.includes(searchQueryInLowerCase);
+            })
+            .filter((asana) => {
+              if (filterQuery !== "all") {
+                return asana.levels[0] === filterQuery;
+              } else return asana;
             })
             .map((asana) => {
               return (
