@@ -47,6 +47,7 @@ export default function CreateFlowForm({ flows, setFlows, setOpen }) {
         name="name"
         minLength="5"
         required
+        autoFocus
       />
       <StyledFieldset>
         <section>
