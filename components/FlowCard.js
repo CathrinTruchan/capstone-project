@@ -5,8 +5,10 @@ export default function FlowCard({ name, hours, minutes, id }) {
   return (
     <FlowWrapper>
       <h2>{name}</h2>
-      <p>Hours {hours}h</p>
-      <p>Minutes {minutes}h</p>
+      <p>
+        {hours}h {minutes}min
+      </p>
+
       <Link href={`/flow/${id}`}>To the flow</Link>
     </FlowWrapper>
   );

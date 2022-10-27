@@ -8,17 +8,22 @@ const flowDummys = [
   {
     id: nanoid(),
     name: "Flow 1",
-    asanas: [],
-    duration: "1:50",
-
     description: "lorem ipsum",
+    asanas: [],
+    duration: {
+      hours: "1",
+      minutes: "30",
+    },
   },
   {
     id: nanoid(),
     name: "Flow 2",
-    asanas: [],
-    duration: "1:50",
     description: "lorem ipsum",
+    asanas: [],
+    duration: {
+      hours: "1",
+      minutes: "30",
+    },
   },
 ];
 
