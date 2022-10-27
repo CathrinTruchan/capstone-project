@@ -40,7 +40,8 @@ export default function CreateFlow() {
         <FlowCard
           key={flow.id}
           name={flow.name}
-          duration={flow.duration}
+          hours={flow.duration.hours}
+          minutes={flow.duration.minutes}
           id={flow.id}
         />
       ))}

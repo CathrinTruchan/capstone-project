@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-export default function FlowCard({ name, duration, id }) {
+export default function FlowCard({ name, hours, minutes, id }) {
   return (
     <FlowWrapper>
       <h2>{name}</h2>
-      <p>Duration: {duration}h</p>
+      <p>Hours {hours}h</p>
+      <p>Minutes {minutes}h</p>
       <Link href={`/flow/${id}`}>To the flow</Link>
     </FlowWrapper>
   );
