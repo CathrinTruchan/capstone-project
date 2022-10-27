@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 import { useState } from "react";
 import styled from "styled-components";
 
-export default function CreateFlowForm({ flows, setFlows, setOpen }) {
+export default function CreateFlowForm({ flows, addFlow }) {
   const [hours, setHours] = useState(0);
 
   function handleHoursValidation(event) {
@@ -20,21 +20,7 @@ export default function CreateFlowForm({ flows, setFlows, setOpen }) {
       alert("Please enter a valid name");
     } else if (flows.some((flow) => flow.name === name)) {
       alert("Name exists already. Please enter a new name.");
-    } else
-      setFlows([
-        ...flows,
-        {
-          id: nanoid(),
-          name: name,
-          asanas: [],
-          duration: {
-            hours: hours,
-            minutes: minutes,
-          },
-          description: "",
-        },
-      ]);
-    setOpen(false);
+    } else addFlow({ name, hours, minutes });
   }
 
   return (

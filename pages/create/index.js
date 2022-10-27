@@ -35,6 +35,23 @@ export default function CreateFlow() {
     setOpen((prev) => (prev = !prev));
   }
 
+  function addFlow({ name, hours, minutes }) {
+    setFlows([
+      ...flows,
+      {
+        id: nanoid(),
+        name: name,
+        asanas: [],
+        duration: {
+          hours: hours,
+          minutes: minutes,
+        },
+        description: "",
+      },
+    ]);
+    setOpen(false);
+  }
+
   return (
     <>
       <h1>Create a new Flow</h1>
@@ -49,7 +66,12 @@ export default function CreateFlow() {
         />
       ))}
       {open && (
-        <CreateFlowForm setFlows={setFlows} flows={flows} setOpen={setOpen} />
+        <CreateFlowForm
+          setFlows={setFlows}
+          flows={flows}
+          setOpen={setOpen}
+          addFlow={addFlow}
+        />
       )}
       <StyledAddButton onClick={toggleOpen}>{open ? "x" : "+"}</StyledAddButton>
     </>
