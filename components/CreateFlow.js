@@ -1,9 +1,8 @@
 import { nanoid } from "nanoid";
 import { useState } from "react";
 import styled from "styled-components";
-import { MainButton } from "./MainButton";
 
-export default function CreateFlowForm({ flows, setFlows }) {
+export default function CreateFlowForm({ flows, setFlows, setOpen }) {
   const [hoursValidation, setHoursValidation] = useState(0);
 
   function handleHoursValidation(event) {
@@ -13,21 +12,27 @@ export default function CreateFlowForm({ flows, setFlows }) {
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const { name, hours, minutes } = Object.fromEntries(formData);
+    const data = Object.fromEntries(formData);
+    const { hours, minutes } = data;
+    const name = data.name.trim();
 
-    setFlows([
-      ...flows,
-      {
-        id: nanoid(),
-        name: name,
-        asanas: [],
-        duration: {
-          hours: hours,
-          minutes: minutes,
+    if (name.length === 0) {
+      alert("Please type in a valid name");
+    } else
+      setFlows([
+        ...flows,
+        {
+          id: nanoid(),
+          name: name,
+          asanas: [],
+          duration: {
+            hours: hours,
+            minutes: minutes,
+          },
+          description: "",
         },
-        description: "",
-      },
-    ]);
+      ]);
+    setOpen(false);
   }
 
   return (
@@ -38,6 +43,7 @@ export default function CreateFlowForm({ flows, setFlows }) {
         type="text"
         id="flow-name"
         name="name"
+        minLength="5"
         required
       />
       <StyledFieldset>
@@ -73,7 +79,7 @@ export default function CreateFlowForm({ flows, setFlows }) {
 const StyledForm = styled.form`
   background-color: var(--primary-light);
   padding: 1rem 0;
-  margin: 0 3rem;
+  margin: 0 2rem -3rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -123,7 +129,6 @@ const StyledSubmitButton = styled.button`
   margin: 1rem 0;
   cursor: pointer;
   box-shadow: var(--drop-shadow-gray);
-
   color: var(--text-light);
   background: var(--highlight-gradient);
   &:hover {

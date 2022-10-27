@@ -38,8 +38,6 @@ export default function CreateFlow() {
   return (
     <>
       <h1>Create a new Flow</h1>
-      <StyledAddButton onClick={toggleOpen}>{open ? "X" : "+"}</StyledAddButton>
-      {open && <CreateFlowForm setFlows={setFlows} flows={flows} />}
 
       {flows.map((flow) => (
         <FlowCard
@@ -50,6 +48,10 @@ export default function CreateFlow() {
           id={flow.id}
         />
       ))}
+      {open && (
+        <CreateFlowForm setFlows={setFlows} flows={flows} setOpen={setOpen} />
+      )}
+      <StyledAddButton onClick={toggleOpen}>{open ? "x" : "+"}</StyledAddButton>
     </>
   );
 }
