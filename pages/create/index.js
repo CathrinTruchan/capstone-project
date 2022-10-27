@@ -1,27 +1,23 @@
 import styled from "styled-components";
-import { forwardRef, useState } from "react";
+import { useState } from "react";
 import CreateFlowForm from "../../components/CreateFlow";
 import { nanoid } from "nanoid";
+import FlowCard from "../../components/FlowCard";
 
 const flowDummys = [
   {
     id: nanoid(),
     name: "Flow 1",
     asanas: [],
-    duration: {
-      hours: 1,
-      minutes: 40,
-    },
+    duration: "1:50",
+
     description: "lorem ipsum",
   },
   {
     id: nanoid(),
     name: "Flow 2",
     asanas: [],
-    duration: {
-      hours: 0,
-      minutes: 50,
-    },
+    duration: "1:50",
     description: "lorem ipsum",
   },
 ];
@@ -40,7 +36,14 @@ export default function CreateFlow() {
       <StyledAddButton onClick={toggleOpen}>{open ? "X" : "+"}</StyledAddButton>
       {open && <CreateFlowForm setFlows={setFlows} flows={flows} />}
 
-      {flows.map((flow) => flow.name)}
+      {flows.map((flow) => (
+        <FlowCard
+          key={flow.id}
+          name={flow.name}
+          duration={flow.duration}
+          id={flow.id}
+        />
+      ))}
     </>
   );
 }
