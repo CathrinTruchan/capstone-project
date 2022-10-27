@@ -17,7 +17,7 @@ export default function CreateFlowForm({ flows, setFlows, setOpen }) {
     const name = data.name.trim();
 
     if (name.length === 0) {
-      alert("Please type in a valid name");
+      alert("Please enter a valid name");
     } else
       setFlows([
         ...flows,
