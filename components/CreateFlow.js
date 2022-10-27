@@ -18,7 +18,7 @@ export default function CreateFlowForm({ flows, setFlows, setOpen }) {
 
     if (name.length === 0) {
       alert("Please enter a valid name");
-    } else if (flows.filter((flow) => flow.name === name)) {
+    } else if (flows.some((flow) => flow.name === name)) {
       alert("Name exists already. Please enter a new name.");
     } else
       setFlows([
