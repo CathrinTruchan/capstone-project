@@ -1,8 +1,34 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { forwardRef, useState } from "react";
+import CreateFlowForm from "../../components/CreateFlow";
+import { nanoid } from "nanoid";
+
+const flowDummys = [
+  {
+    id: nanoid(),
+    name: "Flow 1",
+    asanas: [],
+    duration: {
+      hours: 1,
+      minutes: 40,
+    },
+    description: "lorem ipsum",
+  },
+  {
+    id: nanoid(),
+    name: "Flow 2",
+    asanas: [],
+    duration: {
+      hours: 0,
+      minutes: 50,
+    },
+    description: "lorem ipsum",
+  },
+];
 
 export default function CreateFlow() {
   const [open, setOpen] = useState(false);
+  const [flows, setFlows] = useState(flowDummys);
 
   function toggleOpen() {
     setOpen((prev) => (prev = !prev));
@@ -12,7 +38,9 @@ export default function CreateFlow() {
     <>
       <h1>Create a new Flow</h1>
       <StyledAddButton onClick={toggleOpen}>{open ? "X" : "+"}</StyledAddButton>
-      {open && <p>testtext</p>}
+      {open && <CreateFlowForm setFlows={setFlows} flows={flows} />}
+
+      {flows.map((flow) => flow.name)}
     </>
   );
 }
