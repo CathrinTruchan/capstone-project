@@ -3,10 +3,10 @@ import { useState } from "react";
 import styled from "styled-components";
 
 export default function CreateFlowForm({ flows, setFlows, setOpen }) {
-  const [hoursValidation, setHoursValidation] = useState(0);
+  const [hours, setHours] = useState(0);
 
   function handleHoursValidation(event) {
-    setHoursValidation(event.target.value);
+    setHours(event.target.value);
   }
 
   function handleSubmit(event) {
@@ -69,7 +69,7 @@ export default function CreateFlowForm({ flows, setFlows, setOpen }) {
             type="number"
             id="minutes"
             name="minutes"
-            min={hoursValidation === "0" ? "10" : "0"}
+            min={hours === "0" ? "10" : "0"}
             max="59"
           />
         </section>
