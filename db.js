@@ -549,7 +549,7 @@ const flowDummys = [
     description: "lorem ipsum",
     asanas: [],
     duration: {
-      hours: "0",
+      hours: "",
       minutes: "50",
     },
   },
