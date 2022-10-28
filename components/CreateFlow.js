@@ -1,9 +1,8 @@
-import { nanoid } from "nanoid";
 import { useState } from "react";
 import styled from "styled-components";
 
 export default function CreateFlowForm({ flows, addFlow }) {
-  const [hours, setHours] = useState(0);
+  const [hours, setHours] = useState("0");
 
   function handleHoursValidation(event) {
     setHours(event.target.value);
@@ -34,6 +33,7 @@ export default function CreateFlowForm({ flows, addFlow }) {
         id="flow-name"
         name="name"
         minLength="5"
+        maxLength="50"
         required
         autoFocus
       />

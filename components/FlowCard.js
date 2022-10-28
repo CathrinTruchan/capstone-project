@@ -6,7 +6,9 @@ export default function FlowCard({ name, hours, minutes, id }) {
     <FlowWrapper>
       <h2>{name}</h2>
       <p>
-        {hours}h {minutes}min
+        {hours}
+        {parseInt(hours) > 0 ? "h" : ""} {minutes}
+        {parseInt(minutes) > 0 ? "min" : ""}
       </p>
 
       <Link href={`/flow/${id}`}>To the flow</Link>
