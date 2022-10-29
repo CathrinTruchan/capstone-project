@@ -20,12 +20,11 @@ export default function CreateFlow() {
       {
         id: nanoid(),
         name: name,
-        asanas: [],
         duration: {
           hours: hours,
           minutes: minutes,
         },
-        description: "",
+        asanas: [],
       },
     ]);
     setOpen(false);

@@ -546,22 +546,20 @@ const flowDummys = [
   {
     id: nanoid(),
     name: "Relaxed Morning Flow",
-    description: "lorem ipsum",
-    asanas: [],
     duration: {
       hours: "",
       minutes: "50",
     },
+    asanas: [],
   },
   {
     id: nanoid(),
     name: "Power Yoga Flow",
-    description: "lorem ipsum",
-    asanas: [],
     duration: {
       hours: "1",
       minutes: "45",
     },
+    asanas: [],
   },
 ];
 

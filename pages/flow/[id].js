@@ -19,12 +19,28 @@ export default function FlowPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterQuery, setFilterQuery] = useState("all");
 
+  console.log(selectedAsanas);
+  console.log(flows);
+  console.log(id);
+
   const currentFlow = flows.find((flow) => flow.id === id);
-  const name = currentFlow?.name || "Your Flow";
+  const name = currentFlow?.name || "No flow found";
   const hours = currentFlow?.duration?.hours || "";
   const minutes = currentFlow?.duration?.minutes || "";
+  const currentAsanas = currentFlow?.asanas || [];
 
-  console.log(currentFlow);
+  function updateFlow(id, asana) {
+    setFlows(
+      flows.map((flow) => {
+        if (flow.id == id) {
+          return {
+            ...flow,
+            asanas: [...selectedAsanas, asana],
+          };
+        } else return flow;
+      })
+    );
+  }
 
   function deleteAsana(cardID) {
     const filteredAsanas = selectedAsanas.filter(
@@ -50,17 +66,19 @@ export default function FlowPage() {
       </section>
       <StyledContainer>
         <StyledListWithMargin>
-          {selectedAsanas.map((asana, index) => (
-            <li key={index}>
-              <AsanaCard
-                name={asana.english_name}
-                img={asana.img_url}
-                id={asana.id}
-                deleteCard={() => deleteAsana(asana.flowListId)}
-                showDeleteButton={true}
-              />
-            </li>
-          ))}
+          {currentAsanas.map((asana, index) => {
+            return (
+              <li key={index}>
+                <AsanaCard
+                  name={asana.english_name}
+                  img={asana.img_url}
+                  id={asana.id}
+                  deleteCard={() => deleteAsana(asana.flowListId)}
+                  showDeleteButton={true}
+                />
+              </li>
+            );
+          })}
         </StyledListWithMargin>
 
         {!open && (
@@ -123,6 +141,7 @@ export default function FlowPage() {
                               ...selectedAsanas,
                               { ...asana, flowListId: nanoid() },
                             ]);
+                            updateFlow(id, asana);
                             autoScroll();
                           }}
                         >
