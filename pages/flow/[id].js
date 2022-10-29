@@ -56,10 +56,19 @@ export default function FlowPage() {
   }
 
   function deleteAsana(cardID) {
-    const filteredAsanas = selectedAsanas.filter(
-      (selectedAsana) => selectedAsana.flowListId !== cardID
+    const filteredAsanas = currentFlow.asanas.filter(
+      (asana) => asana.flowListId !== cardID
     );
-    setSelectedAsanas(filteredAsanas);
+    setFlows(
+      flows.map((flow) => {
+        if (flow.id == id) {
+          return {
+            ...flow,
+            asanas: [...filteredAsanas],
+          };
+        } else return flow;
+      })
+    );
   }
 
   function autoScroll() {
@@ -150,10 +159,6 @@ export default function FlowPage() {
                         <StyledAddButton
                           aria-label="add asana"
                           onClick={() => {
-                            /* setSelectedAsanas([
-                              ...selectedAsanas,
-                              { ...asana, flowListId: nanoid() },
-                            ]); */
                             updateFlow(id, asana);
                             autoScroll();
                           }}
