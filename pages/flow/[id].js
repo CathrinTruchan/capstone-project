@@ -35,7 +35,20 @@ export default function FlowPage() {
         if (flow.id == id) {
           return {
             ...flow,
-            asanas: [...selectedAsanas, asana],
+            asanas: [...flow.asanas, { ...asana, flowListId: nanoid() }],
+          };
+        } else return flow;
+      })
+    );
+  }
+
+  function resetFlow(id) {
+    setFlows(
+      flows.map((flow) => {
+        if (flow.id == id) {
+          return {
+            ...flow,
+            asanas: [],
           };
         } else return flow;
       })
@@ -90,10 +103,10 @@ export default function FlowPage() {
             + Add Asanas
           </MainButton>
         )}
-        {!open && selectedAsanas.length > 0 && (
+        {!open && currentAsanas.length > 0 && (
           <MainButton
             type="secondary"
-            onClick={() => setSelectedAsanas([])}
+            onClick={() => resetFlow(id)}
             margin="-3rem auto 5rem auto"
           >
             X Reset flow
@@ -104,7 +117,7 @@ export default function FlowPage() {
           {open && (
             <AddAsanaSection>
               <SectionHeader>
-                <StyledH3>You added {selectedAsanas.length} Asanas</StyledH3>
+                <StyledH3>You added {currentAsanas.length} Asanas</StyledH3>
                 <StyledCloseButton
                   aria-label="close"
                   onClick={() => {
@@ -137,10 +150,10 @@ export default function FlowPage() {
                         <StyledAddButton
                           aria-label="add asana"
                           onClick={() => {
-                            setSelectedAsanas([
+                            /* setSelectedAsanas([
                               ...selectedAsanas,
                               { ...asana, flowListId: nanoid() },
-                            ]);
+                            ]); */
                             updateFlow(id, asana);
                             autoScroll();
                           }}
