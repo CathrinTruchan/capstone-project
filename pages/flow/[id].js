@@ -14,14 +14,9 @@ export default function FlowPage() {
   const [flows, setFlows] = useLocalStorage("flows", flowDummys);
   const router = useRouter();
   const { id } = router.query;
-  const [selectedAsanas, setSelectedAsanas] = useState([]);
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterQuery, setFilterQuery] = useState("all");
-
-  console.log(selectedAsanas);
-  console.log(flows);
-  console.log(id);
 
   const currentFlow = flows.find((flow) => flow.id === id);
   const name = currentFlow?.name || "No flow found";
@@ -103,7 +98,7 @@ export default function FlowPage() {
           })}
         </StyledListWithMargin>
 
-        {!open && (
+        {!open && name != "No flow found" && (
           <MainButton
             type="primary"
             onClick={() => setOpen(true)}
