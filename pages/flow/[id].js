@@ -25,6 +25,7 @@ export default function FlowPage() {
   const hours = currentFlow?.duration?.hours || "";
   const minutes = currentFlow?.duration?.minutes || "";
   const currentAsanas = currentFlow?.asanas || [];
+  const description = currentFlow?.description || "";
 
   function updateFlow(id, asana) {
     setFlows(
@@ -43,12 +44,12 @@ export default function FlowPage() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const { description } = Object.fromEntries(formData);
-
     setFlows(
       flows.map((flow) =>
         flow.id === id ? { ...flow, description: description } : flow
       )
     );
+    toggleOpenForm();
   }
 
   function resetFlow(id) {
@@ -91,20 +92,38 @@ export default function FlowPage() {
           {parseInt(hours) > 0 && <span>{hours}h</span>}
           {parseInt(minutes) > 0 && <span> {minutes}min</span>}
         </StyledParagraph>
-        <StyledEditButton onClick={toggleOpenForm}>
-          Add description <BsPen />
-        </StyledEditButton>
+        <StyledParagraph>
+          {description}
+          {description !== "" && <StyledEditIcon onClick={toggleOpenForm} />}
+        </StyledParagraph>
+        {description === "" && (
+          <StyledEditButton onClick={toggleOpenForm}>
+            Add description <BsPen />
+          </StyledEditButton>
+        )}
         {openDescriptionForm && (
           <StyledForm onSubmit={(event) => onSubmitDescription(event, id)}>
             <StyledTextArea
-              rows="3"
-              cols="40"
+              rows="4"
+              cols="48"
               id="description"
               name="description"
               aria-label="add description for flow"
               placeholder="add your description..."
+              defaultValue={description}
             />
-            <button type="submit">save description</button>
+            <StyledButtonWrapper>
+              <StyledFormButton isPrimary={true} aria-label="Save description">
+                Save
+              </StyledFormButton>
+              <StyledFormButton
+                type="reset"
+                aria-label="close input field for description"
+                onClick={toggleOpenForm}
+              >
+                Close
+              </StyledFormButton>
+            </StyledButtonWrapper>
           </StyledForm>
         )}
       </section>
@@ -305,4 +324,31 @@ const StyledTextArea = styled.textarea`
   margin: 1rem 0;
   box-shadow: var(--drop-shadow-gray);
   font-family: "DM Sans";
+`;
+
+const StyledEditIcon = styled(BsPen)`
+  color: #a9a9a9;
+  margin-left: 0.8rem;
+  font-size: var(--font-small);
+`;
+
+const StyledFormButton = styled.button`
+  width: 4rem;
+  display: block;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border: none;
+  margin: 1rem 0;
+  cursor: pointer;
+  box-shadow: var(--drop-shadow-gray);
+  color: ${({ isPrimary }) =>
+    isPrimary ? "var(--text-light)" : "var(--highlight)"};
+  background: ${({ isPrimary }) =>
+    isPrimary ? "var(--highlight-gradient)" : "var(--background-neutral)"};
+`;
+
+const StyledButtonWrapper = styled.section`
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
 `;
