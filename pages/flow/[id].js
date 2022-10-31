@@ -111,7 +111,7 @@ export default function FlowPage() {
           <StyledForm onSubmit={(event) => onSubmitDescription(event, id)}>
             <StyledTextArea
               rows="4"
-              cols="38"
+              cols="40"
               id="description"
               name="description"
               aria-label="add description for flow"
@@ -126,13 +126,13 @@ export default function FlowPage() {
             >
               Save
             </MainButton>
-            <StyledDeleteButtonForm
+            <StyledCloseButtonForm
               type="reset"
               aria-label="close input field for description"
               onClick={toggleOpenForm}
             >
               X
-            </StyledDeleteButtonForm>
+            </StyledCloseButtonForm>
           </StyledForm>
         )}
       </section>
@@ -343,7 +343,7 @@ const StyledEditIcon = styled(BsPen)`
   font-size: var(--font-small);
 `;
 
-const StyledDeleteButtonForm = styled.button`
+const StyledCloseButtonForm = styled.button`
   border: none;
   position: absolute;
   top: 0;
