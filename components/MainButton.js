@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 const MainButton = styled.button`
-  width: 16rem;
+  width: ${(props) => props.width || "12rem"};
   display: block;
-  padding: 1rem 3rem;
+  padding: 0.8rem 1rem;
   border-radius: 22px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin: ${(props) => props.margin || "1.5rem"};
   cursor: pointer;
   box-shadow: ${({ type }) =>

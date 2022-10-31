@@ -105,25 +105,28 @@ export default function FlowPage() {
           <StyledForm onSubmit={(event) => onSubmitDescription(event, id)}>
             <StyledTextArea
               rows="4"
-              cols="48"
+              cols="38"
               id="description"
               name="description"
               aria-label="add description for flow"
               placeholder="add your description..."
               defaultValue={description}
             />
-            <StyledButtonWrapper>
-              <StyledFormButton isPrimary={true} aria-label="Save description">
-                Save
-              </StyledFormButton>
-              <StyledFormButton
-                type="reset"
-                aria-label="close input field for description"
-                onClick={toggleOpenForm}
-              >
-                Close
-              </StyledFormButton>
-            </StyledButtonWrapper>
+
+            <MainButton
+              type="primary"
+              width="5rem"
+              aria-label="Save description"
+            >
+              Save
+            </MainButton>
+            <StyledDeleteButtonForm
+              type="reset"
+              aria-label="close input field for description"
+              onClick={toggleOpenForm}
+            >
+              X
+            </StyledDeleteButtonForm>
           </StyledForm>
         )}
       </section>
@@ -309,20 +312,21 @@ const StyledEditButton = styled.button`
 `;
 
 const StyledForm = styled.form`
-  all: unset;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 `;
 
 const StyledTextArea = styled.textarea`
+  all: unset;
   color: var(--text-dark);
-  border-radius: 5px;
+  border-radius: 12px;
   padding: 0.5rem 1rem;
   border: none;
   background-color: var(--background-primary);
-  margin: 1rem 0;
-  box-shadow: var(--drop-shadow-gray);
+  margin: 1rem 2rem;
+  box-shadow: var(--drop-shadow-bottom-color);
   font-family: "DM Sans";
 `;
 
@@ -347,8 +351,20 @@ const StyledFormButton = styled.button`
     isPrimary ? "var(--highlight-gradient)" : "var(--background-neutral)"};
 `;
 
-const StyledButtonWrapper = styled.section`
-  display: flex;
-  justify-content: space-between;
-  gap: 2rem;
+const StyledDeleteButtonForm = styled.button`
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  background-color: var(--background-primary);
+  color: var(--highlight);
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  &:active {
+    background-color: var(--highlight);
+    color: var(--text-light);
+  }
 `;
