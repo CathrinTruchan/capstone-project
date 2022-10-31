@@ -76,10 +76,10 @@ export default function FlowPage() {
     <>
       <section>
         <h1>{name}</h1>
-        <p>
+        <StyledParagraph>
           {parseInt(hours) > 0 && <span>{hours}h</span>}
           {parseInt(minutes) > 0 && <span> {minutes}min</span>}
-        </p>
+        </StyledParagraph>
       </section>
       <StyledContainer>
         <StyledListWithMargin>
@@ -246,4 +246,9 @@ const StyledWrapper = styled.div`
 const StyledListWithMargin = styled.ul`
   list-style: none;
   margin-bottom: 20rem;
+`;
+
+const StyledParagraph = styled.p`
+  text-align: center;
+  margin: 1rem 4rem;
 `;
