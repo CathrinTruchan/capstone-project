@@ -26,27 +26,20 @@ export default function FlowPage() {
 
   function updateFlow(id, asana) {
     setFlows(
-      flows.map((flow) => {
-        if (flow.id == id) {
-          return {
-            ...flow,
-            asanas: [...flow.asanas, { ...asana, flowListId: nanoid() }],
-          };
-        } else return flow;
-      })
+      flows.map((flow) =>
+        flow.id === id
+          ? {
+              ...flow,
+              asanas: [...flow.asanas, { ...asana, flowListId: nanoid() }],
+            }
+          : flow
+      )
     );
   }
 
   function resetFlow(id) {
     setFlows(
-      flows.map((flow) => {
-        if (flow.id == id) {
-          return {
-            ...flow,
-            asanas: [],
-          };
-        } else return flow;
-      })
+      flows.map((flow) => (flow.id === id ? { ...flow, asanas: [] } : flow))
     );
   }
 
@@ -56,10 +49,10 @@ export default function FlowPage() {
     );
     setFlows(
       flows.map((flow) => {
-        if (flow.id == id) {
+        if (flow.id === id) {
           return {
             ...flow,
-            asanas: [...filteredAsanas],
+            asanas: filteredAsanas,
           };
         } else return flow;
       })
