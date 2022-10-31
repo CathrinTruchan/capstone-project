@@ -44,12 +44,18 @@ export default function FlowPage() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const { description } = Object.fromEntries(formData);
-    setFlows(
-      flows.map((flow) =>
-        flow.id === id ? { ...flow, description: description } : flow
-      )
-    );
-    toggleOpenForm();
+    const trimmedDescription = description.trim();
+
+    if (trimmedDescription.length === 0) {
+      alert("Please enter a description or close the input field");
+    } else {
+      setFlows(
+        flows.map((flow) =>
+          flow.id === id ? { ...flow, description: trimmedDescription } : flow
+        )
+      );
+      toggleOpenForm();
+    }
   }
 
   function resetFlow(id) {
@@ -316,6 +322,7 @@ const StyledForm = styled.form`
   flex-direction: column;
   align-items: center;
   position: relative;
+  margin: 2rem 3rem;
 `;
 
 const StyledTextArea = styled.textarea`
@@ -336,26 +343,11 @@ const StyledEditIcon = styled(BsPen)`
   font-size: var(--font-small);
 `;
 
-const StyledFormButton = styled.button`
-  width: 4rem;
-  display: block;
-  padding: 0.5rem 1rem;
-  border-radius: 12px;
-  border: none;
-  margin: 1rem 0;
-  cursor: pointer;
-  box-shadow: var(--drop-shadow-gray);
-  color: ${({ isPrimary }) =>
-    isPrimary ? "var(--text-light)" : "var(--highlight)"};
-  background: ${({ isPrimary }) =>
-    isPrimary ? "var(--highlight-gradient)" : "var(--background-neutral)"};
-`;
-
 const StyledDeleteButtonForm = styled.button`
   border: none;
   position: absolute;
   top: 0;
-  right: 2rem;
+  right: 1rem;
   background-color: var(--background-primary);
   color: var(--highlight);
   width: 1.5rem;
