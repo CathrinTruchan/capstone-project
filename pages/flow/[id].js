@@ -9,12 +9,14 @@ import { MainButton } from "../../components/MainButton";
 import { nanoid } from "nanoid";
 import SearchBar from "../../components/SearchBar";
 import LevelFilter from "../../components/LevelFilter";
+import { BsPen } from "react-icons/bs";
 
 export default function FlowPage() {
   const [flows, setFlows] = useLocalStorage("flows", flowDummys);
   const router = useRouter();
   const { id } = router.query;
-  const [open, setOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
+  const [openDescriptionForm, setOpenDescriptionForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterQuery, setFilterQuery] = useState("all");
 
@@ -33,6 +35,18 @@ export default function FlowPage() {
               asanas: [...flow.asanas, { ...asana, flowListId: nanoid() }],
             }
           : flow
+      )
+    );
+  }
+
+  function onSubmitDescription(event, id) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const { description } = Object.fromEntries(formData);
+
+    setFlows(
+      flows.map((flow) =>
+        flow.id === id ? { ...flow, description: description } : flow
       )
     );
   }
@@ -59,6 +73,10 @@ export default function FlowPage() {
     );
   }
 
+  function toggleOpenForm() {
+    setOpenDescriptionForm((prev) => (prev = !prev));
+  }
+
   function autoScroll() {
     setTimeout(() => {
       window.scrollBy({ top: 500, behavior: "smooth" });
@@ -73,6 +91,22 @@ export default function FlowPage() {
           {parseInt(hours) > 0 && <span>{hours}h</span>}
           {parseInt(minutes) > 0 && <span> {minutes}min</span>}
         </StyledParagraph>
+        <StyledEditButton onClick={toggleOpenForm}>
+          Add description <BsPen />
+        </StyledEditButton>
+        {openDescriptionForm && (
+          <StyledForm onSubmit={(event) => onSubmitDescription(event, id)}>
+            <StyledTextArea
+              rows="3"
+              cols="40"
+              id="description"
+              name="description"
+              aria-label="add description for flow"
+              placeholder="add your description..."
+            />
+            <button type="submit">save description</button>
+          </StyledForm>
+        )}
       </section>
       <StyledContainer>
         <StyledListWithMargin>
@@ -91,16 +125,16 @@ export default function FlowPage() {
           })}
         </StyledListWithMargin>
 
-        {!open && name != "No flow found" && (
+        {!openMenu && name != "No flow found" && (
           <MainButton
             type="primary"
-            onClick={() => setOpen(true)}
+            onClick={() => setOpenMenu(true)}
             margin="-15rem auto 5rem auto"
           >
             + Add Asanas
           </MainButton>
         )}
-        {!open && currentAsanas.length > 0 && (
+        {!openMenu && currentAsanas.length > 0 && (
           <MainButton
             type="secondary"
             onClick={() => resetFlow(id)}
@@ -111,14 +145,14 @@ export default function FlowPage() {
         )}
 
         <StyledWrapper>
-          {open && (
+          {openMenu && (
             <AddAsanaSection>
               <SectionHeader>
                 <StyledH3>You added {currentAsanas.length} Asanas</StyledH3>
                 <StyledCloseButton
                   aria-label="close"
                   onClick={() => {
-                    setOpen(false);
+                    setOpenMenu(false);
                     setSearchQuery("");
                     setFilterQuery("all");
                   }}
@@ -244,4 +278,31 @@ const StyledListWithMargin = styled.ul`
 const StyledParagraph = styled.p`
   text-align: center;
   margin: 1rem 4rem;
+`;
+
+const StyledEditButton = styled.button`
+  all: unset;
+  color: #a9a9a9;
+  margin: 1rem auto;
+  display: block;
+  background-color: white;
+  cursor: pointer;
+`;
+
+const StyledForm = styled.form`
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const StyledTextArea = styled.textarea`
+  color: var(--text-dark);
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: var(--background-primary);
+  margin: 1rem 0;
+  box-shadow: var(--drop-shadow-gray);
+  font-family: "DM Sans";
 `;
