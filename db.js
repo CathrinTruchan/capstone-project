@@ -1,3 +1,5 @@
+import { nanoid } from "nanoid";
+
 const asanas = [
   {
     id: "1",
@@ -540,6 +542,27 @@ const asanas = [
   },
 ];
 
+const flowDummys = [
+  {
+    id: nanoid(),
+    name: "Relaxed Morning Flow",
+    duration: {
+      hours: "",
+      minutes: "50",
+    },
+    asanas: [],
+  },
+  {
+    id: nanoid(),
+    name: "Power Yoga Flow",
+    duration: {
+      hours: "1",
+      minutes: "45",
+    },
+    asanas: [],
+  },
+];
+
 function getAllAsanas() {
   return asanas;
 }
@@ -548,6 +571,6 @@ function getAsanaByID(id) {
   return asanas.find((asana) => asana.id === id);
 }
 
-export { getAllAsanas, getAsanaByID };
+export { getAllAsanas, getAsanaByID, flowDummys };
 
 export default asanas;

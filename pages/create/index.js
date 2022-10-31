@@ -3,33 +3,12 @@ import { useState } from "react";
 import CreateFlowForm from "../../components/CreateFlow";
 import { nanoid } from "nanoid";
 import FlowCard from "../../components/FlowCard";
-
-const flowDummys = [
-  {
-    id: nanoid(),
-    name: "Flow 1",
-    description: "lorem ipsum",
-    asanas: [],
-    duration: {
-      hours: "1",
-      minutes: "30",
-    },
-  },
-  {
-    id: nanoid(),
-    name: "Flow 2",
-    description: "lorem ipsum",
-    asanas: [],
-    duration: {
-      hours: "1",
-      minutes: "30",
-    },
-  },
-];
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { flowDummys } from "../../db";
 
 export default function CreateFlow() {
   const [open, setOpen] = useState(false);
-  const [flows, setFlows] = useState(flowDummys);
+  const [flows, setFlows] = useLocalStorage("flows", flowDummys);
 
   function toggleOpen() {
     setOpen((prev) => (prev = !prev));
@@ -41,12 +20,11 @@ export default function CreateFlow() {
       {
         id: nanoid(),
         name: name,
-        asanas: [],
         duration: {
           hours: hours,
           minutes: minutes,
         },
-        description: "",
+        asanas: [],
       },
     ]);
     setOpen(false);
