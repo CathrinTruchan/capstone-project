@@ -9,12 +9,14 @@ import { MainButton } from "../../components/MainButton";
 import { nanoid } from "nanoid";
 import SearchBar from "../../components/SearchBar";
 import LevelFilter from "../../components/LevelFilter";
+import { BsPen } from "react-icons/bs";
 
 export default function FlowPage() {
   const [flows, setFlows] = useLocalStorage("flows", flowDummys);
   const router = useRouter();
   const { id } = router.query;
-  const [open, setOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
+  const [openDescriptionForm, setOpenDescriptionForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterQuery, setFilterQuery] = useState("all");
 
@@ -23,6 +25,7 @@ export default function FlowPage() {
   const hours = currentFlow?.duration?.hours || "";
   const minutes = currentFlow?.duration?.minutes || "";
   const currentAsanas = currentFlow?.asanas || [];
+  const description = currentFlow?.description || "";
 
   function updateFlow(id, asana) {
     setFlows(
@@ -35,6 +38,24 @@ export default function FlowPage() {
           : flow
       )
     );
+  }
+
+  function onSubmitDescription(event, id) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const { description } = Object.fromEntries(formData);
+    const trimmedDescription = description.trim();
+
+    if (trimmedDescription.length === 0) {
+      alert("Please enter a description or close the input field");
+    } else {
+      setFlows(
+        flows.map((flow) =>
+          flow.id === id ? { ...flow, description: trimmedDescription } : flow
+        )
+      );
+      toggleOpenForm();
+    }
   }
 
   function resetFlow(id) {
@@ -59,6 +80,10 @@ export default function FlowPage() {
     );
   }
 
+  function toggleOpenForm() {
+    setOpenDescriptionForm((prev) => (prev = !prev));
+  }
+
   function autoScroll() {
     setTimeout(() => {
       window.scrollBy({ top: 500, behavior: "smooth" });
@@ -73,6 +98,43 @@ export default function FlowPage() {
           {parseInt(hours) > 0 && <span>{hours}h</span>}
           {parseInt(minutes) > 0 && <span> {minutes}min</span>}
         </StyledParagraph>
+        <StyledParagraph>
+          {description}
+          {description !== "" && <StyledEditIcon onClick={toggleOpenForm} />}
+        </StyledParagraph>
+        {description === "" && (
+          <StyledEditButton onClick={toggleOpenForm}>
+            Add description <BsPen />
+          </StyledEditButton>
+        )}
+        {openDescriptionForm && (
+          <StyledForm onSubmit={(event) => onSubmitDescription(event, id)}>
+            <StyledTextArea
+              rows="4"
+              cols="40"
+              id="description"
+              name="description"
+              aria-label="add description for flow"
+              placeholder="add your description..."
+              defaultValue={description}
+            />
+
+            <MainButton
+              type="primary"
+              width="5rem"
+              aria-label="Save description"
+            >
+              Save
+            </MainButton>
+            <StyledCloseButtonForm
+              type="reset"
+              aria-label="close input field for description"
+              onClick={toggleOpenForm}
+            >
+              X
+            </StyledCloseButtonForm>
+          </StyledForm>
+        )}
       </section>
       <StyledContainer>
         <StyledListWithMargin>
@@ -91,16 +153,16 @@ export default function FlowPage() {
           })}
         </StyledListWithMargin>
 
-        {!open && name != "No flow found" && (
+        {!openMenu && name != "No flow found" && (
           <MainButton
             type="primary"
-            onClick={() => setOpen(true)}
+            onClick={() => setOpenMenu(true)}
             margin="-15rem auto 5rem auto"
           >
             + Add Asanas
           </MainButton>
         )}
-        {!open && currentAsanas.length > 0 && (
+        {!openMenu && currentAsanas.length > 0 && (
           <MainButton
             type="secondary"
             onClick={() => resetFlow(id)}
@@ -111,14 +173,14 @@ export default function FlowPage() {
         )}
 
         <StyledWrapper>
-          {open && (
+          {openMenu && (
             <AddAsanaSection>
               <SectionHeader>
                 <StyledH3>You added {currentAsanas.length} Asanas</StyledH3>
                 <StyledCloseButton
                   aria-label="close"
                   onClick={() => {
-                    setOpen(false);
+                    setOpenMenu(false);
                     setSearchQuery("");
                     setFilterQuery("all");
                   }}
@@ -244,4 +306,57 @@ const StyledListWithMargin = styled.ul`
 const StyledParagraph = styled.p`
   text-align: center;
   margin: 1rem 4rem;
+`;
+
+const StyledEditButton = styled.button`
+  all: unset;
+  color: #a9a9a9;
+  margin: 1rem auto;
+  display: block;
+  background-color: white;
+  cursor: pointer;
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin: 2rem 3rem;
+`;
+
+const StyledTextArea = styled.textarea`
+  all: unset;
+  color: var(--text-dark);
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: var(--background-primary);
+  margin: 1rem 2rem;
+  box-shadow: var(--drop-shadow-bottom-color);
+  font-family: "DM Sans";
+`;
+
+const StyledEditIcon = styled(BsPen)`
+  color: #a9a9a9;
+  margin-left: 0.8rem;
+  font-size: var(--font-small);
+`;
+
+const StyledCloseButtonForm = styled.button`
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  background-color: var(--background-primary);
+  color: var(--highlight);
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  &:active {
+    background-color: var(--highlight);
+    color: var(--text-light);
+  }
 `;
