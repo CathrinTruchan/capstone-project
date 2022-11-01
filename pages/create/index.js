@@ -7,11 +7,11 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import { flowDummys } from "../../db";
 
 export default function CreateFlow() {
-  const [open, setOpen] = useState(false);
+  const [openForm, setOpenForm] = useState(false);
   const [flows, setFlows] = useLocalStorage("flows", flowDummys);
 
-  function toggleOpen() {
-    setOpen((prev) => (prev = !prev));
+  function toggleOpenForm() {
+    setOpenForm((prev) => (prev = !prev));
   }
 
   function addFlow({ name, hours, minutes }) {
@@ -27,7 +27,7 @@ export default function CreateFlow() {
         asanas: [],
       },
     ]);
-    setOpen(false);
+    setOpenForm(false);
   }
 
   function deleteFlow(flowCardId) {
@@ -48,15 +48,10 @@ export default function CreateFlow() {
           deleteFlow={() => deleteFlow(flow.id)}
         />
       ))}
-      {open && (
-        <CreateFlowForm
-          setFlows={setFlows}
-          flows={flows}
-          setOpen={setOpen}
-          addFlow={addFlow}
-        />
-      )}
-      <StyledAddButton onClick={toggleOpen}>{open ? "x" : "+"}</StyledAddButton>
+      {openForm && <CreateFlowForm flows={flows} addFlow={addFlow} />}
+      <StyledAddButton onClick={toggleOpenForm}>
+        {openForm ? "x" : "+"}
+      </StyledAddButton>
     </>
   );
 }
@@ -65,7 +60,7 @@ const StyledAddButton = styled.button`
   position: fixed;
   bottom: 1rem;
   right: 2rem;
-  z-index: 30;
+  z-index: 60;
   border: none;
   display: block;
   margin: 5rem auto;

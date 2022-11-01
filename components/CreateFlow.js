@@ -136,7 +136,7 @@ const StyledOverlayBackground = styled.section`
   background: rgba(245, 245, 245, 0.6);
   backdrop-filter: blur(5.4px);
   -webkit-backdrop-filter: blur(5.4px);
-  z-index: 5;
+  z-index: 50;
   position: fixed;
   top: 0;
   left: 0;

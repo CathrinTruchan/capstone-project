@@ -1,27 +1,12 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
 
 export default function FlowCard({ name, hours, minutes, id, deleteFlow }) {
-  const [openCardMenu, setOpenCardMenu] = useState(false);
-
-  function toggleOpenCardMenu() {
-    setOpenCardMenu((prev) => (prev = !prev));
-    console.log("click");
-  }
-
   return (
     <FlowWrapper>
-      <StyledMenuIcon onClick={toggleOpenCardMenu}></StyledMenuIcon>
-      {openCardMenu && (
-        <StyledCardMenu>
-          <StyledList>
-            <StyledListItems onClick={deleteFlow}>delete</StyledListItems>
-            <StyledListItems>edit</StyledListItems>
-          </StyledList>
-        </StyledCardMenu>
-      )}
+      <StyledMenuIcon onClick={deleteFlow}></StyledMenuIcon>
+
       <h2>{name}</h2>
       <p>
         {hours}
@@ -47,32 +32,10 @@ const FlowWrapper = styled.section`
   }
 `;
 
-const StyledMenuIcon = styled(BsThreeDotsVertical)`
+const StyledMenuIcon = styled(AiOutlineClose)`
   position: absolute;
-  top: 0.5rem;
-  right: 2rem;
+  top: 0;
+  right: 1.5rem;
   color: var(--highlight);
-  z-index: 30;
-`;
-
-const StyledCardMenu = styled.nav`
-  position: absolute;
-  padding: 1rem 0.5rem;
-  top: 0.1rem;
-  right: 2rem;
-  z-index: 20;
-  background-color: var(--background-neutral);
-  box-shadow: var(--drop-shadow-gray);
-  border-radius: 5px;
-`;
-
-const StyledList = styled.ul`
-  list-style: none;
-  text-align: right;
-  margin: 2rem 0.5rem 0 0;
   font-size: var(--font-small);
-`;
-
-const StyledListItems = styled.li`
-  margin-top: 0.3rem;
 `;
