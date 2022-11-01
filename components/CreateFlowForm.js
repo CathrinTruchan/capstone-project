@@ -1,7 +1,16 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-export default function CreateFlowForm({ flows, addFlow }) {
+export default function CreateFlowForm({
+  flows,
+  addFlow,
+  editFlowBasicData,
+  openEditForm,
+  id,
+  defaultName,
+  defaultHours,
+  defaultMinutes,
+}) {
   const [hours, setHours] = useState("0");
 
   function handleHoursValidation(event) {
@@ -15,13 +24,17 @@ export default function CreateFlowForm({ flows, addFlow }) {
     const { hours, minutes } = data;
     const name = data.name.trim();
 
-    if (name.length === 0) {
-      alert("Please enter a valid name");
-    } else if (
-      flows.some((flow) => flow.name.toLowerCase() === name.toLowerCase())
-    ) {
-      alert("Name exists already. Please enter a new name.");
-    } else addFlow({ name, hours, minutes });
+    if (openEditForm) {
+      editFlowBasicData(name, hours, minutes, id);
+    } else {
+      if (name.length === 0) {
+        alert("Please enter a valid name");
+      } else if (
+        flows.some((flow) => flow.name.toLowerCase() === name.toLowerCase())
+      ) {
+        alert("Name exists already. Please enter a new name.");
+      } else addFlow(name, hours, minutes);
+    }
   }
 
   return (
@@ -37,6 +50,7 @@ export default function CreateFlowForm({ flows, addFlow }) {
           maxLength="50"
           required
           autoFocus
+          defaultValue={defaultName}
         />
         <StyledFieldset>
           <section>
@@ -49,6 +63,7 @@ export default function CreateFlowForm({ flows, addFlow }) {
               min="0"
               max="2"
               onChange={handleHoursValidation}
+              defaultValue={defaultHours}
             />
           </section>
           <section>
@@ -60,6 +75,7 @@ export default function CreateFlowForm({ flows, addFlow }) {
               name="minutes"
               min={hours === "0" ? "10" : "0"}
               max="59"
+              defaultValue={defaultMinutes}
             />
           </section>
         </StyledFieldset>

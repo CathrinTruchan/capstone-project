@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import CreateFlowForm from "../../components/CreateFlow";
+import CreateFlowForm from "../../components/CreateFlowForm";
 import { nanoid } from "nanoid";
 import FlowCard from "../../components/FlowCard";
 import useLocalStorage from "../../hooks/useLocalStorage";
@@ -14,7 +14,7 @@ export default function CreateFlow() {
     setOpenForm((prev) => (prev = !prev));
   }
 
-  function addFlow({ name, hours, minutes }) {
+  function addFlow(name, hours, minutes) {
     setFlows([
       ...flows,
       {
@@ -34,6 +34,25 @@ export default function CreateFlow() {
     setFlows(flows.filter((flow) => flow.id !== flowCardId));
   }
 
+  function editFlowBasicData(
+    updatedName,
+    updatedHours,
+    updatedMinutes,
+    flowCardId
+  ) {
+    setFlows(
+      flows.map((flow) =>
+        flow.id === flowCardId
+          ? {
+              ...flow,
+              name: updatedName,
+              duration: { hours: updatedHours, minutes: updatedMinutes },
+            }
+          : flow
+      )
+    );
+  }
+
   return (
     <>
       <h1>Create a new Flow</h1>
@@ -46,6 +65,14 @@ export default function CreateFlow() {
           minutes={flow.duration.minutes}
           id={flow.id}
           deleteFlow={() => deleteFlow(flow.id)}
+          editFlowBasicData={(updatedName, updatedHours, updatedMinutes) =>
+            editFlowBasicData(
+              updatedName,
+              updatedHours,
+              updatedMinutes,
+              flow.id
+            )
+          }
         />
       ))}
       {openForm && <CreateFlowForm flows={flows} addFlow={addFlow} />}
