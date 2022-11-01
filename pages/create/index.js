@@ -30,6 +30,10 @@ export default function CreateFlow() {
     setOpen(false);
   }
 
+  function deleteFlow(flowCardId) {
+    setFlows(flows.filter((flow) => flow.id !== flowCardId));
+  }
+
   return (
     <>
       <h1>Create a new Flow</h1>
@@ -41,6 +45,7 @@ export default function CreateFlow() {
           hours={flow.duration.hours}
           minutes={flow.duration.minutes}
           id={flow.id}
+          deleteFlow={() => deleteFlow(flow.id)}
         />
       ))}
       {open && (
