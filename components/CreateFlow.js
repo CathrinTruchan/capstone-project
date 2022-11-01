@@ -25,57 +25,62 @@ export default function CreateFlowForm({ flows, addFlow }) {
   }
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
-      <StyledLabel htmlFor="flow-name">Name:</StyledLabel>
-      <StyledInput
-        width="10rem"
-        type="text"
-        id="flow-name"
-        name="name"
-        minLength="5"
-        maxLength="50"
-        required
-        autoFocus
-      />
-      <StyledFieldset>
-        <section>
-          <StyledLabel htmlFor="hours">Hours</StyledLabel>
-          <StyledInput
-            width="3rem"
-            type="number"
-            id="hours"
-            name="hours"
-            min="0"
-            max="2"
-            onChange={handleHoursValidation}
-          />
-        </section>
-        <section>
-          <StyledLabel htmlFor="minutes">Minutes</StyledLabel>
-          <StyledInput
-            width="3rem"
-            type="number"
-            id="minutes"
-            name="minutes"
-            min={hours === "0" ? "10" : "0"}
-            max="59"
-          />
-        </section>
-      </StyledFieldset>
-      <StyledSubmitButton>Add</StyledSubmitButton>
-    </StyledForm>
+    <StyledOverlayBackground>
+      <StyledForm onSubmit={handleSubmit}>
+        <StyledLabel htmlFor="flow-name">Name:</StyledLabel>
+        <StyledInput
+          width="10rem"
+          type="text"
+          id="flow-name"
+          name="name"
+          minLength="5"
+          maxLength="50"
+          required
+          autoFocus
+        />
+        <StyledFieldset>
+          <section>
+            <StyledLabel htmlFor="hours">Hours</StyledLabel>
+            <StyledInput
+              width="3rem"
+              type="number"
+              id="hours"
+              name="hours"
+              min="0"
+              max="2"
+              onChange={handleHoursValidation}
+            />
+          </section>
+          <section>
+            <StyledLabel htmlFor="minutes">Minutes</StyledLabel>
+            <StyledInput
+              width="3rem"
+              type="number"
+              id="minutes"
+              name="minutes"
+              min={hours === "0" ? "10" : "0"}
+              max="59"
+            />
+          </section>
+        </StyledFieldset>
+        <StyledSubmitButton>Add</StyledSubmitButton>
+      </StyledForm>
+    </StyledOverlayBackground>
   );
 }
 
 const StyledForm = styled.form`
-  background-color: var(--primary-light);
-  padding: 1rem 0;
-  margin: 0 2rem -3rem 2rem;
+  background: var(--primary-gradient);
+  padding: 3rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 22px;
   box-shadow: var(--drop-shadow-gray);
+  position: absolute;
+  width: 80%;
+  top: 20%;
+  left: 10%;
 `;
 
 const StyledInput = styled.input`
@@ -90,7 +95,7 @@ const StyledInput = styled.input`
   background-color: var(--background-neutral);
   margin: 1rem 0;
   box-shadow: var(--drop-shadow-gray);
-  font-size: var(--font-small);
+
   &:focus {
     box-shadow: none;
     border: 1px solid var(--highlight);
@@ -103,11 +108,9 @@ const StyledFieldset = styled.fieldset`
   display: flex;
   flex-direction: row;
   gap: 2rem;
-  font-size: var(--font-small);
 `;
 
 const StyledLabel = styled.label`
-  font-size: var(--font-small);
   color: var(--text-light);
 `;
 
@@ -125,4 +128,16 @@ const StyledSubmitButton = styled.button`
   &:hover {
     background: var(--highlight);
   }
+`;
+
+const StyledOverlayBackground = styled.section`
+  width: 100%;
+  height: 100%;
+  background: rgba(245, 245, 245, 0.6);
+  backdrop-filter: blur(5.4px);
+  -webkit-backdrop-filter: blur(5.4px);
+  z-index: 5;
+  position: fixed;
+  top: 0;
+  left: 0;
 `;

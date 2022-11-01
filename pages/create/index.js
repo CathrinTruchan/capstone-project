@@ -57,12 +57,17 @@ export default function CreateFlow() {
 }
 
 const StyledAddButton = styled.button`
+  position: fixed;
+  bottom: 1rem;
+  right: 2rem;
+  z-index: 30;
   border: none;
   display: block;
   margin: 5rem auto;
   background: var(--highlight-gradient);
+  box-shadow: var(--drop-shadow-gray);
   color: var(--text-light);
-  font-size: 2rem;
+  font-size: 1.5rem;
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 50%;
