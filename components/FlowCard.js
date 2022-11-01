@@ -14,12 +14,12 @@ export default function FlowCard({
   deleteFlow,
   editFlowBasicData,
 }) {
-  const [openEditForm, setOpenEditForm] = useState(false);
+  const [isEditForm, setIsEditForm] = useState(false);
 
   return (
     <FlowWrapper>
       <StyledCloseIcon onClick={deleteFlow}></StyledCloseIcon>
-      <StyledEditIcon onClick={() => setOpenEditForm(true)}></StyledEditIcon>
+      <StyledEditIcon onClick={() => setIsEditForm(true)}></StyledEditIcon>
 
       <h2>{name}</h2>
       <p>
@@ -30,14 +30,15 @@ export default function FlowCard({
 
       <Link href={`/flow/${id}`}>To the flow</Link>
 
-      {openEditForm && (
+      {isEditForm && (
         <CreateFlowForm
           editFlowBasicData={editFlowBasicData}
-          openEditForm={true}
+          isEditForm={true}
           id={id}
           defaultName={name}
           defaultHours={hours}
           defaultMinutes={minutes}
+          setIsEditForm={setIsEditForm}
         />
       )}
     </FlowWrapper>

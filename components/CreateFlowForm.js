@@ -1,11 +1,13 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { MainButton } from "./MainButton";
 
 export default function CreateFlowForm({
   flows,
   addFlow,
   editFlowBasicData,
-  openEditForm,
+  isEditForm,
+  setIsEditForm,
   id,
   defaultName,
   defaultHours,
@@ -26,6 +28,7 @@ export default function CreateFlowForm({
 
     if (openEditForm) {
       editFlowBasicData(name, hours, minutes, id);
+      setIsEditForm(false);
     } else {
       if (name.length === 0) {
         alert("Please enter a valid name");
@@ -79,7 +82,15 @@ export default function CreateFlowForm({
             />
           </section>
         </StyledFieldset>
-        <StyledSubmitButton>Add</StyledSubmitButton>
+        <StyledSubmitButton>Save</StyledSubmitButton>
+        {isEditForm && (
+          <StyledCancelButton
+            type="button"
+            onClick={() => setIsEditForm(false)}
+          >
+            Cancel
+          </StyledCancelButton>
+        )}
       </StyledForm>
     </StyledOverlayBackground>
   );
@@ -144,6 +155,19 @@ const StyledSubmitButton = styled.button`
   &:hover {
     background: var(--highlight);
   }
+`;
+
+const StyledCancelButton = styled.button`
+  width: 12rem;
+  display: block;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  box-shadow: var(--drop-shadow-gray);
+  color: var(--highlight);
+  background: var(--background-neutral);
 `;
 
 const StyledOverlayBackground = styled.section`
