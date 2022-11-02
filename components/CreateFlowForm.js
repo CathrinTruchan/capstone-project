@@ -10,6 +10,7 @@ export default function CreateFlowForm({
   editFlowBasicData,
   editFormId,
   cancelEditFlow,
+  closeForm,
 }) {
   const [hours, setHours] = useState("0");
 
@@ -79,10 +80,12 @@ export default function CreateFlowForm({
           </section>
         </StyledFieldset>
         <StyledSubmitButton>Save</StyledSubmitButton>
-        {editFormId != null && (
+        {editFormId != null ? (
           <StyledCancelButton onClick={cancelEditFlow}>
             Cancel
           </StyledCancelButton>
+        ) : (
+          <StyledCancelButton onClick={closeForm}>Cancel</StyledCancelButton>
         )}
       </StyledForm>
     </StyledOverlayBackground>

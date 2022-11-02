@@ -13,8 +13,13 @@ export default function FlowCard({
 }) {
   return (
     <FlowWrapper>
-      <StyledCloseIcon onClick={deleteFlow}></StyledCloseIcon>
-      <StyledEditIcon onClick={setEditFormId}></StyledEditIcon>
+      <StyledButtonWrapper top="1.5rem" onClick={deleteFlow}>
+        <StyledCloseIcon />
+      </StyledButtonWrapper>
+
+      <StyledButtonWrapper bottom="1.5rem" onClick={setEditFormId}>
+        <StyledEditIcon />
+      </StyledButtonWrapper>
 
       <h2>{name}</h2>
       <p>
@@ -35,26 +40,20 @@ const FlowWrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 4rem auto;
-  padding: 0 2rem 1rem 2rem;
+  margin: 2rem auto;
+  padding: 2rem 2rem 1rem 2rem;
   &:hover {
     box-shadow: var(--drop-shadow-bottom-hover);
   }
 `;
 
 const StyledCloseIcon = styled(AiOutlineClose)`
-  position: absolute;
-  top: 0;
-  right: 1.5rem;
   color: var(--highlight);
   font-size: var(--font-small);
 `;
 
 const StyledEditIcon = styled(BsPen)`
-  position: absolute;
-  bottom: 1rem;
-  right: 1.5rem;
-  color: #a9a9a9;
+  color: var(--primary);
   font-size: var(--font-small);
 `;
 
@@ -72,4 +71,12 @@ const StyledButton = styled.button`
   &:hover {
     background: var(--primary);
   }
+`;
+
+const StyledButtonWrapper = styled.button`
+  all: unset;
+  position: absolute;
+  top: ${(props) => props.top};
+  bottom: ${(props) => props.bottom};
+  right: 2rem;
 `;

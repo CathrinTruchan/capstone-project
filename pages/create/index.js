@@ -59,6 +59,10 @@ export default function CreateFlow() {
     setEditFormId(null);
   }
 
+  function closeForm() {
+    setOpenForm(false);
+  }
+
   return (
     <>
       <h1>Create a new Flow</h1>
@@ -74,7 +78,9 @@ export default function CreateFlow() {
           setEditFormId={() => setEditFormId(flow.id)}
         />
       ))}
-      {openForm && <CreateFlowForm flows={flows} addFlow={addFlow} />}
+      {openForm && (
+        <CreateFlowForm flows={flows} addFlow={addFlow} closeForm={closeForm} />
+      )}
       {editFormId != null &&
         flows.map(
           (flow) =>
@@ -112,7 +118,7 @@ const StyledAddButton = styled.button`
   position: fixed;
   bottom: 1rem;
   right: 2rem;
-  z-index: 60;
+  z-index: 30;
   border: none;
   display: block;
   margin: 5rem auto;

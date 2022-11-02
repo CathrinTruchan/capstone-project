@@ -333,7 +333,7 @@ const StyledTextArea = styled.textarea`
   border: none;
   background-color: var(--background-primary);
   margin: 1rem 2rem;
-  box-shadow: var(--drop-shadow-bottom-color);
+  box-shadow: var(--drop-shadow-color);
   font-family: "DM Sans";
 `;
 
@@ -346,12 +346,12 @@ const StyledEditIcon = styled(BsPen)`
 const StyledCloseButtonForm = styled.button`
   border: none;
   position: absolute;
-  top: 0;
-  right: 1rem;
-  background-color: var(--background-primary);
-  color: var(--highlight);
-  width: 1.5rem;
-  height: 1.5rem;
+  top: 0.5rem;
+  right: -1rem;
+  background-color: var(--highlight);
+  color: var(--text-light);
+  width: 1rem;
+  height: 1rem;
   border-radius: 50%;
   text-align: center;
   cursor: pointer;
