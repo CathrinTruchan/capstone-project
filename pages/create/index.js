@@ -1,20 +1,21 @@
 import styled from "styled-components";
 import { useState } from "react";
-import CreateFlowForm from "../../components/CreateFlow";
+import CreateFlowForm from "../../components/CreateFlowForm";
 import { nanoid } from "nanoid";
 import FlowCard from "../../components/FlowCard";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { flowDummys } from "../../db";
 
 export default function CreateFlow() {
-  const [open, setOpen] = useState(false);
+  const [openForm, setOpenForm] = useState(false);
+  const [editFormId, setEditFormId] = useState(null);
   const [flows, setFlows] = useLocalStorage("flows", flowDummys);
 
-  function toggleOpen() {
-    setOpen((prev) => (prev = !prev));
+  function toggleOpenForm() {
+    setOpenForm((prev) => !prev);
   }
 
-  function addFlow({ name, hours, minutes }) {
+  function addFlow(name, hours, minutes) {
     setFlows([
       ...flows,
       {
@@ -27,7 +28,39 @@ export default function CreateFlow() {
         asanas: [],
       },
     ]);
-    setOpen(false);
+    setOpenForm(false);
+  }
+
+  function deleteFlow(flowCardId) {
+    setFlows(flows.filter((flow) => flow.id !== flowCardId));
+  }
+
+  function editFlowBasicData(
+    updatedName,
+    updatedHours,
+    updatedMinutes,
+    cardId
+  ) {
+    setFlows(
+      flows.map((flow) =>
+        flow.id === cardId
+          ? {
+              ...flow,
+              name: updatedName,
+              duration: { hours: updatedHours, minutes: updatedMinutes },
+            }
+          : flow
+      )
+    );
+    setEditFormId(null);
+  }
+
+  function cancelEditFlow() {
+    setEditFormId(null);
+  }
+
+  function closeForm() {
+    setOpenForm(false);
   }
 
   return (
@@ -41,28 +74,58 @@ export default function CreateFlow() {
           hours={flow.duration.hours}
           minutes={flow.duration.minutes}
           id={flow.id}
+          deleteFlow={() => deleteFlow(flow.id)}
+          setEditFormId={() => setEditFormId(flow.id)}
         />
       ))}
-      {open && (
-        <CreateFlowForm
-          setFlows={setFlows}
-          flows={flows}
-          setOpen={setOpen}
-          addFlow={addFlow}
-        />
+      {openForm && (
+        <CreateFlowForm flows={flows} addFlow={addFlow} closeForm={closeForm} />
       )}
-      <StyledAddButton onClick={toggleOpen}>{open ? "x" : "+"}</StyledAddButton>
+      {editFormId != null &&
+        flows.map(
+          (flow) =>
+            flow.id === editFormId && (
+              <CreateFlowForm
+                flows={flows}
+                editFormId={editFormId}
+                defaultName={flow.name}
+                defaultHours={flow.duration.hours}
+                defaultMinutes={flow.duration.minutes}
+                editFlowBasicData={(
+                  updatedName,
+                  updatedHours,
+                  updatedMinutes
+                ) =>
+                  editFlowBasicData(
+                    updatedName,
+                    updatedHours,
+                    updatedMinutes,
+                    flow.id
+                  )
+                }
+                cancelEditFlow={cancelEditFlow}
+              />
+            )
+        )}
+      <StyledAddButton onClick={toggleOpenForm}>
+        {openForm ? "x" : "+"}
+      </StyledAddButton>
     </>
   );
 }
 
 const StyledAddButton = styled.button`
+  position: fixed;
+  bottom: 1rem;
+  right: 2rem;
+  z-index: 30;
   border: none;
   display: block;
   margin: 5rem auto;
   background: var(--highlight-gradient);
+  box-shadow: var(--drop-shadow-gray);
   color: var(--text-light);
-  font-size: 2rem;
+  font-size: 1.5rem;
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 50%;

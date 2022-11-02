@@ -1,17 +1,35 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { AiOutlineClose } from "react-icons/ai";
+import { BsPen } from "react-icons/bs";
 
-export default function FlowCard({ name, hours, minutes, id }) {
+export default function FlowCard({
+  name,
+  hours,
+  minutes,
+  id,
+  deleteFlow,
+  setEditFormId,
+}) {
   return (
     <FlowWrapper>
+      <StyledButtonWrapper top="1.5rem" onClick={deleteFlow}>
+        <StyledCloseIcon />
+      </StyledButtonWrapper>
+
+      <StyledButtonWrapper bottom="1.5rem" onClick={setEditFormId}>
+        <StyledEditIcon />
+      </StyledButtonWrapper>
+
       <h2>{name}</h2>
       <p>
         {hours}
         {parseInt(hours) > 0 ? "h" : ""} {minutes}
         {parseInt(minutes) > 0 ? "min" : ""}
       </p>
-
-      <Link href={`/flow/${id}`}>To the flow</Link>
+      <Link href={`/flow/${id}`} passHref>
+        <StyledButton>To the flow</StyledButton>
+      </Link>
     </FlowWrapper>
   );
 }
@@ -22,9 +40,43 @@ const FlowWrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 4rem auto;
-  padding: 0 2rem 1rem 2rem;
+  margin: 2rem auto;
+  padding: 2rem 2rem 1rem 2rem;
   &:hover {
     box-shadow: var(--drop-shadow-bottom-hover);
   }
+`;
+
+const StyledCloseIcon = styled(AiOutlineClose)`
+  color: var(--highlight);
+  font-size: var(--font-small);
+`;
+
+const StyledEditIcon = styled(BsPen)`
+  color: var(--primary);
+  font-size: var(--font-small);
+`;
+
+const StyledButton = styled.button`
+  width: 8rem;
+  display: block;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border: none;
+  margin: 1rem 0;
+  cursor: pointer;
+  box-shadow: var(--drop-shadow-gray);
+  color: var(--text-light);
+  background-color: var(--primary-light);
+  &:hover {
+    background: var(--primary);
+  }
+`;
+
+const StyledButtonWrapper = styled.button`
+  all: unset;
+  position: absolute;
+  top: ${(props) => props.top};
+  bottom: ${(props) => props.bottom};
+  right: 2rem;
 `;
