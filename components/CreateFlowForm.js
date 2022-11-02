@@ -27,7 +27,8 @@ export default function CreateFlowForm({
     if (name.length === 0) {
       alert("Please enter a valid name");
     } else if (
-      flows.some((flow) => flow.name.toLowerCase() === name.toLowerCase())
+      flows.some((flow) => flow.name.toLowerCase() === name.toLowerCase()) &&
+      defaultName != name
     ) {
       alert("Name exists already. Please enter a new name.");
     } else if (editFormId != null) {

@@ -22,7 +22,9 @@ export default function FlowCard({
         {parseInt(hours) > 0 ? "h" : ""} {minutes}
         {parseInt(minutes) > 0 ? "min" : ""}
       </p>
-      <Link href={`/flow/${id}`}>To the flow</Link>
+      <Link href={`/flow/${id}`} passHref>
+        <StyledButton>To the flow</StyledButton>
+      </Link>
     </FlowWrapper>
   );
 }
@@ -54,4 +56,20 @@ const StyledEditIcon = styled(BsPen)`
   right: 1.5rem;
   color: #a9a9a9;
   font-size: var(--font-small);
+`;
+
+const StyledButton = styled.button`
+  width: 8rem;
+  display: block;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border: none;
+  margin: 1rem 0;
+  cursor: pointer;
+  box-shadow: var(--drop-shadow-gray);
+  color: var(--text-light);
+  background-color: var(--primary-light);
+  &:hover {
+    background: var(--primary);
+  }
 `;

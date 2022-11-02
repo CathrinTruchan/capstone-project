@@ -12,7 +12,7 @@ export default function CreateFlow() {
   const [flows, setFlows] = useLocalStorage("flows", flowDummys);
 
   function toggleOpenForm() {
-    setOpenForm((prev) => (prev = !prev));
+    setOpenForm((prev) => !prev);
   }
 
   function addFlow(name, hours, minutes) {
@@ -76,27 +76,30 @@ export default function CreateFlow() {
       ))}
       {openForm && <CreateFlowForm flows={flows} addFlow={addFlow} />}
       {editFormId != null &&
-        flows.map((flow) =>
-          flow.id === editFormId ? (
-            <CreateFlowForm
-              flows={flows}
-              editFormId={editFormId}
-              defaultName={flow.name}
-              defaultHours={flow.duration.hours}
-              defaultMinutes={flow.duration.minutes}
-              editFlowBasicData={(updatedName, updatedHours, updatedMinutes) =>
-                editFlowBasicData(
+        flows.map(
+          (flow) =>
+            flow.id === editFormId && (
+              <CreateFlowForm
+                flows={flows}
+                editFormId={editFormId}
+                defaultName={flow.name}
+                defaultHours={flow.duration.hours}
+                defaultMinutes={flow.duration.minutes}
+                editFlowBasicData={(
                   updatedName,
                   updatedHours,
-                  updatedMinutes,
-                  flow.id
-                )
-              }
-              cancelEditFlow={cancelEditFlow}
-            />
-          ) : (
-            ""
-          )
+                  updatedMinutes
+                ) =>
+                  editFlowBasicData(
+                    updatedName,
+                    updatedHours,
+                    updatedMinutes,
+                    flow.id
+                  )
+                }
+                cancelEditFlow={cancelEditFlow}
+              />
+            )
         )}
       <StyledAddButton onClick={toggleOpenForm}>
         {openForm ? "x" : "+"}
