@@ -79,6 +79,7 @@ export default function CreateFlow() {
         flows.map((flow) =>
           flow.id === editFormId ? (
             <CreateFlowForm
+              flows={flows}
               editFormId={editFormId}
               defaultName={flow.name}
               defaultHours={flow.duration.hours}

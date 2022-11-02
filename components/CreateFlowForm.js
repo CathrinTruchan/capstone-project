@@ -24,14 +24,14 @@ export default function CreateFlowForm({
     const { hours, minutes } = data;
     const name = data.name.trim();
 
-    if (editFormId != null) {
-      editFlowBasicData(name, hours, minutes, editFormId);
-    } else if (name.length === 0) {
+    if (name.length === 0) {
       alert("Please enter a valid name");
     } else if (
       flows.some((flow) => flow.name.toLowerCase() === name.toLowerCase())
     ) {
       alert("Name exists already. Please enter a new name.");
+    } else if (editFormId != null) {
+      editFlowBasicData(name, hours, minutes, editFormId);
     } else addFlow(name, hours, minutes);
   }
 
