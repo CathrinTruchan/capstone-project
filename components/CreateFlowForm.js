@@ -1,17 +1,15 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { MainButton } from "./MainButton";
 
 export default function CreateFlowForm({
   flows,
   addFlow,
-  editFlowBasicData,
-  isEditForm,
-  setIsEditForm,
-  id,
   defaultName,
   defaultHours,
   defaultMinutes,
+  editFlowBasicData,
+  editFormId,
+  cancelEditFlow,
 }) {
   const [hours, setHours] = useState("0");
 
@@ -26,18 +24,15 @@ export default function CreateFlowForm({
     const { hours, minutes } = data;
     const name = data.name.trim();
 
-    if (openEditForm) {
-      editFlowBasicData(name, hours, minutes, id);
-      setIsEditForm(false);
-    } else {
-      if (name.length === 0) {
-        alert("Please enter a valid name");
-      } else if (
-        flows.some((flow) => flow.name.toLowerCase() === name.toLowerCase())
-      ) {
-        alert("Name exists already. Please enter a new name.");
-      } else addFlow(name, hours, minutes);
-    }
+    if (editFormId != null) {
+      editFlowBasicData(name, hours, minutes, editFormId);
+    } else if (name.length === 0) {
+      alert("Please enter a valid name");
+    } else if (
+      flows.some((flow) => flow.name.toLowerCase() === name.toLowerCase())
+    ) {
+      alert("Name exists already. Please enter a new name.");
+    } else addFlow(name, hours, minutes);
   }
 
   return (
@@ -83,11 +78,8 @@ export default function CreateFlowForm({
           </section>
         </StyledFieldset>
         <StyledSubmitButton>Save</StyledSubmitButton>
-        {isEditForm && (
-          <StyledCancelButton
-            type="button"
-            onClick={() => setIsEditForm(false)}
-          >
+        {editFormId != null && (
+          <StyledCancelButton onClick={cancelEditFlow}>
             Cancel
           </StyledCancelButton>
         )}

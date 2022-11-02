@@ -8,6 +8,7 @@ import { flowDummys } from "../../db";
 
 export default function CreateFlow() {
   const [openForm, setOpenForm] = useState(false);
+  const [editFormId, setEditFormId] = useState(null);
   const [flows, setFlows] = useLocalStorage("flows", flowDummys);
 
   function toggleOpenForm() {
@@ -38,11 +39,11 @@ export default function CreateFlow() {
     updatedName,
     updatedHours,
     updatedMinutes,
-    flowCardId
+    cardId
   ) {
     setFlows(
       flows.map((flow) =>
-        flow.id === flowCardId
+        flow.id === cardId
           ? {
               ...flow,
               name: updatedName,
@@ -51,6 +52,11 @@ export default function CreateFlow() {
           : flow
       )
     );
+    setEditFormId(null);
+  }
+
+  function cancelEditFlow() {
+    setEditFormId(null);
   }
 
   return (
@@ -65,17 +71,32 @@ export default function CreateFlow() {
           minutes={flow.duration.minutes}
           id={flow.id}
           deleteFlow={() => deleteFlow(flow.id)}
-          editFlowBasicData={(updatedName, updatedHours, updatedMinutes) =>
-            editFlowBasicData(
-              updatedName,
-              updatedHours,
-              updatedMinutes,
-              flow.id
-            )
-          }
+          setEditFormId={() => setEditFormId(flow.id)}
         />
       ))}
       {openForm && <CreateFlowForm flows={flows} addFlow={addFlow} />}
+      {editFormId != null &&
+        flows.map((flow) =>
+          flow.id === editFormId ? (
+            <CreateFlowForm
+              editFormId={editFormId}
+              defaultName={flow.name}
+              defaultHours={flow.duration.hours}
+              defaultMinutes={flow.duration.minutes}
+              editFlowBasicData={(updatedName, updatedHours, updatedMinutes) =>
+                editFlowBasicData(
+                  updatedName,
+                  updatedHours,
+                  updatedMinutes,
+                  flow.id
+                )
+              }
+              cancelEditFlow={cancelEditFlow}
+            />
+          ) : (
+            ""
+          )
+        )}
       <StyledAddButton onClick={toggleOpenForm}>
         {openForm ? "x" : "+"}
       </StyledAddButton>

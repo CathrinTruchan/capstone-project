@@ -2,9 +2,6 @@ import styled from "styled-components";
 import Link from "next/link";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsPen } from "react-icons/bs";
-import { useState } from "react";
-
-import CreateFlowForm from "./CreateFlowForm";
 
 export default function FlowCard({
   name,
@@ -12,14 +9,12 @@ export default function FlowCard({
   minutes,
   id,
   deleteFlow,
-  editFlowBasicData,
+  setEditFormId,
 }) {
-  const [isEditForm, setIsEditForm] = useState(false);
-
   return (
     <FlowWrapper>
       <StyledCloseIcon onClick={deleteFlow}></StyledCloseIcon>
-      <StyledEditIcon onClick={() => setIsEditForm(true)}></StyledEditIcon>
+      <StyledEditIcon onClick={setEditFormId}></StyledEditIcon>
 
       <h2>{name}</h2>
       <p>
@@ -27,20 +22,7 @@ export default function FlowCard({
         {parseInt(hours) > 0 ? "h" : ""} {minutes}
         {parseInt(minutes) > 0 ? "min" : ""}
       </p>
-
       <Link href={`/flow/${id}`}>To the flow</Link>
-
-      {isEditForm && (
-        <CreateFlowForm
-          editFlowBasicData={editFlowBasicData}
-          isEditForm={true}
-          id={id}
-          defaultName={name}
-          defaultHours={hours}
-          defaultMinutes={minutes}
-          setIsEditForm={setIsEditForm}
-        />
-      )}
     </FlowWrapper>
   );
 }
