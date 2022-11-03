@@ -1,6 +1,7 @@
 import { getAsanaByID, getAllAsanas } from "../../db";
 import Image from "next/image";
 import styled from "styled-components";
+import StyledBackButton from "../../components/BackButton";
 
 export async function getStaticPaths() {
   const asanas = getAllAsanas();
@@ -21,25 +22,28 @@ export async function getStaticProps(context) {
 
 export default function Asana({ asana }) {
   return (
-    <StyledArticle>
-      <Image
-        src={asana.img_url}
-        alt={asana.english_name}
-        width={230}
-        height={230}
-        layout="fixed"
-      />
-      <h1>{asana.english_name}</h1>
-      <h2>{asana.sanskrit_name}</h2>
-      <StyledDescription>{asana.description}</StyledDescription>
+    <>
+      <StyledBackButton />
+      <StyledArticle>
+        <Image
+          src={asana.img_url}
+          alt={asana.english_name}
+          width={230}
+          height={230}
+          layout="fixed"
+        />
+        <h1>{asana.english_name}</h1>
+        <h2>{asana.sanskrit_name}</h2>
+        <StyledDescription>{asana.description}</StyledDescription>
 
-      <StyledList>
-        {asana.levels.map((item, index) => {
-          return <StyledListElement key={index}>{item}</StyledListElement>;
-        })}
-      </StyledList>
-      <StyledBenefit>{asana.benefit}</StyledBenefit>
-    </StyledArticle>
+        <StyledList>
+          {asana.levels.map((item, index) => {
+            return <StyledListElement key={index}>{item}</StyledListElement>;
+          })}
+        </StyledList>
+        <StyledBenefit>{asana.benefit}</StyledBenefit>
+      </StyledArticle>
+    </>
   );
 }
 

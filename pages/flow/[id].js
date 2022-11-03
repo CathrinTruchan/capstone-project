@@ -10,6 +10,7 @@ import { nanoid } from "nanoid";
 import SearchBar from "../../components/SearchBar";
 import LevelFilter from "../../components/LevelFilter";
 import { BsPen } from "react-icons/bs";
+import StyledBackButton from "../../components/BackButton";
 
 export default function FlowPage() {
   const [flows, setFlows] = useLocalStorage("flows", flowDummys);
@@ -93,6 +94,7 @@ export default function FlowPage() {
   return (
     <>
       <section>
+        <StyledBackButton />
         <h1>{name}</h1>
         <StyledParagraph>
           {parseInt(hours) > 0 && <span>{hours}h</span>}
