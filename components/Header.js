@@ -19,11 +19,10 @@ const StyledHeaderSection = styled.header`
   background: var(--primary-gradient);
 `;
 
-const StyledTitle = styled.p`
-  font-size: 2.3rem;
+const StyledTitle = styled.h1`
   color: var(--text-light);
   text-align: center;
-  padding: 1rem;
+  padding-bottom: 1rem;
   margin-bottom: 1rem;
   font-family: "Montserrat Alternates";
 `;

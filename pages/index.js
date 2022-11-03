@@ -73,7 +73,7 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1>Let&apos;s flow</h1>
+        <StyledH2>Let&apos;s flow</StyledH2>
 
         {flows.map((flow) => (
           <FlowCard
@@ -148,4 +148,8 @@ const StyledAddButton = styled.button`
     background-color: var(--highlight);
     color: var(--text-light);
   }
+`;
+
+const StyledH2 = styled.h2`
+  font-size: 2rem;
 `;

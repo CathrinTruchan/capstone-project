@@ -95,7 +95,7 @@ export default function FlowPage() {
     <>
       <section>
         <StyledBackButton />
-        <h1>{name}</h1>
+        <h2>{name}</h2>
         <StyledParagraph>
           {parseInt(hours) > 0 && <span>{hours}h</span>}
           {parseInt(minutes) > 0 && <span> {minutes}min</span>}
