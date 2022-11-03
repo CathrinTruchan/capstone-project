@@ -1,14 +1,68 @@
 import Head from "next/head";
 import styled from "styled-components";
-import AsanaCard from "../components/Asana-Card/AsanaCard";
-import asanas from "../db";
-import SearchBar from "../components/SearchBar";
 import { useState } from "react";
-import LevelFilter from "../components/LevelFilter";
+import CreateFlowForm from "/components/CreateFlowForm";
+import { nanoid } from "nanoid";
+import FlowCard from "/components/FlowCard";
+import useLocalStorage from "/hooks/useLocalStorage";
+import { flowDummys } from "/db";
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filterQuery, setFilterQuery] = useState("all");
+  const [openForm, setOpenForm] = useState(false);
+  const [editFormId, setEditFormId] = useState(null);
+  const [flows, setFlows] = useLocalStorage("flows", flowDummys);
+
+  function toggleOpenForm() {
+    setOpenForm((prev) => !prev);
+  }
+
+  function addFlow(name, hours, minutes) {
+    setFlows([
+      ...flows,
+      {
+        id: nanoid(),
+        name: name,
+        duration: {
+          hours: hours,
+          minutes: minutes,
+        },
+        asanas: [],
+      },
+    ]);
+    setOpenForm(false);
+  }
+
+  function deleteFlow(flowCardId) {
+    setFlows(flows.filter((flow) => flow.id !== flowCardId));
+  }
+
+  function editFlowBasicData(
+    updatedName,
+    updatedHours,
+    updatedMinutes,
+    cardId
+  ) {
+    setFlows(
+      flows.map((flow) =>
+        flow.id === cardId
+          ? {
+              ...flow,
+              name: updatedName,
+              duration: { hours: updatedHours, minutes: updatedMinutes },
+            }
+          : flow
+      )
+    );
+    setEditFormId(null);
+  }
+
+  function cancelEditFlow() {
+    setEditFormId(null);
+  }
+
+  function closeForm() {
+    setOpenForm(false);
+  }
 
   return (
     <div>
@@ -19,41 +73,83 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1>Your Daily Flow</h1>
-        <SearchBar setSearchQuery={setSearchQuery} />
+        <StyledH2>Let&apos;s flow</StyledH2>
 
-        <LevelFilter setFilterQuery={setFilterQuery} />
-
-        <StyledList>
-          {asanas
-            .filter((asana) => {
-              const nameInLowerCase = asana.english_name.toLowerCase();
-              const searchQueryInLowerCase = searchQuery.toLowerCase();
-              return nameInLowerCase.includes(searchQueryInLowerCase);
-            })
-            .filter((asana) => {
-              if (filterQuery !== "all") {
-                return asana.levels[0] === filterQuery;
-              } else return asana;
-            })
-            .map((asana) => {
-              return (
-                <li key={asana.id}>
-                  <AsanaCard
-                    name={asana.english_name}
-                    img={asana.img_url}
-                    id={asana.id}
-                    showDeleteButton={false}
-                  />
-                </li>
-              );
-            })}
-        </StyledList>
+        {flows.map((flow) => (
+          <FlowCard
+            key={flow.id}
+            name={flow.name}
+            hours={flow.duration.hours}
+            minutes={flow.duration.minutes}
+            id={flow.id}
+            deleteFlow={() => deleteFlow(flow.id)}
+            setEditFormId={() => setEditFormId(flow.id)}
+          />
+        ))}
+        {openForm && (
+          <CreateFlowForm
+            flows={flows}
+            addFlow={addFlow}
+            closeForm={closeForm}
+          />
+        )}
+        {editFormId != null &&
+          flows.map(
+            (flow) =>
+              flow.id === editFormId && (
+                <CreateFlowForm
+                  flows={flows}
+                  editFormId={editFormId}
+                  defaultName={flow.name}
+                  defaultHours={flow.duration.hours}
+                  defaultMinutes={flow.duration.minutes}
+                  editFlowBasicData={(
+                    updatedName,
+                    updatedHours,
+                    updatedMinutes
+                  ) =>
+                    editFlowBasicData(
+                      updatedName,
+                      updatedHours,
+                      updatedMinutes,
+                      flow.id
+                    )
+                  }
+                  cancelEditFlow={cancelEditFlow}
+                />
+              )
+          )}
+        <StyledAddButton onClick={toggleOpenForm}>
+          {openForm ? "x" : "+"}
+        </StyledAddButton>
       </main>
     </div>
   );
 }
 
-const StyledList = styled.ul`
-  list-style: none;
+const StyledAddButton = styled.button`
+  position: fixed;
+  bottom: 1.5rem;
+  right: 2rem;
+  z-index: 30;
+  border: none;
+  display: block;
+  margin: auto;
+  background: var(--highlight-gradient);
+  box-shadow: var(--drop-shadow-gray);
+  color: var(--text-light);
+  font-size: 1.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  &:active {
+    background-color: var(--highlight);
+    color: var(--text-light);
+  }
+`;
+
+const StyledH2 = styled.h2`
+  font-size: 2rem;
 `;

@@ -1,11 +1,13 @@
 import GlobalStyle from "../components/GlobalStyle";
-import { useState } from "react";
+import Layout from "../components/Layout";
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   );
 }

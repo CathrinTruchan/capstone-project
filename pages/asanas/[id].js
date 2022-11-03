@@ -32,8 +32,8 @@ export default function Asana({ asana }) {
           height={230}
           layout="fixed"
         />
-        <h1>{asana.english_name}</h1>
-        <h2>{asana.sanskrit_name}</h2>
+        <h2>{asana.english_name}</h2>
+        <h3>{asana.sanskrit_name}</h3>
         <StyledDescription>{asana.description}</StyledDescription>
 
         <StyledList>
