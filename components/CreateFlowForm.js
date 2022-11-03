@@ -39,9 +39,11 @@ export default function CreateFlowForm({
 
   return (
     <StyledOverlayBackground>
-      <StyledForm onSubmit={handleSubmit}>
+      <StyledForm onSubmit={handleSubmit} role="form">
         <StyledLabel htmlFor="flow-name">Name:</StyledLabel>
         <StyledInput
+          aria-label="name"
+          role="input"
           width="10rem"
           type="text"
           id="flow-name"
@@ -56,6 +58,8 @@ export default function CreateFlowForm({
           <section>
             <StyledLabel htmlFor="hours">Hours</StyledLabel>
             <StyledInput
+              aria-label="hours"
+              role="input"
               width="3rem"
               type="number"
               id="hours"
@@ -69,6 +73,8 @@ export default function CreateFlowForm({
           <section>
             <StyledLabel htmlFor="minutes">Minutes</StyledLabel>
             <StyledInput
+              aria-label="minutes"
+              role="input"
               width="3rem"
               type="number"
               id="minutes"
@@ -79,13 +85,21 @@ export default function CreateFlowForm({
             />
           </section>
         </StyledFieldset>
-        <StyledSubmitButton>Save</StyledSubmitButton>
+        <StyledSubmitButton aria-label="save" role="button">
+          Save
+        </StyledSubmitButton>
         {editFormId != null ? (
           <StyledCancelButton onClick={cancelEditFlow}>
             Cancel
           </StyledCancelButton>
         ) : (
-          <StyledCancelButton onClick={closeForm}>Cancel</StyledCancelButton>
+          <StyledCancelButton
+            aria-label="cancel"
+            role="button"
+            onClick={closeForm}
+          >
+            Cancel
+          </StyledCancelButton>
         )}
       </StyledForm>
     </StyledOverlayBackground>

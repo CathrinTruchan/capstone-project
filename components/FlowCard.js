@@ -13,11 +13,21 @@ export default function FlowCard({
 }) {
   return (
     <FlowWrapper>
-      <StyledButtonWrapper top="1.5rem" onClick={deleteFlow}>
+      <StyledButtonWrapper
+        role="button"
+        aria-label="delete"
+        top="1.5rem"
+        onClick={deleteFlow}
+      >
         <StyledCloseIcon />
       </StyledButtonWrapper>
 
-      <StyledButtonWrapper bottom="1.5rem" onClick={setEditFormId}>
+      <StyledButtonWrapper
+        role="button"
+        bottom="1.5rem"
+        aria-label="edit"
+        onClick={setEditFormId}
+      >
         <StyledEditIcon />
       </StyledButtonWrapper>
 
@@ -28,7 +38,7 @@ export default function FlowCard({
         {parseInt(minutes) > 0 ? "min" : ""}
       </p>
       <Link href={`/flow/${id}`} passHref>
-        <StyledButton>To the flow</StyledButton>
+        <StyledButton role="button">To the flow</StyledButton>
       </Link>
     </FlowWrapper>
   );
