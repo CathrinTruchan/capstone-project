@@ -73,7 +73,7 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1>Your Daily Flow</h1>
+        <h1>Let&apos;s flow</h1>
 
         {flows.map((flow) => (
           <FlowCard
@@ -129,12 +129,12 @@ export default function Home() {
 
 const StyledAddButton = styled.button`
   position: fixed;
-  bottom: 1rem;
+  bottom: 1.5rem;
   right: 2rem;
   z-index: 30;
   border: none;
   display: block;
-  margin: 5rem auto;
+  margin: auto;
   background: var(--highlight-gradient);
   box-shadow: var(--drop-shadow-gray);
   color: var(--text-light);

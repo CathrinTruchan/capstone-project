@@ -19,9 +19,9 @@ const StyledBackButton = styled.button`
   background-color: var(--background-neutral);
   border-radius: 50%;
   position: fixed;
-  top: 5rem;
+  top: 6rem;
   left: 1rem;
-  z-index: 1;
+  z-index: 80;
 `;
 
 const StyledBackIcon = styled(IoIosArrowBack)`

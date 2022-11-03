@@ -267,6 +267,7 @@ const AddAsanaSection = styled.section`
   box-shadow: var(--drop-shadow-color);
   overflow-y: scroll;
   color: var(--text-light);
+  margin-left: -1rem;
 `;
 
 const StyledH3 = styled.h3`
