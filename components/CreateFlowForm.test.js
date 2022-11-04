@@ -21,8 +21,8 @@ describe("CreateFlowForm", () => {
 
   it("adds a new text to text input", async () => {
     render(<CreateFlowForm />);
-    const input = screen.getAllByRole("input");
-    await userEvent.type(input[0], "My new Flow");
-    expect(input[0]).toHaveValue("My new Flow");
+    const input = screen.getByLabelText("name");
+    await userEvent.type(input, "My new Flow");
+    expect(input).toHaveValue("My new Flow");
   });
 });
