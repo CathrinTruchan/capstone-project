@@ -3,14 +3,20 @@ import userEvent from "@testing-library/user-event";
 import FlowCard from "./FlowCard";
 
 describe("FlowCard", () => {
-  it("renders the name, hours and minutes of the flow-object", () => {
-    render(<FlowCard name={"Power Yoga Flow"} hours={1} minutes={30} />);
+  it("renders three buttons, one of them with the text `to the flow`", () => {
+    render(<FlowCard />);
 
     expect(screen.getAllByText("To the flow")).toHaveLength(1);
     expect(screen.getAllByRole("button")).toHaveLength(3);
   });
 
-  it("calls a function when clicking on the delete-button", async () => {
+  it("renders the name and duration of the flow", () => {
+    render(<FlowCard name={"Power Yoga Flow"} hours={1} minutes={30} />);
+    expect(screen.getByText("Power Yoga Flow")).toBeVisible();
+    expect(screen.getByText("1h 30min")).toBeVisible();
+  });
+
+  it("calls the delete function when clicking on the delete-button", async () => {
     const deleteFunction = jest.fn();
     render(
       <FlowCard
@@ -27,7 +33,7 @@ describe("FlowCard", () => {
     expect(deleteFunction).toHaveBeenCalledTimes(1);
   });
 
-  it("calls a function when clicking on the edit-button", async () => {
+  it("calls the edit function when clicking on the edit-button", async () => {
     const editFunction = jest.fn();
     render(
       <FlowCard

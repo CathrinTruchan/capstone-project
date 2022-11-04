@@ -13,7 +13,8 @@ export default function LevelFilter({ setFilterQuery }) {
         name="levelfilter"
         value="beginner"
         onChange={handleLevelFilter}
-        aria-label="filter for beginner asanas"
+        aria-label="beginner"
+        role="radio"
       />
       <label htmlFor="beginner">beginner</label>
       <input
@@ -22,7 +23,8 @@ export default function LevelFilter({ setFilterQuery }) {
         name="levelfilter"
         value="intermediate"
         onChange={handleLevelFilter}
-        aria-label="filter for intermediate asanas"
+        aria-label="intermediate"
+        role="radio"
       />
       <label htmlFor="intermediate">intermediate</label>
       <input
@@ -31,7 +33,8 @@ export default function LevelFilter({ setFilterQuery }) {
         name="levelfilter"
         value="pro"
         onChange={handleLevelFilter}
-        aria-label="filter for advanced asanas"
+        aria-label="advanced"
+        role="radio"
       />
       <label htmlFor="advanced">pro</label>
       <input
@@ -40,7 +43,8 @@ export default function LevelFilter({ setFilterQuery }) {
         name="levelfilter"
         value="all"
         onChange={handleLevelFilter}
-        aria-label="filter for all asanas"
+        aria-label="all"
+        role="radio"
       />
       <label htmlFor="all">all</label>
     </StyledInputWrapper>
