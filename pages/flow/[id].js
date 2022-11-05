@@ -3,7 +3,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import AsanaCard from "../../components/Asana-Card/AsanaCard";
-import asanas from "../../db";
+// import asanas from "../../db";
 import { useState } from "react";
 import { MainButton } from "../../components/MainButton";
 import { nanoid } from "nanoid";
@@ -11,8 +11,17 @@ import SearchBar from "../../components/SearchBar";
 import LevelFilter from "../../components/LevelFilter";
 import { BsPen } from "react-icons/bs";
 import StyledBackButton from "../../components/BackButton";
+import { getAllAsanas } from "../../services/asanaService";
 
-export default function FlowPage() {
+export async function getServerSideProps() {
+  const asanas = await getAllAsanas();
+
+  return {
+    props: { asanas: asanas },
+  };
+}
+
+export default function FlowPage({ asanas }) {
   const [flows, setFlows] = useLocalStorage("flows", flowDummys);
   const router = useRouter();
   const { id } = router.query;
@@ -28,6 +37,7 @@ export default function FlowPage() {
   const currentAsanas = currentFlow?.asanas || [];
   const description = currentFlow?.description || "";
 
+  console.log(currentAsanas);
   function updateFlow(id, asana) {
     setFlows(
       flows.map((flow) =>
