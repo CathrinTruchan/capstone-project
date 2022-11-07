@@ -9,6 +9,7 @@ export async function getServerSideProps() {
 } */
 
 import { getAllFlows } from "../../services/flowService";
+import FlowCard from "/components/FlowCard";
 
 export async function getServerSideProps() {
   const flows = await getAllFlows();
@@ -21,10 +22,14 @@ export default function AsanasTest({ flows }) {
   console.log(flows);
   return (
     <>
-      <p>Test</p>
-      <p>{flows[0].name}</p>
-      <p>{flows[0].hours}</p>
-      <p>{flows[0].minutes}</p>
+      {flows.map((flow) => (
+        <FlowCard
+          key={flow.id}
+          name={flow.name}
+          hours={flow.hours}
+          minutes={flow.minutes}
+        />
+      ))}
     </>
   );
 }

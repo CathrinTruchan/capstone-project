@@ -11,30 +11,33 @@ import LevelFilter from "../../components/LevelFilter";
 import { BsPen } from "react-icons/bs";
 import StyledBackButton from "../../components/BackButton";
 import { getAllAsanas } from "../../services/asanaService";
+import { getFlowById } from "/services/flowService";
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+  const { id } = context.params;
   const asanas = await getAllAsanas();
-
+  const currentFlowDB = await getFlowById(id);
   return {
-    props: { asanas: asanas },
+    props: { asanas: asanas, currentFlowDB: currentFlowDB },
   };
 }
 
-export default function FlowPage({ asanas }) {
-  const [flows, setFlows] = useLocalStorage("flows", flowDummys);
-  const router = useRouter();
-  const { id } = router.query;
+export default function FlowPage({ asanas, currentFlowDB }) {
+  //const [flows, setFlows] = useLocalStorage("flows", flowDummys);
+  // const router = useRouter();
+  // const { id } = router.query;
+  const [flow, setFlow] = useState({});
   const [openMenu, setOpenMenu] = useState(false);
   const [openDescriptionForm, setOpenDescriptionForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterQuery, setFilterQuery] = useState("all");
 
-  const currentFlow = flows.find((flow) => flow.id === id);
+  /*  const currentFlow = flows.find((flow) => flow.id === id);
   const name = currentFlow?.name || "No flow found";
   const hours = currentFlow?.duration?.hours || "";
   const minutes = currentFlow?.duration?.minutes || "";
   const currentAsanas = currentFlow?.asanas || [];
-  const description = currentFlow?.description || "";
+  const description = currentFlow?.description || ""; */
 
   function updateFlow(id, asana) {
     setFlows(
@@ -103,16 +106,23 @@ export default function FlowPage({ asanas }) {
     <>
       <section>
         <StyledBackButton />
-        <h2>{name}</h2>
+
+        <h2>{currentFlowDB.name}</h2>
         <StyledParagraph>
-          {parseInt(hours) > 0 && <span>{hours}h</span>}
-          {parseInt(minutes) > 0 && <span> {minutes}min</span>}
+          {parseInt(currentFlowDB.hours) > 0 && (
+            <span>{currentFlowDB.hours}h</span>
+          )}
+          {parseInt(currentFlowDB.minute) > 0 && (
+            <span> {currentFlowDB.minutes}min</span>
+          )}
         </StyledParagraph>
         <StyledParagraph>
-          {description}
-          {description !== "" && <StyledEditIcon onClick={toggleOpenForm} />}
+          {currentFlowDB.description}
+          {currentFlowDB.description !== "" && (
+            <StyledEditIcon onClick={toggleOpenForm} />
+          )}
         </StyledParagraph>
-        {description === "" && (
+        {currentFlowDB.description === "" && (
           <StyledEditButton onClick={toggleOpenForm}>
             Add description <BsPen />
           </StyledEditButton>
@@ -148,7 +158,7 @@ export default function FlowPage({ asanas }) {
       </section>
       <StyledContainer>
         <StyledListWithMargin>
-          {currentAsanas.map((asana, index) => {
+          {currentFlowDB.asanas.map((asana, index) => {
             return (
               <li key={index}>
                 <AsanaCard
@@ -163,7 +173,7 @@ export default function FlowPage({ asanas }) {
           })}
         </StyledListWithMargin>
 
-        {!openMenu && name != "No flow found" && (
+        {!openMenu && currentFlowDB.name != "No flow found" && (
           <MainButton
             type="primary"
             onClick={() => setOpenMenu(true)}
@@ -172,7 +182,7 @@ export default function FlowPage({ asanas }) {
             + Add Asanas
           </MainButton>
         )}
-        {!openMenu && currentAsanas.length > 0 && (
+        {!openMenu && currentFlowDB.asanas.length > 0 && (
           <MainButton
             type="secondary"
             onClick={() => resetFlow(id)}
@@ -186,7 +196,9 @@ export default function FlowPage({ asanas }) {
           {openMenu && (
             <AddAsanaSection>
               <SectionHeader>
-                <StyledH3>You added {currentAsanas.length} Asanas</StyledH3>
+                <StyledH3>
+                  You added {currentFlowDB.asanas.length} Asanas
+                </StyledH3>
                 <StyledCloseButton
                   aria-label="close"
                   onClick={() => {

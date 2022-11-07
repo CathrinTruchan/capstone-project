@@ -11,6 +11,9 @@ export default function CreateFlowForm({
   editFormId,
   cancelEditFlow,
   closeForm,
+  handleFlowPost,
+  handleFlowUpdate,
+  id,
 }) {
   const [hours, setHours] = useState("0");
 
@@ -18,12 +21,22 @@ export default function CreateFlowForm({
     setHours(event.target.value);
   }
 
-  function handleSubmit(event) {
+  function onSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
     const { hours, minutes } = data;
     const name = data.name.trim();
+    const flowData = {
+      id: id,
+      name: name,
+      description: "",
+      duration: {
+        hours: hours,
+        minutes: minutes,
+      },
+      asanas: [],
+    };
 
     if (name.length === 0) {
       alert("Please enter a valid name");
@@ -33,13 +46,15 @@ export default function CreateFlowForm({
     ) {
       alert("Name exists already. Please enter a new name.");
     } else if (editFormId != null) {
-      editFlowBasicData(name, hours, minutes, editFormId);
-    } else addFlow(name, hours, minutes);
+      handleFlowUpdate(flowData);
+      //editFlowBasicData(name, hours, minutes, editFormId);
+    } else handleFlowPost(flowData);
+    //addFlow(name, hours, minutes);
   }
 
   return (
     <StyledOverlayBackground>
-      <StyledForm onSubmit={handleSubmit} role="form">
+      <StyledForm onSubmit={onSubmit} role="form">
         <StyledLabel htmlFor="flow-name">Name:</StyledLabel>
         <StyledInput
           aria-label="name"

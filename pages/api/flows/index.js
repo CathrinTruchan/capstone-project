@@ -15,6 +15,32 @@ export default async function handler(request, response) {
     return response
       .status(201)
       .json({ message: "Flow created", createdId: newFlow.id });
+  } else if (request.method === "PUT") {
+    await dbConnect();
+    const updatedData = JSON.parse(request.body);
+    console.log(updatedData);
+    console.log("test");
+    const updatedFlow = await Flow.findByIdAndUpdate(
+      { _id: updatedData.id },
+      {
+        name: updatedData.name,
+        hours: updatedData.duration.hours,
+        minutes: updatedData.duration.minutes,
+        description: "",
+        asanas: [],
+      }
+    );
+
+    return response
+      .status(200)
+      .json({ message: "Flow updated", name: updatedFlow.name });
+  } else if (request.method === "DELETE") {
+    await dbConnect();
+    const idToDelete = JSON.parse(request.body);
+    await Flow.findByIdAndDelete(idToDelete);
+    return response
+      .status(200)
+      .json({ message: "Flow deleted", id: idToDelete });
   }
 
   return response.status(405).json({ message: "HTTP method is not allowed" });
