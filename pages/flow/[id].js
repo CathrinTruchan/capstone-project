@@ -3,7 +3,6 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import AsanaCard from "../../components/Asana-Card/AsanaCard";
-// import asanas from "../../db";
 import { useState } from "react";
 import { MainButton } from "../../components/MainButton";
 import { nanoid } from "nanoid";
@@ -37,7 +36,6 @@ export default function FlowPage({ asanas }) {
   const currentAsanas = currentFlow?.asanas || [];
   const description = currentFlow?.description || "";
 
-  console.log(currentAsanas);
   function updateFlow(id, asana) {
     setFlows(
       flows.map((flow) =>
