@@ -101,7 +101,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
         <h2>{flow.name}</h2>
         <StyledParagraph>
           {parseInt(flow.hours) > 0 && <span>{flow.hours}h</span>}
-          {parseInt(flow.minute) > 0 && <span> {flow.minutes}min</span>}
+          {parseInt(flow.minutes) > 0 && <span> {flow.minutes}min</span>}
         </StyledParagraph>
         <StyledParagraph>
           {flow.description}
