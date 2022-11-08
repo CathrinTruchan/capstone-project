@@ -3,11 +3,9 @@ import styled from "styled-components";
 
 export default function CreateFlowForm({
   flows,
-  addFlow,
   defaultName,
   defaultHours,
   defaultMinutes,
-  editFlowBasicData,
   editFormId,
   cancelEditFlow,
   closeForm,
@@ -48,9 +46,7 @@ export default function CreateFlowForm({
       alert("Name exists already. Please enter a new name.");
     } else if (editFormId != null) {
       handleFlowUpdate(flowData);
-      //editFlowBasicData(name, hours, minutes, editFormId);
     } else handleFlowPost(flowData);
-    //addFlow(name, hours, minutes);
   }
 
   return (
