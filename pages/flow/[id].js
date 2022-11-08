@@ -1,5 +1,3 @@
-import { flowDummys } from "../../db";
-import useLocalStorage from "../../hooks/useLocalStorage";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import AsanaCard from "../../components/Asana-Card/AsanaCard";
@@ -23,7 +21,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function FlowPage({ asanas, currentFlowDB }) {
-  //const [flows, setFlows] = useLocalStorage("flows", flowDummys);
   const router = useRouter();
   const { id } = router.query;
   const [flow, setFlow] = useState(currentFlowDB);
@@ -32,24 +29,15 @@ export default function FlowPage({ asanas, currentFlowDB }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterQuery, setFilterQuery] = useState("all");
 
-  /*  const currentFlow = flows.find((flow) => flow.id === id);
-  const name = currentFlow?.name || "No flow found";
-  const hours = currentFlow?.duration?.hours || "";
-  const minutes = currentFlow?.duration?.minutes || "";
-  const currentAsanas = currentFlow?.asanas || [];
-  const description = currentFlow?.description || ""; */
-
-  console.log(JSON.stringify(flow));
-
-  async function handleFlowSave(flow) {
+  async function handleFlowSave(data) {
     try {
-      const response = await fetch(`/api/flows${id}`, {
+      const response = await fetch(`/api/flows/${id}`, {
         method: "PUT",
-        body: JSON.stringify(flow),
+        body: JSON.stringify(data),
       });
 
       const result = await response.json();
-
+      console.log(result.name);
       if (result.name) {
         alert("Flow has been updated");
       } else {
@@ -59,19 +47,6 @@ export default function FlowPage({ asanas, currentFlowDB }) {
       console.error(error);
     }
   }
-  /* 
-  function updateFlow(id, asana) {
-    setFlows(
-      flows.map((flow) =>
-        flow.id === id
-          ? {
-              ...flow,
-              asanas: [...flow.asanas, { ...asana, flowListId: nanoid() }],
-            }
-          : flow
-      )
-    );
-  } */
 
   function addAsanaToFlow(asana) {
     setFlow({
@@ -79,25 +54,6 @@ export default function FlowPage({ asanas, currentFlowDB }) {
       asanas: [...flow.asanas, { ...asana, flowListId: nanoid() }],
     });
   }
-
-  /*   function onSubmitDescription(event, id) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const { description } = Object.fromEntries(formData);
-    const trimmedDescription = description.trim();
-
-    if (trimmedDescription.length === 0) {
-      alert("Please enter a description or close the input field");
-    } else {
-      setFlows(
-        flows.map((flow) =>
-          flow.id === id ? { ...flow, description: trimmedDescription } : flow
-        )
-      );
-      toggleOpenForm();
-    }
-  }
- */
 
   function onSubmitDescription(event) {
     event.preventDefault();
@@ -113,13 +69,6 @@ export default function FlowPage({ asanas, currentFlowDB }) {
     }
   }
 
-  /* 
-  function resetFlow(id) {
-    setFlows(
-      flows.map((flow) => (flow.id === id ? { ...flow, asanas: [] } : flow))
-    );
-  } */
-
   function resetFlow() {
     setFlow({ ...flow, asanas: [] });
   }
@@ -134,22 +83,6 @@ export default function FlowPage({ asanas, currentFlowDB }) {
     });
   }
 
-  /*   function deleteAsana(cardID) {
-    const filteredAsanas = currentFlow.asanas.filter(
-      (asana) => asana.flowListId !== cardID
-    );
-    setFlows(
-      flows.map((flow) => {
-        if (flow.id === id) {
-          return {
-            ...flow,
-            asanas: filteredAsanas,
-          };
-        } else return flow;
-      })
-    );
-  }
- */
   function toggleOpenForm() {
     setOpenDescriptionForm((prev) => (prev = !prev));
   }
@@ -248,7 +181,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
 
         <MainButton
           type="primary"
-          onClick={handleFlowSave}
+          onClick={() => handleFlowSave(flow)}
           margin="-3rem auto 5rem auto"
         >
           Save Flow
@@ -291,7 +224,6 @@ export default function FlowPage({ asanas, currentFlowDB }) {
                         <StyledAddButton
                           aria-label="add asana"
                           onClick={() => {
-                            //updateFlow(id, asana);
                             addAsanaToFlow(asana);
                             autoScroll();
                           }}

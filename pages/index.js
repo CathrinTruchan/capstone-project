@@ -2,13 +2,10 @@ import Head from "next/head";
 import styled from "styled-components";
 import { useState } from "react";
 import CreateFlowForm from "/components/CreateFlowForm";
-import { nanoid } from "nanoid";
 import FlowCard from "/components/FlowCard";
-import useLocalStorage from "/hooks/useLocalStorage";
-import { flowDummys } from "/db";
-import Image from "next/image";
-
 import { getAllFlows } from "/services/flowService";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export async function getServerSideProps() {
   const flowsDB = await getAllFlows();
@@ -20,11 +17,17 @@ export async function getServerSideProps() {
 export default function Home({ flowsDB }) {
   const [openForm, setOpenForm] = useState(false);
   const [editFormId, setEditFormId] = useState(null);
-  // const [flows, setFlows] = useLocalStorage("flows", flowDummys);
-  //const [flows, setFlows] = useState(flowsDB);
+  const [isUpdating, setIsUpdating] = useState(false);
 
-  console.log(flowsDB);
-  console.log(editFormId);
+  const router = useRouter();
+  const refreshData = () => {
+    router.replace(router.asPath);
+    setIsUpdating(true);
+  };
+  useEffect(() => {
+    setIsUpdating(false);
+  }, [flowsDB]);
+
   function toggleOpenForm() {
     setOpenForm((prev) => !prev);
   }
@@ -47,12 +50,13 @@ export default function Home({ flowsDB }) {
       console.error(error);
     }
     setOpenForm(false);
+    refreshData();
   }
 
   async function handleFlowUpdate(flowData) {
     try {
       const response = await fetch("/api/flows", {
-        method: "PUT",
+        method: "PATCH",
         body: JSON.stringify(flowData),
       });
 
@@ -68,6 +72,7 @@ export default function Home({ flowsDB }) {
     }
     setOpenForm(false);
     setEditFormId(null);
+    refreshData();
   }
 
   async function handleDelete(id) {
@@ -87,47 +92,8 @@ export default function Home({ flowsDB }) {
     } catch (error) {
       console.error(error);
     }
+    refreshData();
   }
-
-  /*  function addFlow(name, hours, minutes) {
-    setFlows([
-      ...flows,
-      {
-        id: nanoid(),
-        name: name,
-        duration: {
-          hours: hours,
-          minutes: minutes,
-        },
-        asanas: [],
-      },
-    ]);
-    setOpenForm(false);
-  } */
-
-  /*  function deleteFlow(flowCardId) {
-    setFlows(flows.filter((flow) => flow.id !== flowCardId));
-  }
- */
-  /* function editFlowBasicData(
-    updatedName,
-    updatedHours,
-    updatedMinutes,
-    cardId
-  ) {
-    setFlows(
-      flows.map((flow) =>
-        flow.id === cardId
-          ? {
-              ...flow,
-              name: updatedName,
-              duration: { hours: updatedHours, minutes: updatedMinutes },
-            }
-          : flow
-      )
-    );
-    setEditFormId(null);
-  } */
 
   function cancelEditFlow() {
     setEditFormId(null);
@@ -162,7 +128,6 @@ export default function Home({ flowsDB }) {
         {openForm && (
           <CreateFlowForm
             flows={flowsDB}
-            // addFlow={addFlow}
             handleFlowPost={handleFlowPost}
             closeForm={closeForm}
           />
@@ -180,18 +145,6 @@ export default function Home({ flowsDB }) {
                   defaultHours={flow.hours}
                   defaultMinutes={flow.minutes}
                   handleFlowUpdate={handleFlowUpdate}
-                  /* editFlowBasicData={(
-                    updatedName,
-                    updatedHours,
-                    updatedMinutes
-                  ) =>
-                    editFlowBasicData(
-                      updatedName,
-                      updatedHours,
-                      updatedMinutes,
-                      flow.id
-                    )
-                  } */
                   cancelEditFlow={cancelEditFlow}
                 />
               )

@@ -15,18 +15,18 @@ export default async function handler(request, response) {
     return response
       .status(201)
       .json({ message: "Flow created", createdId: newFlow.id });
-  } else if (request.method === "PUT") {
+  } else if (request.method === "PATCH") {
     await dbConnect();
     const updatedData = JSON.parse(request.body);
 
     const updatedFlow = await Flow.findByIdAndUpdate(
       { _id: updatedData.id },
       {
-        name: updatedData.name,
-        hours: updatedData.duration.hours,
-        minutes: updatedData.duration.minutes,
-        description: "",
-        asanas: [],
+        $set: {
+          name: updatedData.name,
+          hours: updatedData.duration.hours,
+          minutes: updatedData.duration.minutes,
+        },
       }
     );
 

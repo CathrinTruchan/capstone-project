@@ -14,7 +14,7 @@ export default async function handler(request, response) {
     const updatedFlow = await Flow.findByIdAndUpdate(id, updatedData);
     return response
       .status(200)
-      .json({ message: "Flow updated", updatedFlow: updatedFlow.name });
+      .json({ message: "Flow updated", name: updatedFlow.name });
   }
   return response.status(405).json({ message: "HTTP method is not allowed" });
 }
