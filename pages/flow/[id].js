@@ -24,9 +24,9 @@ export async function getServerSideProps(context) {
 
 export default function FlowPage({ asanas, currentFlowDB }) {
   //const [flows, setFlows] = useLocalStorage("flows", flowDummys);
-  // const router = useRouter();
-  // const { id } = router.query;
-  const [flow, setFlow] = useState({});
+  const router = useRouter();
+  const { id } = router.query;
+  const [flow, setFlow] = useState(currentFlowDB);
   const [openMenu, setOpenMenu] = useState(false);
   const [openDescriptionForm, setOpenDescriptionForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -39,6 +39,27 @@ export default function FlowPage({ asanas, currentFlowDB }) {
   const currentAsanas = currentFlow?.asanas || [];
   const description = currentFlow?.description || ""; */
 
+  console.log(JSON.stringify(flow));
+
+  async function handleFlowSave(flow) {
+    try {
+      const response = await fetch(`/api/flows${id}`, {
+        method: "PUT",
+        body: JSON.stringify(flow),
+      });
+
+      const result = await response.json();
+
+      if (result.name) {
+        alert("Flow has been updated");
+      } else {
+        alert("Updating a flow did not work!!");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  /* 
   function updateFlow(id, asana) {
     setFlows(
       flows.map((flow) =>
@@ -50,9 +71,16 @@ export default function FlowPage({ asanas, currentFlowDB }) {
           : flow
       )
     );
+  } */
+
+  function addAsanaToFlow(asana) {
+    setFlow({
+      ...flow,
+      asanas: [...flow.asanas, { ...asana, flowListId: nanoid() }],
+    });
   }
 
-  function onSubmitDescription(event, id) {
+  /*   function onSubmitDescription(event, id) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const { description } = Object.fromEntries(formData);
@@ -69,14 +97,44 @@ export default function FlowPage({ asanas, currentFlowDB }) {
       toggleOpenForm();
     }
   }
+ */
 
+  function onSubmitDescription(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const { description } = Object.fromEntries(formData);
+    const trimmedDescription = description.trim();
+
+    if (trimmedDescription.length === 0) {
+      alert("Please enter a description or close the input field");
+    } else {
+      setFlow({ ...flow, description: trimmedDescription });
+      toggleOpenForm();
+    }
+  }
+
+  /* 
   function resetFlow(id) {
     setFlows(
       flows.map((flow) => (flow.id === id ? { ...flow, asanas: [] } : flow))
     );
+  } */
+
+  function resetFlow() {
+    setFlow({ ...flow, asanas: [] });
   }
 
   function deleteAsana(cardID) {
+    const filteredAsanas = flow.asanas.filter(
+      (asana) => asana.flowListId !== cardID
+    );
+    setFlow({
+      ...flow,
+      asanas: filteredAsanas,
+    });
+  }
+
+  /*   function deleteAsana(cardID) {
     const filteredAsanas = currentFlow.asanas.filter(
       (asana) => asana.flowListId !== cardID
     );
@@ -91,7 +149,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
       })
     );
   }
-
+ */
   function toggleOpenForm() {
     setOpenDescriptionForm((prev) => (prev = !prev));
   }
@@ -107,28 +165,24 @@ export default function FlowPage({ asanas, currentFlowDB }) {
       <section>
         <StyledBackButton />
 
-        <h2>{currentFlowDB.name}</h2>
+        <h2>{flow.name}</h2>
         <StyledParagraph>
-          {parseInt(currentFlowDB.hours) > 0 && (
-            <span>{currentFlowDB.hours}h</span>
-          )}
-          {parseInt(currentFlowDB.minute) > 0 && (
-            <span> {currentFlowDB.minutes}min</span>
-          )}
+          {parseInt(flow.hours) > 0 && <span>{flow.hours}h</span>}
+          {parseInt(flow.minute) > 0 && <span> {flow.minutes}min</span>}
         </StyledParagraph>
         <StyledParagraph>
-          {currentFlowDB.description}
-          {currentFlowDB.description !== "" && (
+          {flow.description}
+          {flow.description !== "" && (
             <StyledEditIcon onClick={toggleOpenForm} />
           )}
         </StyledParagraph>
-        {currentFlowDB.description === "" && (
+        {flow.description === "" && (
           <StyledEditButton onClick={toggleOpenForm}>
             Add description <BsPen />
           </StyledEditButton>
         )}
         {openDescriptionForm && (
-          <StyledForm onSubmit={(event) => onSubmitDescription(event, id)}>
+          <StyledForm onSubmit={(event) => onSubmitDescription(event)}>
             <StyledTextArea
               rows="4"
               cols="40"
@@ -136,7 +190,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
               name="description"
               aria-label="add description for flow"
               placeholder="add your description..."
-              defaultValue={description}
+              defaultValue={flow.description}
             />
 
             <MainButton
@@ -158,7 +212,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
       </section>
       <StyledContainer>
         <StyledListWithMargin>
-          {currentFlowDB.asanas.map((asana, index) => {
+          {flow.asanas.map((asana, index) => {
             return (
               <li key={index}>
                 <AsanaCard
@@ -173,7 +227,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
           })}
         </StyledListWithMargin>
 
-        {!openMenu && currentFlowDB.name != "No flow found" && (
+        {!openMenu && flow.name != "No flow found" && (
           <MainButton
             type="primary"
             onClick={() => setOpenMenu(true)}
@@ -182,23 +236,29 @@ export default function FlowPage({ asanas, currentFlowDB }) {
             + Add Asanas
           </MainButton>
         )}
-        {!openMenu && currentFlowDB.asanas.length > 0 && (
+        {!openMenu && flow.asanas.length > 0 && (
           <MainButton
             type="secondary"
-            onClick={() => resetFlow(id)}
+            onClick={resetFlow}
             margin="-3rem auto 5rem auto"
           >
             X Reset flow
           </MainButton>
         )}
 
+        <MainButton
+          type="primary"
+          onClick={handleFlowSave}
+          margin="-3rem auto 5rem auto"
+        >
+          Save Flow
+        </MainButton>
+
         <StyledWrapper>
           {openMenu && (
             <AddAsanaSection>
               <SectionHeader>
-                <StyledH3>
-                  You added {currentFlowDB.asanas.length} Asanas
-                </StyledH3>
+                <StyledH3>You added {flow.asanas.length} Asanas</StyledH3>
                 <StyledCloseButton
                   aria-label="close"
                   onClick={() => {
@@ -231,7 +291,8 @@ export default function FlowPage({ asanas, currentFlowDB }) {
                         <StyledAddButton
                           aria-label="add asana"
                           onClick={() => {
-                            updateFlow(id, asana);
+                            //updateFlow(id, asana);
+                            addAsanaToFlow(asana);
                             autoScroll();
                           }}
                         >

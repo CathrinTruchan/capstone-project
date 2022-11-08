@@ -6,6 +6,7 @@ import { nanoid } from "nanoid";
 import FlowCard from "/components/FlowCard";
 import useLocalStorage from "/hooks/useLocalStorage";
 import { flowDummys } from "/db";
+import Image from "next/image";
 
 import { getAllFlows } from "/services/flowService";
 
@@ -36,7 +37,7 @@ export default function Home({ flowsDB }) {
       });
 
       const result = await response.json();
-      console.log(result);
+
       if (result.createdId) {
         alert("Flow has been created");
       } else {
@@ -56,7 +57,7 @@ export default function Home({ flowsDB }) {
       });
 
       const result = await response.json();
-      console.log(result.name);
+
       if (result.name) {
         alert("Flow has been updated");
       } else {
@@ -75,7 +76,7 @@ export default function Home({ flowsDB }) {
         method: "DELETE",
         body: JSON.stringify(id),
       });
-      console.log(response);
+
       const result = await response.json();
 
       if (result.id) {

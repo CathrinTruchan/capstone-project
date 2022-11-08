@@ -18,8 +18,7 @@ export default async function handler(request, response) {
   } else if (request.method === "PUT") {
     await dbConnect();
     const updatedData = JSON.parse(request.body);
-    console.log(updatedData);
-    console.log("test");
+
     const updatedFlow = await Flow.findByIdAndUpdate(
       { _id: updatedData.id },
       {
