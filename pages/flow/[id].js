@@ -162,30 +162,28 @@ export default function FlowPage({ asanas, currentFlowDB }) {
 
         {!openMenu && flow.name != "No flow found" && (
           <MainButton
-            type="primary"
+            type="secondary"
             onClick={() => setOpenMenu(true)}
             margin="-15rem auto 5rem auto"
           >
-            + Add Asanas
+            Add Asanas
           </MainButton>
         )}
         {!openMenu && flow.asanas.length > 0 && (
-          <MainButton
-            type="secondary"
-            onClick={resetFlow}
-            margin="-3rem auto 5rem auto"
-          >
-            X Reset flow
-          </MainButton>
-        )}
+          <>
+            <MainButton
+              type="primary"
+              onClick={() => handleFlowSave(flow)}
+              margin="-3rem auto 5rem auto"
+            >
+              Save Flow
+            </MainButton>
 
-        <MainButton
-          type="primary"
-          onClick={() => handleFlowSave(flow)}
-          margin="-3rem auto 5rem auto"
-        >
-          Save Flow
-        </MainButton>
+            <StyledResetButton onClick={resetFlow}>
+              Reset flow
+            </StyledResetButton>
+          </>
+        )}
 
         <StyledWrapper>
           {openMenu && (
@@ -375,4 +373,13 @@ const StyledCloseButtonForm = styled.button`
     background-color: var(--highlight);
     color: var(--text-light);
   }
+`;
+
+const StyledResetButton = styled.button`
+  all: unset;
+  display: block;
+  margin: -3rem auto 5rem auto;
+  color: var(--highlight);
+  text-decoration: underline;
+  cursor: pointer;
 `;
