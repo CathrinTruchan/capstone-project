@@ -18,12 +18,12 @@ export default async function handler(request, response) {
   } else if (request.method === "PATCH") {
     await dbConnect();
     const updatedData = JSON.parse(request.body);
-
+    console.log(updatedData);
     const updatedFlow = await Flow.findByIdAndUpdate(
       { _id: updatedData.id },
       {
-        $set: {
-          name: updatedData.name,
+        name: updatedData.name,
+        duration: {
           hours: updatedData.duration.hours,
           minutes: updatedData.duration.minutes,
         },
