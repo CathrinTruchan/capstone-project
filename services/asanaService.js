@@ -5,7 +5,7 @@ export async function getAllAsanas() {
   await dbConnect();
 
   const asanas = await Asana.find();
-  console.log(asanas);
+
   const sanatizedAsanas = asanas.map((asana) => ({
     id: asana._id,
     english_name: asana.english_name,
@@ -23,8 +23,7 @@ export async function getAllAsanas() {
 
 export async function getAsanaById(id) {
   await dbConnect();
-  const asanas = await Asana.find();
-  const asana = asanas.find((asana) => asana.id === id);
+  const asana = await Asana.findById(id);
 
   const sanitizedAsana = {
     id: asana._id,

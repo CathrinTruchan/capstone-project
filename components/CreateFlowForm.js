@@ -27,8 +27,8 @@ export default function CreateFlowForm({
     const name = data.name.trim();
 
     const flowData = {
-      id: id,
-      name: name,
+      id,
+      name,
       description: "",
       duration: {
         hours: hours,

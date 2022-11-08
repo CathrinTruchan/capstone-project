@@ -3,10 +3,8 @@ import Flow from "../models/Flow";
 
 export async function getAllFlows() {
   await dbConnect();
-
   const flows = await Flow.find();
-  console.log(flows);
-  console.log("test");
+
   const sanatizedFlows = flows.map((flow) => ({
     id: flow._id,
     name: flow.name,
@@ -21,8 +19,7 @@ export async function getAllFlows() {
 
 export async function getFlowById(id) {
   await dbConnect();
-  const flows = await Flow.find();
-  const flow = flows.find((flow) => flow.id === id);
+  const flow = await Flow.findById(id);
 
   const sanitizedFlow = {
     id: flow._id,

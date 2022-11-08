@@ -16,7 +16,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const { id } = context.params;
-  console.log(id);
+
   const asana = await getAsanaById(id);
   return {
     props: { asana: asana },

@@ -37,7 +37,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
       });
 
       const result = await response.json();
-      console.log(result.name);
+
       if (result.name) {
         alert("Flow has been updated");
       } else {
@@ -145,9 +145,9 @@ export default function FlowPage({ asanas, currentFlowDB }) {
       </section>
       <StyledContainer>
         <StyledListWithMargin>
-          {flow.asanas.map((asana, index) => {
+          {flow.asanas.map((asana) => {
             return (
-              <li key={index}>
+              <li key={asana.flowListId}>
                 <AsanaCard
                   name={asana.english_name}
                   img={asana.img_url}
