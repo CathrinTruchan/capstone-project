@@ -37,12 +37,6 @@ export default function FlowPage({ asanas, currentFlowDB }) {
       });
 
       const result = await response.json();
-
-      if (result.name) {
-        alert("Flow has been updated");
-      } else {
-        alert("Updating a flow did not work!!");
-      }
     } catch (error) {
       console.error(error);
     }

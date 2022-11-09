@@ -41,12 +41,6 @@ export default function Home({ flowsDB }) {
       });
 
       const result = await response.json();
-
-      /* if (result.createdId) {
-        alert("Flow has been created");
-      } else {
-        alert("Creating a flow did not work!!");
-      } */
     } catch (error) {
       console.error(error);
     }
@@ -62,12 +56,6 @@ export default function Home({ flowsDB }) {
       });
 
       const result = await response.json();
-
-      /*  if (result.name) {
-        alert("Flow has been updated");
-      } else {
-        alert("Updating a flow did not work!!");
-      } */
     } catch (error) {
       console.error(error);
     }
@@ -84,12 +72,6 @@ export default function Home({ flowsDB }) {
       });
 
       const result = await response.json();
-      /* 
-      if (result.id) {
-        alert("Flow has been deleted");
-      } else {
-        alert("Deleting a flow did not work!!");
-      } */
     } catch (error) {
       console.error(error);
     }
