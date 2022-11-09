@@ -113,14 +113,16 @@ export default function Home({ flowsDB }) {
         <StyledH2>NAMASTE</StyledH2>
 
         <h3>Let&apos;s flow together</h3>
-
-        <Image
-          src="/images/animation-start-s2.gif"
-          width={300}
-          height={300}
-          alt="yoga"
-          layout="responsive"
-        />
+        <ImageWrapper>
+          <Image
+            src="/images/animation-start-s4.gif"
+            width={300}
+            height={256}
+            alt="yoga"
+            layout="fixed"
+            priority
+          />
+        </ImageWrapper>
         <StyledWrapper>
           <h2>Your Flows: </h2>
           <StyledParagraph>Choose a flow or create a new one:</StyledParagraph>
@@ -178,4 +180,9 @@ const StyledParagraph = styled.p`
 
 const StyledWrapper = styled.section`
   margin-top: 3rem;
+`;
+
+const ImageWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;

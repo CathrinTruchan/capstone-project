@@ -80,11 +80,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
     });
   }
 
-  function handleMaxLength(text) {
-    if (text.length > 100) {
-      setDisabledSaveButton(true);
-    } else setDisabledSaveButton(false);
-  }
+  const handleMaxLength = (text) => setDisabledSaveButton(text.length > 100);
 
   function toggleOpenForm() {
     setOpenDescriptionForm((prev) => (prev = !prev));
@@ -139,7 +135,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
               type="primary"
               width="7rem"
               aria-label="Save description"
-              disabled={disabledSaveButton ? true : false}
+              disabled={disabledSaveButton}
             >
               Save
             </MainButton>
@@ -263,7 +259,7 @@ const StyledListItem = styled.li`
 const StyledRoundButton = styled.button`
   border: none;
   background-color: var(--background-neutral);
-  color: ${(props) => props.color || "var(--highlight)"};
+  color: ${({ color }) => color || "var(--highlight)"};
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
