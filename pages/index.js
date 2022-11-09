@@ -7,6 +7,7 @@ import { getAllFlows } from "/services/flowService";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Image from "next/image";
+import { AddButton } from "../components/AddButton";
 
 export async function getServerSideProps() {
   const flowsDB = await getAllFlows();
@@ -41,6 +42,11 @@ export default function Home({ flowsDB }) {
       });
 
       const result = await response.json();
+      if (result.createdId) {
+        router.push(`/flow/${result.createdId}`);
+      } else {
+        alert("Creating a flow did not work!!");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -86,6 +92,12 @@ export default function Home({ flowsDB }) {
     setOpenForm(false);
   }
 
+  const sortedFlowsDB = flowsDB.sort((a, b) => {
+    if (a.id > b.id) {
+      return -1;
+    } else return 1;
+  });
+
   return (
     <div>
       <Head>
@@ -96,19 +108,20 @@ export default function Home({ flowsDB }) {
 
       <main>
         <StyledH2>NAMASTE</StyledH2>
+
         <h3>Let&apos;s flow together</h3>
 
         <Image
           src="/images/animation-start-s2.gif"
-          width={523}
-          height={523}
+          width={300}
+          height={300}
           alt="yoga"
           layout="responsive"
         />
         <StyledWrapper>
           <h2>Your Flows: </h2>
           <StyledParagraph>Choose a flow or create a new one</StyledParagraph>
-          {flowsDB.map((flow) => (
+          {sortedFlowsDB.map((flow) => (
             <FlowCard
               key={flow.id}
               name={flow.name}
@@ -143,37 +156,14 @@ export default function Home({ flowsDB }) {
                   />
                 )
             )}
-          <StyledAddButton onClick={toggleOpenForm}>
-            {openForm ? "x" : "+"}
-          </StyledAddButton>
+          <AddButton aria-label="add a flow" onClick={toggleOpenForm}>
+            +
+          </AddButton>
         </StyledWrapper>
       </main>
     </div>
   );
 }
-
-const StyledAddButton = styled.button`
-  position: fixed;
-  bottom: 3rem;
-  right: 2rem;
-  z-index: 30;
-  border: none;
-  display: block;
-  margin: auto;
-  background: var(--highlight-gradient);
-  box-shadow: var(--drop-shadow-gray);
-  color: var(--text-light);
-  font-size: 2rem;
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
-  text-align: center;
-  cursor: pointer;
-  &:active {
-    background-color: var(--highlight);
-    color: var(--text-light);
-  }
-`;
 
 const StyledH2 = styled.h2`
   font-size: 2rem;

@@ -10,6 +10,7 @@ import { BsPen } from "react-icons/bs";
 import StyledBackButton from "../../components/BackButton";
 import { getAllAsanas } from "../../services/asanaService";
 import { getFlowById } from "/services/flowService";
+import { AddButton } from "../../components/AddButton";
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
@@ -29,6 +30,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterQuery, setFilterQuery] = useState("all");
   const [disabledSaveButton, setDisabledSaveButton] = useState(false);
+  const [resetButton, setResetButton] = useState(false);
 
   async function handleFlowSave(data) {
     try {
@@ -169,32 +171,27 @@ export default function FlowPage({ asanas, currentFlowDB }) {
           })}
         </StyledListWithMargin>
 
-        {!openMenu && flow.name != "No flow found" && (
-          <MainButton
-            type="secondary"
-            onClick={() => setOpenMenu(true)}
-            margin="-15rem auto 5rem auto"
-          >
-            Add Asanas
-          </MainButton>
-        )}
         {!openMenu && flow.asanas.length > 0 && (
           <>
             <MainButton
               type="primary"
               onClick={() => handleFlowSave(flow)}
-              margin="-3rem auto 5rem auto"
+              margin=" 0 auto 5rem auto"
             >
-              Save Flow
+              Save Changes
             </MainButton>
-
-            <StyledResetButton onClick={resetFlow}>
+            <StyledResetButton
+              onClick={() => {
+                resetFlow();
+                setResetButton();
+              }}
+            >
               Reset flow
             </StyledResetButton>
           </>
         )}
-
-        <StyledWrapper>
+        <AddButton onClick={() => setOpenMenu(true)}>+</AddButton>
+        <StyledContainer>
           {openMenu && (
             <AddAsanaSection>
               <SectionHeader>
@@ -243,7 +240,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
               </StyledList>
             </AddAsanaSection>
           )}
-        </StyledWrapper>
+        </StyledContainer>
       </StyledContainer>
     </>
   );
@@ -323,7 +320,7 @@ const StyledWrapper = styled.div`
 
 const StyledListWithMargin = styled.ul`
   list-style: none;
-  margin-bottom: 20rem;
+  margin-bottom: 3rem;
 `;
 
 const StyledParagraph = styled.p`
