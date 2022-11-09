@@ -2,58 +2,97 @@ import Head from "next/head";
 import styled from "styled-components";
 import { useState } from "react";
 import CreateFlowForm from "/components/CreateFlowForm";
-import { nanoid } from "nanoid";
 import FlowCard from "/components/FlowCard";
-import useLocalStorage from "/hooks/useLocalStorage";
-import { flowDummys } from "/db";
+import { getAllFlows } from "/services/flowService";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-export default function Home() {
+export async function getServerSideProps() {
+  const flowsDB = await getAllFlows();
+  return {
+    props: { flowsDB: flowsDB },
+  };
+}
+
+export default function Home({ flowsDB }) {
   const [openForm, setOpenForm] = useState(false);
   const [editFormId, setEditFormId] = useState(null);
-  const [flows, setFlows] = useLocalStorage("flows", flowDummys);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const router = useRouter();
+  const refreshData = () => {
+    router.replace(router.asPath);
+    setIsUpdating(true);
+  };
+  useEffect(() => {
+    setIsUpdating(false);
+  }, [flowsDB]);
 
   function toggleOpenForm() {
     setOpenForm((prev) => !prev);
   }
 
-  function addFlow(name, hours, minutes) {
-    setFlows([
-      ...flows,
-      {
-        id: nanoid(),
-        name: name,
-        duration: {
-          hours: hours,
-          minutes: minutes,
-        },
-        asanas: [],
-      },
-    ]);
+  async function handleFlowPost(flowData) {
+    try {
+      const response = await fetch("/api/flows", {
+        method: "POST",
+        body: JSON.stringify(flowData),
+      });
+
+      const result = await response.json();
+
+      if (result.createdId) {
+        alert("Flow has been created");
+      } else {
+        alert("Creating a flow did not work!!");
+      }
+    } catch (error) {
+      console.error(error);
+    }
     setOpenForm(false);
+    refreshData();
   }
 
-  function deleteFlow(flowCardId) {
-    setFlows(flows.filter((flow) => flow.id !== flowCardId));
-  }
+  async function handleFlowUpdate(flowData) {
+    try {
+      const response = await fetch("/api/flows", {
+        method: "PATCH",
+        body: JSON.stringify(flowData),
+      });
 
-  function editFlowBasicData(
-    updatedName,
-    updatedHours,
-    updatedMinutes,
-    cardId
-  ) {
-    setFlows(
-      flows.map((flow) =>
-        flow.id === cardId
-          ? {
-              ...flow,
-              name: updatedName,
-              duration: { hours: updatedHours, minutes: updatedMinutes },
-            }
-          : flow
-      )
-    );
+      const result = await response.json();
+
+      if (result.name) {
+        alert("Flow has been updated");
+      } else {
+        alert("Updating a flow did not work!!");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setOpenForm(false);
     setEditFormId(null);
+    refreshData();
+  }
+
+  async function handleDelete(id) {
+    try {
+      const response = await fetch(`/api/flows`, {
+        method: "DELETE",
+        body: JSON.stringify(id),
+      });
+
+      const result = await response.json();
+
+      if (result.id) {
+        alert("Flow has been deleted");
+      } else {
+        alert("Deleting a flow did not work!!");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    refreshData();
   }
 
   function cancelEditFlow() {
@@ -75,46 +114,37 @@ export default function Home() {
       <main>
         <StyledH2>Let&apos;s flow</StyledH2>
 
-        {flows.map((flow) => (
+        {flowsDB.map((flow) => (
           <FlowCard
             key={flow.id}
             name={flow.name}
-            hours={flow.duration.hours}
-            minutes={flow.duration.minutes}
+            hours={flow.hours}
+            minutes={flow.minutes}
             id={flow.id}
-            deleteFlow={() => deleteFlow(flow.id)}
+            deleteFlow={() => handleDelete(flow.id)}
             setEditFormId={() => setEditFormId(flow.id)}
           />
         ))}
         {openForm && (
           <CreateFlowForm
-            flows={flows}
-            addFlow={addFlow}
+            flows={flowsDB}
+            handleFlowPost={handleFlowPost}
             closeForm={closeForm}
           />
         )}
         {editFormId != null &&
-          flows.map(
+          flowsDB.map(
             (flow) =>
               flow.id === editFormId && (
                 <CreateFlowForm
-                  flows={flows}
+                  key={flow.id}
+                  flows={flowsDB}
+                  id={flow.id}
                   editFormId={editFormId}
                   defaultName={flow.name}
-                  defaultHours={flow.duration.hours}
-                  defaultMinutes={flow.duration.minutes}
-                  editFlowBasicData={(
-                    updatedName,
-                    updatedHours,
-                    updatedMinutes
-                  ) =>
-                    editFlowBasicData(
-                      updatedName,
-                      updatedHours,
-                      updatedMinutes,
-                      flow.id
-                    )
-                  }
+                  defaultHours={flow.hours}
+                  defaultMinutes={flow.minutes}
+                  handleFlowUpdate={handleFlowUpdate}
                   cancelEditFlow={cancelEditFlow}
                 />
               )

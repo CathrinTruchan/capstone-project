@@ -1,11 +1,13 @@
-import { getAsanaByID, getAllAsanas } from "../../db";
+import { getAsanaById, getAllAsanas } from "../../services/asanaService";
 import Image from "next/image";
 import styled from "styled-components";
 import StyledBackButton from "../../components/BackButton";
 
 export async function getStaticPaths() {
-  const asanas = getAllAsanas();
+  const asanas = await getAllAsanas();
+
   const ids = asanas.map((asana) => asana.id);
+
   return {
     paths: ids.map((id) => ({ params: { id: id } })),
     fallback: false,
@@ -14,7 +16,8 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const { id } = context.params;
-  const asana = getAsanaByID(id);
+
+  const asana = await getAsanaById(id);
   return {
     props: { asana: asana },
   };
