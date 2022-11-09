@@ -155,7 +155,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
         )}
       </section>
       <StyledContainer>
-        <StyledListWithMargin>
+        <StyledList>
           {flow.asanas.map((asana) => {
             return (
               <li key={asana.flowListId}>
@@ -169,7 +169,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
               </li>
             );
           })}
-        </StyledListWithMargin>
+        </StyledList>
 
         {!openMenu && flow.asanas.length > 0 && (
           <>
@@ -196,8 +196,9 @@ export default function FlowPage({ asanas, currentFlowDB }) {
             <AddAsanaSection>
               <SectionHeader>
                 <StyledH3>You added {flow.asanas.length} Asanas</StyledH3>
-                <StyledCloseButton
+                <StyledRoundButton
                   aria-label="close"
+                  color="var(--primary)"
                   onClick={() => {
                     setOpenMenu(false);
                     setSearchQuery("");
@@ -205,7 +206,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
                   }}
                 >
                   X
-                </StyledCloseButton>
+                </StyledRoundButton>
               </SectionHeader>
               <SearchBar setSearchQuery={setSearchQuery} />
               <LevelFilter setFilterQuery={setFilterQuery} />
@@ -225,7 +226,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
                     return (
                       <StyledListItem key={asana.id}>
                         <p>{asana.english_name}</p>
-                        <StyledAddButton
+                        <StyledRoundButton
                           aria-label="add asana"
                           onClick={() => {
                             addAsanaToFlow(asana);
@@ -233,7 +234,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
                           }}
                         >
                           +
-                        </StyledAddButton>
+                        </StyledRoundButton>
                       </StyledListItem>
                     );
                   })}
@@ -248,6 +249,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
 
 const StyledList = styled.ul`
   list-style: none;
+  margin-bottom: 3rem;
 `;
 
 const StyledListItem = styled.li`
@@ -258,10 +260,10 @@ const StyledListItem = styled.li`
   margin: 1.2rem 0.5rem;
 `;
 
-const StyledAddButton = styled.button`
+const StyledRoundButton = styled.button`
   border: none;
   background-color: var(--background-neutral);
-  color: var(--highlight);
+  color: ${(props) => props.color || "var(--highlight)"};
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
@@ -296,31 +298,11 @@ const StyledContainer = styled.section`
   position: relative;
 `;
 
-const StyledCloseButton = styled.button`
-  border: none;
-  background-color: var(--background-neutral);
-  color: var(--primary);
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-  text-align: center;
-  cursor: pointer;
-`;
-
 const SectionHeader = styled.section`
   display: flex;
   justify-content: space-between;
   background-color: transparent;
   flex-wrap: wrap;
-`;
-
-const StyledWrapper = styled.div`
-  position: relative;
-`;
-
-const StyledListWithMargin = styled.ul`
-  list-style: none;
-  margin-bottom: 3rem;
 `;
 
 const StyledParagraph = styled.p`
