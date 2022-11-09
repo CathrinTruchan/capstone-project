@@ -11,6 +11,7 @@ import StyledBackButton from "../../components/BackButton";
 import { getAllAsanas } from "../../services/asanaService";
 import { getFlowById } from "/services/flowService";
 import { AddButton } from "../../components/AddButton";
+import { TbYoga } from "react-icons/tb";
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
@@ -30,7 +31,6 @@ export default function FlowPage({ asanas, currentFlowDB }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterQuery, setFilterQuery] = useState("all");
   const [disabledSaveButton, setDisabledSaveButton] = useState(false);
-  const [resetButton, setResetButton] = useState(false);
 
   async function handleFlowSave(data) {
     try {
@@ -180,17 +180,17 @@ export default function FlowPage({ asanas, currentFlowDB }) {
             >
               Save Changes
             </MainButton>
-            <StyledResetButton
-              onClick={() => {
-                resetFlow();
-                setResetButton();
-              }}
-            >
+            <StyledResetButton onClick={resetFlow}>
               Reset flow
             </StyledResetButton>
           </>
         )}
-        <AddButton onClick={() => setOpenMenu(true)}>+</AddButton>
+        <AddButton
+          aria-label="open menu to add asanas"
+          onClick={() => setOpenMenu(true)}
+        >
+          <StyledAsanaIcon />
+        </AddButton>
         <StyledContainer>
           {openMenu && (
             <AddAsanaSection>
@@ -364,7 +364,7 @@ const StyledResetButton = styled.button`
   all: unset;
   display: block;
   margin: -3rem auto 5rem auto;
-  color: var(--highlight);
+  color: var(--highlight-light);
   text-decoration: underline;
   cursor: pointer;
 `;
@@ -373,4 +373,8 @@ const StyledWarning = styled.p`
   font-size: var(--font-small);
   color: var(--highlight-light);
   text-align: center;
+`;
+
+const StyledAsanaIcon = styled(TbYoga)`
+  color: var(--background-neutral);
 `;

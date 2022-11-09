@@ -62,6 +62,11 @@ export default function Home({ flowsDB }) {
       });
 
       const result = await response.json();
+      if (result.id) {
+        router.push(`/flow/${result.id}`);
+      } else {
+        alert("Updating the flow did not work!!");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -120,7 +125,7 @@ export default function Home({ flowsDB }) {
         />
         <StyledWrapper>
           <h2>Your Flows: </h2>
-          <StyledParagraph>Choose a flow or create a new one</StyledParagraph>
+          <StyledParagraph>Choose a flow or create a new one:</StyledParagraph>
           {sortedFlowsDB.map((flow) => (
             <FlowCard
               key={flow.id}

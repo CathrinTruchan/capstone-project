@@ -86,7 +86,16 @@ const StyledButton = styled.button`
 const StyledButtonWrapper = styled.button`
   all: unset;
   position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
   top: ${(props) => props.top};
   bottom: ${(props) => props.bottom};
   right: 2rem;
+  &:hover {
+    scale: 1.3;
+  }
+  &:active {
+    scale: 1.3;
+  }
 `;

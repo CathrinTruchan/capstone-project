@@ -31,7 +31,11 @@ export default async function handler(request, response) {
 
     return response
       .status(200)
-      .json({ message: "Flow updated", name: updatedFlow.name });
+      .json({
+        message: "Flow updated",
+        name: updatedFlow.name,
+        id: updatedFlow.id,
+      });
   } else if (request.method === "DELETE") {
     const idToDelete = JSON.parse(request.body);
     await Flow.findByIdAndDelete(idToDelete);
