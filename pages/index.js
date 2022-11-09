@@ -6,6 +6,7 @@ import FlowCard from "/components/FlowCard";
 import { getAllFlows } from "/services/flowService";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Image from "next/image";
 
 export async function getServerSideProps() {
   const flowsDB = await getAllFlows();
@@ -41,11 +42,11 @@ export default function Home({ flowsDB }) {
 
       const result = await response.json();
 
-      if (result.createdId) {
+      /* if (result.createdId) {
         alert("Flow has been created");
       } else {
         alert("Creating a flow did not work!!");
-      }
+      } */
     } catch (error) {
       console.error(error);
     }
@@ -62,11 +63,11 @@ export default function Home({ flowsDB }) {
 
       const result = await response.json();
 
-      if (result.name) {
+      /*  if (result.name) {
         alert("Flow has been updated");
       } else {
         alert("Updating a flow did not work!!");
-      }
+      } */
     } catch (error) {
       console.error(error);
     }
@@ -83,12 +84,12 @@ export default function Home({ flowsDB }) {
       });
 
       const result = await response.json();
-
+      /* 
       if (result.id) {
         alert("Flow has been deleted");
       } else {
         alert("Deleting a flow did not work!!");
-      }
+      } */
     } catch (error) {
       console.error(error);
     }
@@ -112,46 +113,58 @@ export default function Home({ flowsDB }) {
       </Head>
 
       <main>
-        <StyledH2>Let&apos;s flow</StyledH2>
+        <StyledH2>NAMASTE</StyledH2>
+        <h3>Let&apos;s flow together</h3>
 
-        {flowsDB.map((flow) => (
-          <FlowCard
-            key={flow.id}
-            name={flow.name}
-            hours={flow.hours}
-            minutes={flow.minutes}
-            id={flow.id}
-            deleteFlow={() => handleDelete(flow.id)}
-            setEditFormId={() => setEditFormId(flow.id)}
-          />
-        ))}
-        {openForm && (
-          <CreateFlowForm
-            flows={flowsDB}
-            handleFlowPost={handleFlowPost}
-            closeForm={closeForm}
-          />
-        )}
-        {editFormId != null &&
-          flowsDB.map(
-            (flow) =>
-              flow.id === editFormId && (
-                <CreateFlowForm
-                  key={flow.id}
-                  flows={flowsDB}
-                  id={flow.id}
-                  editFormId={editFormId}
-                  defaultName={flow.name}
-                  defaultHours={flow.hours}
-                  defaultMinutes={flow.minutes}
-                  handleFlowUpdate={handleFlowUpdate}
-                  cancelEditFlow={cancelEditFlow}
-                />
-              )
+        <Image
+          src="/images/animation-start-s2.gif"
+          width={523}
+          height={523}
+          alt="yoga"
+          layout="responsive"
+        />
+        <StyledWrapper>
+          <h2>Your Flows: </h2>
+          <StyledParagraph>Choose a flow or create a new one</StyledParagraph>
+          {flowsDB.map((flow) => (
+            <FlowCard
+              key={flow.id}
+              name={flow.name}
+              hours={flow.hours}
+              minutes={flow.minutes}
+              id={flow.id}
+              deleteFlow={() => handleDelete(flow.id)}
+              setEditFormId={() => setEditFormId(flow.id)}
+            />
+          ))}
+          {openForm && (
+            <CreateFlowForm
+              flows={flowsDB}
+              handleFlowPost={handleFlowPost}
+              closeForm={closeForm}
+            />
           )}
-        <StyledAddButton onClick={toggleOpenForm}>
-          {openForm ? "x" : "+"}
-        </StyledAddButton>
+          {editFormId != null &&
+            flowsDB.map(
+              (flow) =>
+                flow.id === editFormId && (
+                  <CreateFlowForm
+                    key={flow.id}
+                    flows={flowsDB}
+                    id={flow.id}
+                    editFormId={editFormId}
+                    defaultName={flow.name}
+                    defaultHours={flow.hours}
+                    defaultMinutes={flow.minutes}
+                    handleFlowUpdate={handleFlowUpdate}
+                    cancelEditFlow={cancelEditFlow}
+                  />
+                )
+            )}
+          <StyledAddButton onClick={toggleOpenForm}>
+            {openForm ? "x" : "+"}
+          </StyledAddButton>
+        </StyledWrapper>
       </main>
     </div>
   );
@@ -159,7 +172,7 @@ export default function Home({ flowsDB }) {
 
 const StyledAddButton = styled.button`
   position: fixed;
-  bottom: 1.5rem;
+  bottom: 3rem;
   right: 2rem;
   z-index: 30;
   border: none;
@@ -168,9 +181,9 @@ const StyledAddButton = styled.button`
   background: var(--highlight-gradient);
   box-shadow: var(--drop-shadow-gray);
   color: var(--text-light);
-  font-size: 1.5rem;
-  width: 3.5rem;
-  height: 3.5rem;
+  font-size: 2rem;
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
   text-align: center;
   cursor: pointer;
@@ -182,4 +195,12 @@ const StyledAddButton = styled.button`
 
 const StyledH2 = styled.h2`
   font-size: 2rem;
+`;
+
+const StyledParagraph = styled.p`
+  text-align: center;
+`;
+
+const StyledWrapper = styled.section`
+  margin-top: 3rem;
 `;
