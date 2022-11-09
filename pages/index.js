@@ -51,7 +51,6 @@ export default function Home({ flowsDB }) {
       console.error(error);
     }
     setOpenForm(false);
-    refreshData();
   }
 
   async function handleFlowUpdate(flowData) {
@@ -72,7 +71,6 @@ export default function Home({ flowsDB }) {
     }
     setOpenForm(false);
     setEditFormId(null);
-    refreshData();
   }
 
   async function handleDelete(id) {
