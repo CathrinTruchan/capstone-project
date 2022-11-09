@@ -28,6 +28,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
   const [openDescriptionForm, setOpenDescriptionForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterQuery, setFilterQuery] = useState("all");
+  const [disabledSaveButton, setDisabledSaveButton] = useState(false);
 
   async function handleFlowSave(data) {
     try {
@@ -77,6 +78,12 @@ export default function FlowPage({ asanas, currentFlowDB }) {
     });
   }
 
+  function handleMaxLength(text) {
+    if (text.length > 100) {
+      setDisabledSaveButton(true);
+    } else setDisabledSaveButton(false);
+  }
+
   function toggleOpenForm() {
     setOpenDescriptionForm((prev) => (prev = !prev));
   }
@@ -118,12 +125,19 @@ export default function FlowPage({ asanas, currentFlowDB }) {
               aria-label="add description for flow"
               placeholder="add your description..."
               defaultValue={flow.description}
+              onChange={(event) => handleMaxLength(event.target.value)}
             />
+            {disabledSaveButton && (
+              <StyledWarning>
+                The maximum length of the description is 100 characters.
+              </StyledWarning>
+            )}
 
             <MainButton
               type="primary"
               width="7rem"
               aria-label="Save description"
+              disabled={disabledSaveButton ? true : false}
             >
               Save
             </MainButton>
@@ -374,4 +388,10 @@ const StyledResetButton = styled.button`
   color: var(--highlight);
   text-decoration: underline;
   cursor: pointer;
+`;
+
+const StyledWarning = styled.p`
+  font-size: var(--font-small);
+  color: var(--highlight-light);
+  text-align: center;
 `;

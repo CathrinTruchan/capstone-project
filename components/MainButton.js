@@ -20,6 +20,10 @@ const MainButton = styled.button`
     background: ${({ type }) =>
       type === "primary" ? "var(--highlight)" : "var(--background-neutral)"};
   }
+  &:disabled {
+    background-color: var(--background-neutral);
+    color: var(--background-primary);
+  }
 `;
 
 export { MainButton };
