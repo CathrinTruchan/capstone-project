@@ -112,7 +112,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
           <StyledForm onSubmit={(event) => onSubmitDescription(event)}>
             <StyledTextArea
               rows="4"
-              cols="40"
+              cols="30"
               id="description"
               name="description"
               aria-label="add description for flow"
@@ -122,11 +122,12 @@ export default function FlowPage({ asanas, currentFlowDB }) {
 
             <MainButton
               type="primary"
-              width="5rem"
+              width="7rem"
               aria-label="Save description"
             >
               Save
             </MainButton>
+
             <StyledCloseButtonForm
               type="reset"
               aria-label="close input field for description"
@@ -330,7 +331,8 @@ const StyledForm = styled.form`
   flex-direction: column;
   align-items: center;
   position: relative;
-  margin: 2rem 3rem;
+  margin: 2rem auto;
+  width: 17.5rem;
 `;
 
 const StyledTextArea = styled.textarea`
@@ -341,7 +343,7 @@ const StyledTextArea = styled.textarea`
   border: none;
   background-color: var(--background-primary);
   margin: 1rem 2rem;
-  box-shadow: var(--drop-shadow-color);
+  box-shadow: var(--drop-shadow-bottom-color);
   font-family: "DM Sans";
 `;
 
@@ -354,19 +356,15 @@ const StyledEditIcon = styled(BsPen)`
 const StyledCloseButtonForm = styled.button`
   border: none;
   position: absolute;
-  top: 0.5rem;
-  right: -1rem;
-  background-color: var(--highlight);
-  color: var(--text-light);
+  top: 1.3rem;
+  right: 0.5rem;
+  background-color: var(--background-primary);
+  color: var(--highlight);
   width: 1rem;
   height: 1rem;
   border-radius: 50%;
   text-align: center;
   cursor: pointer;
-  &:active {
-    background-color: var(--highlight);
-    color: var(--text-light);
-  }
 `;
 
 const StyledResetButton = styled.button`
