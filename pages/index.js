@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Image from "next/image";
 import { AddButton } from "../components/AddButton";
+import { useSession, signIn, signOut } from "next-auth/react";
+import LoginButton from "../components/LoginButton";
 
 export async function getServerSideProps() {
   const flowsDB = await getAllFlows();
@@ -20,6 +22,7 @@ export default function Home({ flowsDB }) {
   const [openForm, setOpenForm] = useState(false);
   const [editFormId, setEditFormId] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const { data: session } = useSession();
 
   const router = useRouter();
   const refreshData = () => {
@@ -111,6 +114,9 @@ export default function Home({ flowsDB }) {
 
       <main>
         <StyledH2>NAMASTE</StyledH2>
+
+        {!session && <p>You are not logged in</p>}
+        <LoginButton />
 
         <h3>Let&apos;s flow together</h3>
         <ImageWrapper>
