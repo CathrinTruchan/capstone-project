@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Image from "next/image";
 import { AddButton } from "../components/AddButton";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import LoginButton from "../components/LoginButton";
 
 export async function getServerSideProps() {
@@ -135,17 +135,19 @@ export default function Home({ flowsDB }) {
             <StyledParagraph>
               Choose a flow or create a new one:
             </StyledParagraph>
-            {sortedFlowsDB.map((flow) => (
-              <FlowCard
-                key={flow.id}
-                name={flow.name}
-                hours={flow.hours}
-                minutes={flow.minutes}
-                id={flow.id}
-                deleteFlow={() => handleDelete(flow.id)}
-                setEditFormId={() => setEditFormId(flow.id)}
-              />
-            ))}
+            {sortedFlowsDB
+              .filter((flow) => flow.author === session.user.email)
+              .map((flow) => (
+                <FlowCard
+                  key={flow.id}
+                  name={flow.name}
+                  hours={flow.hours}
+                  minutes={flow.minutes}
+                  id={flow.id}
+                  deleteFlow={() => handleDelete(flow.id)}
+                  setEditFormId={() => setEditFormId(flow.id)}
+                />
+              ))}
             {openForm && (
               <CreateFlowForm
                 flows={flowsDB}
