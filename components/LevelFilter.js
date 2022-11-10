@@ -52,7 +52,7 @@ export default function LevelFilter({ setFilterQuery }) {
 }
 
 const StyledInputWrapper = styled.section`
-  margin: 0.5rem 0 1rem 0;
+  margin: 1rem 0 1rem 0;
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
