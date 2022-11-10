@@ -114,7 +114,8 @@ export default function Home({ flowsDB }) {
       </Head>
 
       <main>
-        <StyledH2>NAMASTE</StyledH2>
+        <StyledH2>NAMASTE,</StyledH2>
+        <StyledH2>{session.user.name.toUpperCase()}</StyledH2>
         <h3>Let&apos;s flow together</h3>
         <ImageWrapper>
           <Image
@@ -127,7 +128,6 @@ export default function Home({ flowsDB }) {
           />
         </ImageWrapper>
         <LoginButton />
-        <LogoutButton />
 
         {session && (
           <StyledWrapper>

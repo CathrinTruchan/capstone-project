@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import LogoutButton from "./LogoutButton";
 
 export default function Header() {
   return (
     <StyledHeaderSection>
       <StyledTitle>Your Daily Flow</StyledTitle>
+      <LogoutButton />
     </StyledHeaderSection>
   );
 }
