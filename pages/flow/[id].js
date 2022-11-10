@@ -17,6 +17,7 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
 
 import LoginButton from "../../components/LoginButton";
+import Link from "next/link";
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
@@ -105,7 +106,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
       window.scrollBy({ top: 500, behavior: "smooth" });
     });
   }
-  if (session) {
+  if (session.user.email === currentFlowDB.author) {
     return (
       <>
         <section>
@@ -253,6 +254,15 @@ export default function FlowPage({ asanas, currentFlowDB }) {
             )}
           </StyledContainer>
         </StyledContainer>
+      </>
+    );
+  } else if (session && session.user.email != currentFlowDB.author) {
+    return (
+      <>
+        <StyledText>You don&apos;t have access to this flow.</StyledText>
+        <StyledText>
+          Have a look at <Link href="/">your flows.</Link>
+        </StyledText>
       </>
     );
   } else
