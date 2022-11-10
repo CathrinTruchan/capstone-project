@@ -15,7 +15,7 @@ import { TbYoga } from "react-icons/tb";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
+
 import LoginButton from "../../components/LoginButton";
 
 export async function getServerSideProps(context) {
@@ -257,10 +257,12 @@ export default function FlowPage({ asanas, currentFlowDB }) {
     );
   } else
     return (
-      <StyledText>
-        <p>Please log in to see the flows.</p>
+      <>
+        <StyledText>
+          <h3>Please log in to see the flows.</h3>
+        </StyledText>
         <LoginButton />
-      </StyledText>
+      </>
     );
 }
 

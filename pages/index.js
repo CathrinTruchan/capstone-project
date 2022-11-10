@@ -126,6 +126,7 @@ export default function Home({ flowsDB }) {
             priority
           />
         </ImageWrapper>
+
         <LoginButton />
 
         {session && (

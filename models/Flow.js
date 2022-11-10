@@ -10,6 +10,7 @@ const flowSchema = new Schema({
     minutes: { type: Number },
   },
   asanas: { type: Array },
+  author: { type: String, required: true },
 });
 
 const Flow =

@@ -35,6 +35,7 @@ export default function CreateFlowForm({
         minutes: minutes,
       },
       asanas: [],
+      author: "",
     };
 
     if (name.length === 0) {

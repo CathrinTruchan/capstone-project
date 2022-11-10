@@ -18,7 +18,11 @@ export default async function handler(request, response) {
     return response.status(200).json(flows);
   } else if (request.method === "POST") {
     if (session) {
-      const postData = JSON.parse(request.body);
+      const data = JSON.parse(request.body);
+      const postData = {
+        ...data,
+        author: session.user.email,
+      };
       const newFlow = await Flow.create(postData);
 
       return response

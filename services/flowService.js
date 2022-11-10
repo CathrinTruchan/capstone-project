@@ -12,6 +12,7 @@ export async function getAllFlows() {
     hours: flow.duration.hours,
     minutes: flow.duration.minutes,
     asanas: flow.asanas,
+    author: flow.author,
   }));
 
   return JSON.parse(JSON.stringify(sanatizedFlows));
@@ -28,6 +29,7 @@ export async function getFlowById(id) {
     hours: flow.duration.hours,
     minutes: flow.duration.minutes,
     asanas: flow.asanas,
+    author: flow.author,
   };
   return JSON.parse(JSON.stringify(sanitizedFlow));
 }
