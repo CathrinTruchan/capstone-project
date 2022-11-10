@@ -10,6 +10,8 @@ import { BsPen } from "react-icons/bs";
 import StyledBackButton from "../../components/BackButton";
 import { getAllAsanas } from "../../services/asanaService";
 import { getFlowById } from "/services/flowService";
+import { AddButton } from "../../components/AddButton";
+import { TbYoga } from "react-icons/tb";
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
@@ -28,6 +30,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
   const [openDescriptionForm, setOpenDescriptionForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterQuery, setFilterQuery] = useState("all");
+  const [disabledSaveButton, setDisabledSaveButton] = useState(false);
 
   async function handleFlowSave(data) {
     try {
@@ -37,12 +40,6 @@ export default function FlowPage({ asanas, currentFlowDB }) {
       });
 
       const result = await response.json();
-
-      if (result.name) {
-        alert("Flow has been updated");
-      } else {
-        alert("Updating a flow did not work!!");
-      }
     } catch (error) {
       console.error(error);
     }
@@ -83,6 +80,8 @@ export default function FlowPage({ asanas, currentFlowDB }) {
     });
   }
 
+  const handleMaxLength = (text) => setDisabledSaveButton(text.length > 100);
+
   function toggleOpenForm() {
     setOpenDescriptionForm((prev) => (prev = !prev));
   }
@@ -118,21 +117,29 @@ export default function FlowPage({ asanas, currentFlowDB }) {
           <StyledForm onSubmit={(event) => onSubmitDescription(event)}>
             <StyledTextArea
               rows="4"
-              cols="40"
+              cols="30"
               id="description"
               name="description"
               aria-label="add description for flow"
               placeholder="add your description..."
               defaultValue={flow.description}
+              onChange={(event) => handleMaxLength(event.target.value)}
             />
+            {disabledSaveButton && (
+              <StyledWarning>
+                The maximum length of the description is 100 characters.
+              </StyledWarning>
+            )}
 
             <MainButton
               type="primary"
-              width="5rem"
+              width="7rem"
               aria-label="Save description"
+              disabled={disabledSaveButton}
             >
               Save
             </MainButton>
+
             <StyledCloseButtonForm
               type="reset"
               aria-label="close input field for description"
@@ -144,7 +151,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
         )}
       </section>
       <StyledContainer>
-        <StyledListWithMargin>
+        <StyledList>
           {flow.asanas.map((asana) => {
             return (
               <li key={asana.flowListId}>
@@ -158,40 +165,36 @@ export default function FlowPage({ asanas, currentFlowDB }) {
               </li>
             );
           })}
-        </StyledListWithMargin>
+        </StyledList>
 
-        {!openMenu && flow.name != "No flow found" && (
-          <MainButton
-            type="secondary"
-            onClick={() => setOpenMenu(true)}
-            margin="-15rem auto 5rem auto"
-          >
-            Add Asanas
-          </MainButton>
-        )}
         {!openMenu && flow.asanas.length > 0 && (
           <>
             <MainButton
               type="primary"
               onClick={() => handleFlowSave(flow)}
-              margin="-3rem auto 5rem auto"
+              margin=" 0 auto 5rem auto"
             >
-              Save Flow
+              Save Changes
             </MainButton>
-
             <StyledResetButton onClick={resetFlow}>
               Reset flow
             </StyledResetButton>
           </>
         )}
-
-        <StyledWrapper>
+        <AddButton
+          aria-label="open menu to add asanas"
+          onClick={() => setOpenMenu(true)}
+        >
+          <StyledAsanaIcon />
+        </AddButton>
+        <StyledContainer>
           {openMenu && (
             <AddAsanaSection>
               <SectionHeader>
                 <StyledH3>You added {flow.asanas.length} Asanas</StyledH3>
-                <StyledCloseButton
+                <StyledRoundButton
                   aria-label="close"
+                  color="var(--primary)"
                   onClick={() => {
                     setOpenMenu(false);
                     setSearchQuery("");
@@ -199,7 +202,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
                   }}
                 >
                   X
-                </StyledCloseButton>
+                </StyledRoundButton>
               </SectionHeader>
               <SearchBar setSearchQuery={setSearchQuery} />
               <LevelFilter setFilterQuery={setFilterQuery} />
@@ -219,7 +222,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
                     return (
                       <StyledListItem key={asana.id}>
                         <p>{asana.english_name}</p>
-                        <StyledAddButton
+                        <StyledRoundButton
                           aria-label="add asana"
                           onClick={() => {
                             addAsanaToFlow(asana);
@@ -227,14 +230,14 @@ export default function FlowPage({ asanas, currentFlowDB }) {
                           }}
                         >
                           +
-                        </StyledAddButton>
+                        </StyledRoundButton>
                       </StyledListItem>
                     );
                   })}
               </StyledList>
             </AddAsanaSection>
           )}
-        </StyledWrapper>
+        </StyledContainer>
       </StyledContainer>
     </>
   );
@@ -242,6 +245,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
 
 const StyledList = styled.ul`
   list-style: none;
+  margin-bottom: 3rem;
 `;
 
 const StyledListItem = styled.li`
@@ -252,10 +256,10 @@ const StyledListItem = styled.li`
   margin: 1.2rem 0.5rem;
 `;
 
-const StyledAddButton = styled.button`
+const StyledRoundButton = styled.button`
   border: none;
   background-color: var(--background-neutral);
-  color: var(--highlight);
+  color: ${({ color }) => color || "var(--highlight)"};
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
@@ -290,31 +294,11 @@ const StyledContainer = styled.section`
   position: relative;
 `;
 
-const StyledCloseButton = styled.button`
-  border: none;
-  background-color: var(--background-neutral);
-  color: var(--primary);
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-  text-align: center;
-  cursor: pointer;
-`;
-
 const SectionHeader = styled.section`
   display: flex;
   justify-content: space-between;
   background-color: transparent;
   flex-wrap: wrap;
-`;
-
-const StyledWrapper = styled.div`
-  position: relative;
-`;
-
-const StyledListWithMargin = styled.ul`
-  list-style: none;
-  margin-bottom: 20rem;
 `;
 
 const StyledParagraph = styled.p`
@@ -336,7 +320,8 @@ const StyledForm = styled.form`
   flex-direction: column;
   align-items: center;
   position: relative;
-  margin: 2rem 3rem;
+  margin: 2rem auto;
+  width: 17.5rem;
 `;
 
 const StyledTextArea = styled.textarea`
@@ -347,7 +332,7 @@ const StyledTextArea = styled.textarea`
   border: none;
   background-color: var(--background-primary);
   margin: 1rem 2rem;
-  box-shadow: var(--drop-shadow-color);
+  box-shadow: var(--drop-shadow-bottom-color);
   font-family: "DM Sans";
 `;
 
@@ -360,26 +345,32 @@ const StyledEditIcon = styled(BsPen)`
 const StyledCloseButtonForm = styled.button`
   border: none;
   position: absolute;
-  top: 0.5rem;
-  right: -1rem;
-  background-color: var(--highlight);
-  color: var(--text-light);
+  top: 1.3rem;
+  right: 0.5rem;
+  background-color: var(--background-primary);
+  color: var(--highlight);
   width: 1rem;
   height: 1rem;
   border-radius: 50%;
   text-align: center;
   cursor: pointer;
-  &:active {
-    background-color: var(--highlight);
-    color: var(--text-light);
-  }
 `;
 
 const StyledResetButton = styled.button`
   all: unset;
   display: block;
   margin: -3rem auto 5rem auto;
-  color: var(--highlight);
+  color: var(--highlight-light);
   text-decoration: underline;
   cursor: pointer;
+`;
+
+const StyledWarning = styled.p`
+  font-size: var(--font-small);
+  color: var(--highlight-light);
+  text-align: center;
+`;
+
+const StyledAsanaIcon = styled(TbYoga)`
+  color: var(--background-neutral);
 `;

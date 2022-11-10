@@ -31,7 +31,7 @@ const StyledInput = styled.input`
   background-color: var(--background-neutral);
   margin: ${(props) => props.margin};
   box-shadow: var(--drop-shadow-gray);
-  font-size: var(--font-small);
+
   &:focus {
     box-shadow: none;
     border: 1px solid var(--highlight);

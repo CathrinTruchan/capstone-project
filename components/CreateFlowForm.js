@@ -166,7 +166,7 @@ const StyledLabel = styled.label`
 const StyledSubmitButton = styled.button`
   width: 12rem;
   display: block;
-  padding: 0.5rem 1.5rem;
+  padding: 0.6rem 1.5rem;
   border-radius: 12px;
   border: none;
   margin: 1rem 0;
@@ -182,7 +182,7 @@ const StyledSubmitButton = styled.button`
 const StyledCancelButton = styled.button`
   width: 12rem;
   display: block;
-  padding: 0.5rem 1.5rem;
+  padding: 0.6rem 1.5rem;
   border: none;
   border-radius: 12px;
   margin: 0.5rem 0;
