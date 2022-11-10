@@ -106,7 +106,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
       window.scrollBy({ top: 500, behavior: "smooth" });
     });
   }
-  if (session.user.email === currentFlowDB.author) {
+  if (session && session.user.email === currentFlowDB.author) {
     return (
       <>
         <section>
@@ -259,7 +259,9 @@ export default function FlowPage({ asanas, currentFlowDB }) {
   } else if (session && session.user.email != currentFlowDB.author) {
     return (
       <>
-        <StyledText>You don&apos;t have access to this flow.</StyledText>
+        <StyledText>
+          <p>You don&apos;t have access to this flow.</p>
+        </StyledText>
         <StyledText>
           Have a look at <Link href="/">your flows.</Link>
         </StyledText>
