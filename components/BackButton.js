@@ -22,10 +22,17 @@ const StyledBackButton = styled.button`
   top: 6rem;
   left: 1rem;
   z-index: 80;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--primary);
+  }
 `;
 
 const StyledBackIcon = styled(IoIosArrowBack)`
   font-size: 1.3rem;
   margin: 0.1rem;
   color: var(--primary-light);
+  &:hover {
+    color: var(--background-neutral);
+  }
 `;
