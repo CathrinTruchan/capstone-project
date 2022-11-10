@@ -12,19 +12,33 @@ import { getAllAsanas } from "../../services/asanaService";
 import { getFlowById } from "/services/flowService";
 import { AddButton } from "../../components/AddButton";
 import { TbYoga } from "react-icons/tb";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import LoginButton from "../../components/LoginButton";
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
   const asanas = await getAllAsanas();
   const currentFlowDB = await getFlowById(id);
   return {
-    props: { asanas: asanas, currentFlowDB: currentFlowDB },
+    props: {
+      asanas: asanas,
+      currentFlowDB: currentFlowDB,
+      session: await unstable_getServerSession(
+        context.req,
+        context.res,
+        authOptions
+      ),
+    },
   };
 }
 
 export default function FlowPage({ asanas, currentFlowDB }) {
   const router = useRouter();
   const { id } = router.query;
+  const { data: session } = useSession();
   const [flow, setFlow] = useState(currentFlowDB);
   const [openMenu, setOpenMenu] = useState(false);
   const [openDescriptionForm, setOpenDescriptionForm] = useState(false);
@@ -91,156 +105,163 @@ export default function FlowPage({ asanas, currentFlowDB }) {
       window.scrollBy({ top: 500, behavior: "smooth" });
     });
   }
+  if (session) {
+    return (
+      <>
+        <section>
+          <StyledBackButton />
 
-  return (
-    <>
-      <section>
-        <StyledBackButton />
-
-        <h2>{flow.name}</h2>
-        <StyledParagraph>
-          {parseInt(flow.hours) > 0 && <span>{flow.hours}h</span>}
-          {parseInt(flow.minutes) > 0 && <span> {flow.minutes}min</span>}
-        </StyledParagraph>
-        <StyledParagraph>
-          {flow.description}
-          {flow.description !== "" && (
-            <StyledEditIcon onClick={toggleOpenForm} />
-          )}
-        </StyledParagraph>
-        {flow.description === "" && (
-          <StyledEditButton onClick={toggleOpenForm}>
-            Add description <BsPen />
-          </StyledEditButton>
-        )}
-        {openDescriptionForm && (
-          <StyledForm onSubmit={(event) => onSubmitDescription(event)}>
-            <StyledTextArea
-              rows="4"
-              cols="30"
-              id="description"
-              name="description"
-              aria-label="add description for flow"
-              placeholder="add your description..."
-              defaultValue={flow.description}
-              onChange={(event) => handleMaxLength(event.target.value)}
-            />
-            {disabledSaveButton && (
-              <StyledWarning>
-                The maximum length of the description is 100 characters.
-              </StyledWarning>
+          <h2>{flow.name}</h2>
+          <StyledParagraph>
+            {parseInt(flow.hours) > 0 && <span>{flow.hours}h</span>}
+            {parseInt(flow.minutes) > 0 && <span> {flow.minutes}min</span>}
+          </StyledParagraph>
+          <StyledParagraph>
+            {flow.description}
+            {flow.description !== "" && (
+              <StyledEditIcon onClick={toggleOpenForm} />
             )}
-
-            <MainButton
-              type="primary"
-              width="7rem"
-              aria-label="Save description"
-              disabled={disabledSaveButton}
-            >
-              Save
-            </MainButton>
-
-            <StyledCloseButtonForm
-              type="reset"
-              aria-label="close input field for description"
-              onClick={toggleOpenForm}
-            >
-              X
-            </StyledCloseButtonForm>
-          </StyledForm>
-        )}
-      </section>
-      <StyledContainer>
-        <StyledList>
-          {flow.asanas.map((asana) => {
-            return (
-              <li key={asana.flowListId}>
-                <AsanaCard
-                  name={asana.english_name}
-                  img={asana.img_url}
-                  id={asana.id}
-                  deleteCard={() => deleteAsana(asana.flowListId)}
-                  showDeleteButton={true}
-                />
-              </li>
-            );
-          })}
-        </StyledList>
-
-        {!openMenu && flow.asanas.length > 0 && (
-          <>
-            <MainButton
-              type="primary"
-              onClick={() => handleFlowSave(flow)}
-              margin=" 0 auto 5rem auto"
-            >
-              Save Changes
-            </MainButton>
-            <StyledResetButton onClick={resetFlow}>
-              Reset flow
-            </StyledResetButton>
-          </>
-        )}
-        <AddButton
-          aria-label="open menu to add asanas"
-          onClick={() => setOpenMenu(true)}
-        >
-          <StyledAsanaIcon />
-        </AddButton>
-        <StyledContainer>
-          {openMenu && (
-            <AddAsanaSection>
-              <SectionHeader>
-                <StyledH3>You added {flow.asanas.length} Asanas</StyledH3>
-                <StyledRoundButton
-                  aria-label="close"
-                  color="var(--primary)"
-                  onClick={() => {
-                    setOpenMenu(false);
-                    setSearchQuery("");
-                    setFilterQuery("all");
-                  }}
-                >
-                  X
-                </StyledRoundButton>
-              </SectionHeader>
-              <SearchBar setSearchQuery={setSearchQuery} />
-              <LevelFilter setFilterQuery={setFilterQuery} />
-              <StyledList>
-                {asanas
-                  .filter((asana) => {
-                    const nameInLowerCase = asana.english_name.toLowerCase();
-                    const searchQueryInLowerCase = searchQuery.toLowerCase();
-                    return nameInLowerCase.includes(searchQueryInLowerCase);
-                  })
-                  .filter((asana) => {
-                    if (filterQuery !== "all") {
-                      return asana.levels[0] === filterQuery;
-                    } else return asana;
-                  })
-                  .map((asana) => {
-                    return (
-                      <StyledListItem key={asana.id}>
-                        <p>{asana.english_name}</p>
-                        <StyledRoundButton
-                          aria-label="add asana"
-                          onClick={() => {
-                            addAsanaToFlow(asana);
-                            autoScroll();
-                          }}
-                        >
-                          +
-                        </StyledRoundButton>
-                      </StyledListItem>
-                    );
-                  })}
-              </StyledList>
-            </AddAsanaSection>
+          </StyledParagraph>
+          {flow.description === "" && (
+            <StyledEditButton onClick={toggleOpenForm}>
+              Add description <BsPen />
+            </StyledEditButton>
           )}
+          {openDescriptionForm && (
+            <StyledForm onSubmit={(event) => onSubmitDescription(event)}>
+              <StyledTextArea
+                rows="4"
+                cols="30"
+                id="description"
+                name="description"
+                aria-label="add description for flow"
+                placeholder="add your description..."
+                defaultValue={flow.description}
+                onChange={(event) => handleMaxLength(event.target.value)}
+              />
+              {disabledSaveButton && (
+                <StyledWarning>
+                  The maximum length of the description is 100 characters.
+                </StyledWarning>
+              )}
+
+              <MainButton
+                type="primary"
+                width="7rem"
+                aria-label="Save description"
+                disabled={disabledSaveButton}
+              >
+                Save
+              </MainButton>
+
+              <StyledCloseButtonForm
+                type="reset"
+                aria-label="close input field for description"
+                onClick={toggleOpenForm}
+              >
+                X
+              </StyledCloseButtonForm>
+            </StyledForm>
+          )}
+        </section>
+        <StyledContainer>
+          <StyledList>
+            {flow.asanas.map((asana) => {
+              return (
+                <li key={asana.flowListId}>
+                  <AsanaCard
+                    name={asana.english_name}
+                    img={asana.img_url}
+                    id={asana.id}
+                    deleteCard={() => deleteAsana(asana.flowListId)}
+                    showDeleteButton={true}
+                  />
+                </li>
+              );
+            })}
+          </StyledList>
+
+          {!openMenu && flow.asanas.length > 0 && (
+            <>
+              <MainButton
+                type="primary"
+                onClick={() => handleFlowSave(flow)}
+                margin=" 0 auto 5rem auto"
+              >
+                Save Changes
+              </MainButton>
+              <StyledResetButton onClick={resetFlow}>
+                Reset flow
+              </StyledResetButton>
+            </>
+          )}
+          <AddButton
+            aria-label="open menu to add asanas"
+            onClick={() => setOpenMenu(true)}
+          >
+            <StyledAsanaIcon />
+          </AddButton>
+          <StyledContainer>
+            {openMenu && (
+              <AddAsanaSection>
+                <SectionHeader>
+                  <StyledH3>You added {flow.asanas.length} Asanas</StyledH3>
+                  <StyledRoundButton
+                    aria-label="close"
+                    color="var(--primary)"
+                    onClick={() => {
+                      setOpenMenu(false);
+                      setSearchQuery("");
+                      setFilterQuery("all");
+                    }}
+                  >
+                    X
+                  </StyledRoundButton>
+                </SectionHeader>
+                <SearchBar setSearchQuery={setSearchQuery} />
+                <LevelFilter setFilterQuery={setFilterQuery} />
+                <StyledList>
+                  {asanas
+                    .filter((asana) => {
+                      const nameInLowerCase = asana.english_name.toLowerCase();
+                      const searchQueryInLowerCase = searchQuery.toLowerCase();
+                      return nameInLowerCase.includes(searchQueryInLowerCase);
+                    })
+                    .filter((asana) => {
+                      if (filterQuery !== "all") {
+                        return asana.levels[0] === filterQuery;
+                      } else return asana;
+                    })
+                    .map((asana) => {
+                      return (
+                        <StyledListItem key={asana.id}>
+                          <p>{asana.english_name}</p>
+                          <StyledRoundButton
+                            aria-label="add asana"
+                            onClick={() => {
+                              addAsanaToFlow(asana);
+                              autoScroll();
+                            }}
+                          >
+                            +
+                          </StyledRoundButton>
+                        </StyledListItem>
+                      );
+                    })}
+                </StyledList>
+              </AddAsanaSection>
+            )}
+          </StyledContainer>
         </StyledContainer>
-      </StyledContainer>
-    </>
-  );
+      </>
+    );
+  } else
+    return (
+      <StyledText>
+        <p>Please log in to see the flows.</p>
+        <LoginButton />
+      </StyledText>
+    );
 }
 
 const StyledList = styled.ul`
@@ -373,4 +394,8 @@ const StyledWarning = styled.p`
 
 const StyledAsanaIcon = styled(TbYoga)`
   color: var(--background-neutral);
+`;
+
+const StyledText = styled.section`
+  text-align: center;
 `;

@@ -10,7 +10,6 @@ import Image from "next/image";
 import { AddButton } from "../components/AddButton";
 import { useSession, signIn, signOut } from "next-auth/react";
 import LoginButton from "../components/LoginButton";
-import LogoutButton from "../components/LogoutButton";
 
 export async function getServerSideProps() {
   const flowsDB = await getAllFlows();
@@ -115,7 +114,7 @@ export default function Home({ flowsDB }) {
 
       <main>
         <StyledH2>NAMASTE,</StyledH2>
-        <StyledH2>{session.user.name.toUpperCase()}</StyledH2>
+        {session && <StyledH2>{session.user.name.toUpperCase()}</StyledH2>}
         <h3>Let&apos;s flow together</h3>
         <ImageWrapper>
           <Image
