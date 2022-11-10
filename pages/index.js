@@ -10,6 +10,7 @@ import Image from "next/image";
 import { AddButton } from "../components/AddButton";
 import { useSession, signIn, signOut } from "next-auth/react";
 import LoginButton from "../components/LoginButton";
+import LogoutButton from "../components/LogoutButton";
 
 export async function getServerSideProps() {
   const flowsDB = await getAllFlows();
@@ -114,10 +115,6 @@ export default function Home({ flowsDB }) {
 
       <main>
         <StyledH2>NAMASTE</StyledH2>
-
-        {!session && <p>You are not logged in</p>}
-        <LoginButton />
-
         <h3>Let&apos;s flow together</h3>
         <ImageWrapper>
           <Image
@@ -129,48 +126,55 @@ export default function Home({ flowsDB }) {
             priority
           />
         </ImageWrapper>
-        <StyledWrapper>
-          <h2>Your Flows: </h2>
-          <StyledParagraph>Choose a flow or create a new one:</StyledParagraph>
-          {sortedFlowsDB.map((flow) => (
-            <FlowCard
-              key={flow.id}
-              name={flow.name}
-              hours={flow.hours}
-              minutes={flow.minutes}
-              id={flow.id}
-              deleteFlow={() => handleDelete(flow.id)}
-              setEditFormId={() => setEditFormId(flow.id)}
-            />
-          ))}
-          {openForm && (
-            <CreateFlowForm
-              flows={flowsDB}
-              handleFlowPost={handleFlowPost}
-              closeForm={closeForm}
-            />
-          )}
-          {editFormId != null &&
-            flowsDB.map(
-              (flow) =>
-                flow.id === editFormId && (
-                  <CreateFlowForm
-                    key={flow.id}
-                    flows={flowsDB}
-                    id={flow.id}
-                    editFormId={editFormId}
-                    defaultName={flow.name}
-                    defaultHours={flow.hours}
-                    defaultMinutes={flow.minutes}
-                    handleFlowUpdate={handleFlowUpdate}
-                    cancelEditFlow={cancelEditFlow}
-                  />
-                )
+        <LoginButton />
+        <LogoutButton />
+
+        {session && (
+          <StyledWrapper>
+            <h2>Your Flows: </h2>
+            <StyledParagraph>
+              Choose a flow or create a new one:
+            </StyledParagraph>
+            {sortedFlowsDB.map((flow) => (
+              <FlowCard
+                key={flow.id}
+                name={flow.name}
+                hours={flow.hours}
+                minutes={flow.minutes}
+                id={flow.id}
+                deleteFlow={() => handleDelete(flow.id)}
+                setEditFormId={() => setEditFormId(flow.id)}
+              />
+            ))}
+            {openForm && (
+              <CreateFlowForm
+                flows={flowsDB}
+                handleFlowPost={handleFlowPost}
+                closeForm={closeForm}
+              />
             )}
-          <AddButton aria-label="add a flow" onClick={toggleOpenForm}>
-            +
-          </AddButton>
-        </StyledWrapper>
+            {editFormId != null &&
+              flowsDB.map(
+                (flow) =>
+                  flow.id === editFormId && (
+                    <CreateFlowForm
+                      key={flow.id}
+                      flows={flowsDB}
+                      id={flow.id}
+                      editFormId={editFormId}
+                      defaultName={flow.name}
+                      defaultHours={flow.hours}
+                      defaultMinutes={flow.minutes}
+                      handleFlowUpdate={handleFlowUpdate}
+                      cancelEditFlow={cancelEditFlow}
+                    />
+                  )
+              )}
+            <AddButton aria-label="add a flow" onClick={toggleOpenForm}>
+              +
+            </AddButton>
+          </StyledWrapper>
+        )}
       </main>
     </div>
   );
