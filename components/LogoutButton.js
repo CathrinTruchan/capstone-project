@@ -18,11 +18,11 @@ export default function LogoutButton() {
 const StyledLogoutButton = styled.button`
   all: unset;
   position: fixed;
-  top: 1.2rem;
-  right: 1rem;
+  top: 1.3rem;
+  right: 0.7rem;
 `;
 
 const StyledLogoutIcon = styled(AiOutlineLogout)`
   color: white;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
 `;

@@ -67,7 +67,7 @@ export default function Home({ flowsDB }) {
 
   async function handleFlowUpdate(flowData) {
     try {
-      const response = await fetch("/api/flows", {
+      const response = await fetch(`/api/flows/${flowData.id}`, {
         method: "PATCH",
         body: JSON.stringify(flowData),
       });
@@ -87,7 +87,7 @@ export default function Home({ flowsDB }) {
 
   async function handleDelete(id) {
     try {
-      const response = await fetch(`/api/flows`, {
+      const response = await fetch(`/api/flows/${id}`, {
         method: "DELETE",
         body: JSON.stringify(id),
       });
