@@ -1,11 +1,13 @@
 import dbConnect from "../lib/dbConnect";
 import Flow from "../models/Flow";
 
-export async function getAllFlows() {
+export async function getAllFlows(author) {
   await dbConnect();
-  const flows = await Flow.find();
 
-  const sanatizedFlows = flows.map((flow) => ({
+  const flows = await Flow.find();
+  const flowsByAuthor = flows.filter((flow) => author === flow.author);
+
+  const sanatizedFlows = flowsByAuthor.map((flow) => ({
     id: flow._id,
     name: flow.name,
     description: flow.description,
@@ -18,8 +20,9 @@ export async function getAllFlows() {
   return JSON.parse(JSON.stringify(sanatizedFlows));
 }
 
-export async function getFlowById(id) {
+export async function getFlowById(id, author) {
   await dbConnect();
+
   const flow = await Flow.findById(id);
 
   const sanitizedFlow = {
@@ -31,5 +34,7 @@ export async function getFlowById(id) {
     asanas: flow.asanas,
     author: flow.author,
   };
-  return JSON.parse(JSON.stringify(sanitizedFlow));
+  if (author === flow.author) {
+    return JSON.parse(JSON.stringify(sanitizedFlow));
+  } else return {};
 }

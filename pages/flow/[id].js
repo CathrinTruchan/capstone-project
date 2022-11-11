@@ -22,18 +22,22 @@ import Link from "next/link";
 export async function getServerSideProps(context) {
   const { id } = context.params;
   const asanas = await getAllAsanas();
-  const currentFlowDB = await getFlowById(id);
-  return {
-    props: {
-      asanas: asanas,
-      currentFlowDB: currentFlowDB,
-      session: await unstable_getServerSession(
-        context.req,
-        context.res,
-        authOptions
-      ),
-    },
-  };
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  if (session) {
+    const currentFlowDB = await getFlowById(id, session.user.email);
+    return {
+      props: {
+        asanas: asanas,
+        currentFlowDB: currentFlowDB,
+      },
+    };
+  } else {
+    return { props: {} };
+  }
 }
 
 export default function FlowPage({ asanas, currentFlowDB }) {

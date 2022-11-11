@@ -10,12 +10,21 @@ import Image from "next/image";
 import { AddButton } from "../components/AddButton";
 import { useSession } from "next-auth/react";
 import LoginButton from "../components/LoginButton";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 
-export async function getServerSideProps() {
-  const flowsDB = await getAllFlows();
-  return {
-    props: { flowsDB: flowsDB },
-  };
+export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  if (session) {
+    const flowsDB = await getAllFlows(session.user.email);
+    return {
+      props: { flowsDB: flowsDB },
+    };
+  } else return { props: {} };
 }
 
 export default function Home({ flowsDB }) {
@@ -98,12 +107,6 @@ export default function Home({ flowsDB }) {
     setOpenForm(false);
   }
 
-  const sortedFlowsDB = flowsDB.sort((a, b) => {
-    if (a.id > b.id) {
-      return -1;
-    } else return 1;
-  });
-
   return (
     <div>
       <Head>
@@ -135,19 +138,17 @@ export default function Home({ flowsDB }) {
             <StyledParagraph>
               Choose a flow or create a new one:
             </StyledParagraph>
-            {sortedFlowsDB
-              .filter((flow) => flow.author === session.user.email)
-              .map((flow) => (
-                <FlowCard
-                  key={flow.id}
-                  name={flow.name}
-                  hours={flow.hours}
-                  minutes={flow.minutes}
-                  id={flow.id}
-                  deleteFlow={() => handleDelete(flow.id)}
-                  setEditFormId={() => setEditFormId(flow.id)}
-                />
-              ))}
+            {flowsDB.map((flow) => (
+              <FlowCard
+                key={flow.id}
+                name={flow.name}
+                hours={flow.hours}
+                minutes={flow.minutes}
+                id={flow.id}
+                deleteFlow={() => handleDelete(flow.id)}
+                setEditFormId={() => setEditFormId(flow.id)}
+              />
+            ))}
             {openForm && (
               <CreateFlowForm
                 flows={flowsDB}

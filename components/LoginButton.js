@@ -6,7 +6,11 @@ export default function LoginButton() {
   if (!session) {
     return (
       <>
-        <MainButton margin="2rem auto" type="primary" onClick={() => signIn()}>
+        <MainButton
+          margin="2rem auto"
+          type="primary"
+          onClick={() => signIn("github")}
+        >
           Sign in
         </MainButton>
       </>

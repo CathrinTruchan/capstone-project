@@ -14,8 +14,13 @@ export default async function handler(request, response) {
   await dbConnect();
 
   if (request.method === "GET") {
-    const flows = await getAllFlows();
-    return response.status(200).json(flows);
+    if (session) {
+      const flows = await getAllFlows(session.user.email);
+      return response.status(200).json(flows);
+    }
+    {
+      return response.status(401).json({ message: "Unauthorized" });
+    }
   } else if (request.method === "POST") {
     if (session) {
       const data = JSON.parse(request.body);
