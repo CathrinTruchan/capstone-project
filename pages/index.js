@@ -8,18 +8,30 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Image from "next/image";
 import { AddButton } from "../components/AddButton";
+import { useSession } from "next-auth/react";
+import LoginButton from "../components/LoginButton";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 
-export async function getServerSideProps() {
-  const flowsDB = await getAllFlows();
-  return {
-    props: { flowsDB: flowsDB },
-  };
+export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  if (session) {
+    const flowsDB = await getAllFlows(session.user.email);
+    return {
+      props: { flowsDB: flowsDB },
+    };
+  } else return { props: {} };
 }
 
 export default function Home({ flowsDB }) {
   const [openForm, setOpenForm] = useState(false);
   const [editFormId, setEditFormId] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const { data: session } = useSession();
 
   const router = useRouter();
   const refreshData = () => {
@@ -95,12 +107,6 @@ export default function Home({ flowsDB }) {
     setOpenForm(false);
   }
 
-  const sortedFlowsDB = flowsDB.sort((a, b) => {
-    if (a.id > b.id) {
-      return -1;
-    } else return 1;
-  });
-
   return (
     <div>
       <Head>
@@ -110,8 +116,8 @@ export default function Home({ flowsDB }) {
       </Head>
 
       <main>
-        <StyledH2>NAMASTE</StyledH2>
-
+        <StyledH2>NAMASTE,</StyledH2>
+        {session && <StyledH2>{session.user.name.toUpperCase()}</StyledH2>}
         <h3>Let&apos;s flow together</h3>
         <ImageWrapper>
           <Image
@@ -123,48 +129,55 @@ export default function Home({ flowsDB }) {
             priority
           />
         </ImageWrapper>
-        <StyledWrapper>
-          <h2>Your Flows: </h2>
-          <StyledParagraph>Choose a flow or create a new one:</StyledParagraph>
-          {sortedFlowsDB.map((flow) => (
-            <FlowCard
-              key={flow.id}
-              name={flow.name}
-              hours={flow.hours}
-              minutes={flow.minutes}
-              id={flow.id}
-              deleteFlow={() => handleDelete(flow.id)}
-              setEditFormId={() => setEditFormId(flow.id)}
-            />
-          ))}
-          {openForm && (
-            <CreateFlowForm
-              flows={flowsDB}
-              handleFlowPost={handleFlowPost}
-              closeForm={closeForm}
-            />
-          )}
-          {editFormId != null &&
-            flowsDB.map(
-              (flow) =>
-                flow.id === editFormId && (
-                  <CreateFlowForm
-                    key={flow.id}
-                    flows={flowsDB}
-                    id={flow.id}
-                    editFormId={editFormId}
-                    defaultName={flow.name}
-                    defaultHours={flow.hours}
-                    defaultMinutes={flow.minutes}
-                    handleFlowUpdate={handleFlowUpdate}
-                    cancelEditFlow={cancelEditFlow}
-                  />
-                )
+
+        <LoginButton />
+
+        {session && (
+          <StyledWrapper>
+            <h2>Your Flows: </h2>
+            <StyledParagraph>
+              Choose a flow or create a new one:
+            </StyledParagraph>
+            {flowsDB.map((flow) => (
+              <FlowCard
+                key={flow.id}
+                name={flow.name}
+                hours={flow.hours}
+                minutes={flow.minutes}
+                id={flow.id}
+                deleteFlow={() => handleDelete(flow.id)}
+                setEditFormId={() => setEditFormId(flow.id)}
+              />
+            ))}
+            {openForm && (
+              <CreateFlowForm
+                flows={flowsDB}
+                handleFlowPost={handleFlowPost}
+                closeForm={closeForm}
+              />
             )}
-          <AddButton aria-label="add a flow" onClick={toggleOpenForm}>
-            +
-          </AddButton>
-        </StyledWrapper>
+            {editFormId != null &&
+              flowsDB.map(
+                (flow) =>
+                  flow.id === editFormId && (
+                    <CreateFlowForm
+                      key={flow.id}
+                      flows={flowsDB}
+                      id={flow.id}
+                      editFormId={editFormId}
+                      defaultName={flow.name}
+                      defaultHours={flow.hours}
+                      defaultMinutes={flow.minutes}
+                      handleFlowUpdate={handleFlowUpdate}
+                      cancelEditFlow={cancelEditFlow}
+                    />
+                  )
+              )}
+            <AddButton aria-label="add a flow" onClick={toggleOpenForm}>
+              +
+            </AddButton>
+          </StyledWrapper>
+        )}
       </main>
     </div>
   );
