@@ -5,13 +5,14 @@ import CreateFlowForm from "/components/CreateFlowForm";
 import FlowCard from "/components/FlowCard";
 import { getAllFlows } from "/services/flowService";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { AddButton } from "../components/AddButton";
 import { useSession } from "next-auth/react";
 import LoginButton from "../components/LoginButton";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
+import lottie from "lottie-web";
 
 export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(
@@ -101,6 +102,18 @@ export default function Home({ flowsDB }) {
 
   const toggleOpenForm = () => setOpenForm((prev) => !prev);
 
+  const container = useRef(null);
+  useEffect(() => {
+    const instance = lottie.loadAnimation({
+      container: container.current,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      animationData: require("/public/animations/yoga-animation-start.json"),
+    });
+    return () => instance.destroy();
+  }, []);
+
   return (
     <div>
       <Head>
@@ -112,17 +125,10 @@ export default function Home({ flowsDB }) {
       <main>
         <StyledH2>NAMASTE</StyledH2>
         {session && <StyledH2>{session.user.name.toUpperCase()}</StyledH2>}
+
         <h3>Let&apos;s flow together</h3>
-        <ImageWrapper>
-          <Image
-            src="/images/animation-start-s4.gif"
-            width={300}
-            height={256}
-            alt="yoga"
-            layout="fixed"
-            priority
-          />
-        </ImageWrapper>
+
+        <AnimationWrapper ref={container}></AnimationWrapper>
 
         <LoginButton />
 
@@ -189,7 +195,7 @@ const StyledWrapper = styled.section`
   margin-top: 3rem;
 `;
 
-const ImageWrapper = styled.div`
-  display: flex;
-  justify-content: center;
+const AnimationWrapper = styled.section`
+  width: 350px;
+  margin: -2.5rem auto;
 `;
