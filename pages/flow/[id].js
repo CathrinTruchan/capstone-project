@@ -137,6 +137,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
                 name="description"
                 aria-label="add description for flow"
                 placeholder="add your description..."
+                autoComplete="off"
                 defaultValue={flow.description}
                 onChange={(event) => handleMaxLength(event.target.value)}
               />
