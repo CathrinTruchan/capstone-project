@@ -29,15 +29,12 @@ export async function getServerSideProps(context) {
   if (session) {
     const currentFlowDB = await getFlowById(id, session.user.email);
 
-    if (!currentFlowDB) {
-      return { notFound: true };
-    } else
-      return {
-        props: {
-          asanas: asanas,
-          currentFlowDB: currentFlowDB,
-        },
-      };
+    return {
+      props: {
+        asanas: asanas,
+        currentFlowDB: currentFlowDB,
+      },
+    };
   } else {
     return { props: {} };
   }

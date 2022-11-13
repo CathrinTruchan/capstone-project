@@ -21,12 +21,10 @@ export async function getServerSideProps(context) {
   );
   if (session) {
     const flowsDB = await getAllFlows(session.user.email);
-    if (!flowsDB) {
-      return { notFound: true };
-    } else
-      return {
-        props: { flowsDB: flowsDB },
-      };
+
+    return {
+      props: { flowsDB: flowsDB },
+    };
   } else return { props: {} };
 }
 
