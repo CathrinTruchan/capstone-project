@@ -66,6 +66,7 @@ export default function CreateFlowForm({
           required
           autoFocus
           defaultValue={defaultName}
+          autoComplete="off"
         />
         <StyledFieldset>
           <section>
@@ -81,6 +82,7 @@ export default function CreateFlowForm({
               max="2"
               onChange={handleHoursValidation}
               defaultValue={defaultHours}
+              autoComplete="off"
             />
           </section>
           <section>
@@ -95,6 +97,7 @@ export default function CreateFlowForm({
               min={hours === "0" ? "10" : "0"}
               max="59"
               defaultValue={defaultMinutes}
+              autoComplete="off"
             />
           </section>
         </StyledFieldset>

@@ -15,7 +15,6 @@ import { TbYoga } from "react-icons/tb";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
-
 import LoginButton from "../../components/LoginButton";
 import Link from "next/link";
 
@@ -29,6 +28,7 @@ export async function getServerSideProps(context) {
   );
   if (session) {
     const currentFlowDB = await getFlowById(id, session.user.email);
+
     return {
       props: {
         asanas: asanas,
@@ -85,10 +85,6 @@ export default function FlowPage({ asanas, currentFlowDB }) {
     }
   }
 
-  function resetFlow() {
-    setFlow({ ...flow, asanas: [] });
-  }
-
   function deleteAsana(cardID) {
     const filteredAsanas = flow.asanas.filter(
       (asana) => asana.flowListId !== cardID
@@ -99,17 +95,18 @@ export default function FlowPage({ asanas, currentFlowDB }) {
     });
   }
 
+  const resetFlow = () => setFlow({ ...flow, asanas: [] });
+
   const handleMaxLength = (text) => setDisabledSaveButton(text.length > 100);
 
-  function toggleOpenForm() {
-    setOpenDescriptionForm((prev) => (prev = !prev));
-  }
+  const toggleOpenForm = () => setOpenDescriptionForm((prev) => (prev = !prev));
 
   function autoScroll() {
     setTimeout(() => {
       window.scrollBy({ top: 500, behavior: "smooth" });
     });
   }
+
   if (session && session.user.email === currentFlowDB.author) {
     return (
       <>
@@ -141,6 +138,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
                 name="description"
                 aria-label="add description for flow"
                 placeholder="add your description..."
+                autoComplete="off"
                 defaultValue={flow.description}
                 onChange={(event) => handleMaxLength(event.target.value)}
               />
@@ -169,7 +167,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
             </StyledForm>
           )}
         </section>
-        <StyledContainer>
+        <section>
           <StyledList>
             {flow.asanas.map((asana) => {
               return (
@@ -206,58 +204,57 @@ export default function FlowPage({ asanas, currentFlowDB }) {
           >
             <StyledAsanaIcon />
           </AddButton>
-          <StyledContainer>
-            {openMenu && (
-              <AddAsanaSection>
-                <SectionHeader>
-                  <StyledH3>You added {flow.asanas.length} Asanas</StyledH3>
-                  <StyledRoundButton
-                    aria-label="close"
-                    color="var(--primary)"
-                    onClick={() => {
-                      setOpenMenu(false);
-                      setSearchQuery("");
-                      setFilterQuery("all");
-                    }}
-                  >
-                    X
-                  </StyledRoundButton>
-                </SectionHeader>
-                <SearchBar setSearchQuery={setSearchQuery} />
-                <LevelFilter setFilterQuery={setFilterQuery} />
-                <StyledList>
-                  {asanas
-                    .filter((asana) => {
-                      const nameInLowerCase = asana.english_name.toLowerCase();
-                      const searchQueryInLowerCase = searchQuery.toLowerCase();
-                      return nameInLowerCase.includes(searchQueryInLowerCase);
-                    })
-                    .filter((asana) => {
-                      if (filterQuery !== "all") {
-                        return asana.levels[0] === filterQuery;
-                      } else return asana;
-                    })
-                    .map((asana) => {
-                      return (
-                        <StyledListItem key={asana.id}>
-                          <p>{asana.english_name}</p>
-                          <StyledRoundButton
-                            aria-label="add asana"
-                            onClick={() => {
-                              addAsanaToFlow(asana);
-                              autoScroll();
-                            }}
-                          >
-                            +
-                          </StyledRoundButton>
-                        </StyledListItem>
-                      );
-                    })}
-                </StyledList>
-              </AddAsanaSection>
-            )}
-          </StyledContainer>
-        </StyledContainer>
+
+          {openMenu && (
+            <AddAsanaSection>
+              <SectionHeader>
+                <StyledH3>You added {flow.asanas.length} Asanas</StyledH3>
+                <StyledRoundButton
+                  aria-label="close asana menu"
+                  color="var(--primary)"
+                  onClick={() => {
+                    setOpenMenu(false);
+                    setSearchQuery("");
+                    setFilterQuery("all");
+                  }}
+                >
+                  X
+                </StyledRoundButton>
+              </SectionHeader>
+              <SearchBar setSearchQuery={setSearchQuery} />
+              <LevelFilter setFilterQuery={setFilterQuery} />
+              <StyledList>
+                {asanas
+                  .filter((asana) => {
+                    return asana.english_name
+                      .toLowerCase()
+                      .includes(searchQuery.toLowerCase());
+                  })
+                  .filter((asana) => {
+                    if (filterQuery !== "all") {
+                      return asana.levels[0] === filterQuery;
+                    } else return asana;
+                  })
+                  .map((asana) => {
+                    return (
+                      <StyledListItem key={asana.id}>
+                        <p>{asana.english_name}</p>
+                        <StyledRoundButton
+                          aria-label="add asana"
+                          onClick={() => {
+                            addAsanaToFlow(asana);
+                            autoScroll();
+                          }}
+                        >
+                          +
+                        </StyledRoundButton>
+                      </StyledListItem>
+                    );
+                  })}
+              </StyledList>
+            </AddAsanaSection>
+          )}
+        </section>
       </>
     );
   } else if (session && session.user.email != currentFlowDB.author) {
@@ -329,10 +326,6 @@ const StyledH3 = styled.h3`
   color: var(--text-light);
 `;
 
-const StyledContainer = styled.section`
-  position: relative;
-`;
-
 const SectionHeader = styled.section`
   display: flex;
   justify-content: space-between;
@@ -369,10 +362,8 @@ const StyledTextArea = styled.textarea`
   border-radius: 12px;
   padding: 0.5rem 1rem;
   border: none;
-  background-color: var(--background-primary);
   margin: 1rem 2rem;
   box-shadow: var(--drop-shadow-bottom-color);
-  font-family: "DM Sans";
 `;
 
 const StyledEditIcon = styled(BsPen)`

@@ -14,17 +14,14 @@ export default function FlowCard({
 }) {
   const [openEditMenu, setOpenEditMenu] = useState(false);
 
-  function toggleEditMenu() {
-    setOpenEditMenu((prev) => !prev);
-  }
+  const toggleEditMenu = () => setOpenEditMenu((prev) => !prev);
 
   return (
     <FlowWrapper>
       <h2>{name}</h2>
       <p>
-        {hours}
-        {parseInt(hours) > 0 ? "h" : ""} {minutes}
-        {parseInt(minutes) > 0 ? "min" : ""}
+        {parseInt(hours) > 0 && <span>{hours}h</span>}
+        {parseInt(minutes) > 0 && <span> {minutes}min</span>}
       </p>
       <Link href={`/flow/${id}`} passHref>
         <StyledButton role="button">To the flow</StyledButton>

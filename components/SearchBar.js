@@ -14,6 +14,7 @@ export default function SearchBar({ setSearchQuery }) {
         arialabel="searchbar"
         placeholder="search all asanas..."
         onChange={handleSearch}
+        autoComplete="off"
       />
     </>
   );

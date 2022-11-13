@@ -26,4 +26,5 @@ const StyledTitle = styled.h1`
   padding-bottom: 1rem;
   margin-bottom: 1rem;
   font-family: "Montserrat Alternates";
+  font-size: 1.8rem;
 `;
