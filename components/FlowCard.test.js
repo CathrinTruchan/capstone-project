@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import FlowCard from "./FlowCard";
 
 describe("FlowCard", () => {
-  it("renders four buttons, one of them with the text `to the flow`", () => {
+  it("renders two buttons, one of them with the text `to the flow`", () => {
     render(<FlowCard />);
 
     expect(screen.getAllByText("To the flow")).toHaveLength(1);
