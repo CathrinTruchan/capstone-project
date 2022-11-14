@@ -168,7 +168,7 @@ export default function FlowPage({ asanas, currentFlowDB }) {
           )}
         </section>
         <section>
-          <StyledList>
+          <StyleAsanaList>
             {flow.asanas.map((asana) => {
               return (
                 <li key={asana.flowListId}>
@@ -182,14 +182,14 @@ export default function FlowPage({ asanas, currentFlowDB }) {
                 </li>
               );
             })}
-          </StyledList>
+          </StyleAsanaList>
 
           {!openMenu && flow.asanas.length > 0 && (
             <>
               <MainButton
                 type="primary"
                 onClick={() => handleFlowSave(flow)}
-                margin=" 0 auto 5rem auto"
+                margin=" -13rem auto 5rem auto"
               >
                 Save Changes
               </MainButton>
@@ -282,6 +282,11 @@ export default function FlowPage({ asanas, currentFlowDB }) {
 const StyledList = styled.ul`
   list-style: none;
   margin-bottom: 3rem;
+`;
+
+const StyleAsanaList = styled.ul`
+  list-style: none;
+  margin-bottom: 18rem;
 `;
 
 const StyledListItem = styled.li`
