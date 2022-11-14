@@ -86,7 +86,6 @@ const StyledButton = styled.button`
   border-radius: 12px;
   border: none;
   margin: 1rem 0 2rem 0;
-
   cursor: pointer;
   box-shadow: var(--drop-shadow-gray);
   color: var(--text-light);
