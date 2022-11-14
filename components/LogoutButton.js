@@ -25,4 +25,9 @@ const StyledLogoutButton = styled.button`
 const StyledLogoutIcon = styled(AiOutlineLogout)`
   color: white;
   font-size: 1.5rem;
+  border-radius: 50%;
+  &:hover {
+    background-color: var(--background-neutral);
+    color: var(--primary);
+  }
 `;

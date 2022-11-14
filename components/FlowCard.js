@@ -26,7 +26,11 @@ export default function FlowCard({
       <Link href={`/flow/${id}`} passHref>
         <StyledButton role="button">To the flow</StyledButton>
       </Link>
-      <StyledDotButton onClick={toggleEditMenu}>
+      <StyledDotButton
+        role="button"
+        aria-label="openMenu"
+        onClick={toggleEditMenu}
+      >
         <StyledThreeDots />
       </StyledDotButton>
       {openEditMenu && (
@@ -82,7 +86,6 @@ const StyledButton = styled.button`
   border-radius: 12px;
   border: none;
   margin: 1rem 0 2rem 0;
-
   cursor: pointer;
   box-shadow: var(--drop-shadow-gray);
   color: var(--text-light);
